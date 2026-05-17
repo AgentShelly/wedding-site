@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { randomBytes } from "crypto";
 
 // Supported locales
 const locales = ["en", "es"];
@@ -16,8 +15,9 @@ function getLocale(request: NextRequest): string {
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Generate CSP nonce
-  const nonce = randomBytes(16).toString("base64");
+  // Generate CSP nonce using Web Crypto (Edge Runtime compatible)
+  const nonceBytes = crypto.getRandomValues(new Uint8Array(16));
+  const nonce = btoa(String.fromCharCode(...nonceBytes));
 
   // Skip static files and API routes for locale logic
   const isStaticFile =

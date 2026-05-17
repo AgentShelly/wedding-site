@@ -141,3 +141,20 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# Vercel
+.vercel
+
+# Testing
+/playwright-report
+/test-results
+
+# Sharp cache
+.sharp/
+
+# Generated images
+/public/img/processed/
+
+# Next.js
+next-env.d.ts
+

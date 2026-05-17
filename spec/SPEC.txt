@@ -1,0 +1,812 @@
+TRANQUILO VACATION RENTALS — BUILD SPECIFICATION
+================================================
+
+PROJECT NAME: tranquilo-web
+TARGET DOMAIN: tranquilovacationrentals.com
+LAST UPDATED: 2026
+
+How to use this document: paste this entire file into Claude Code or Codex
+as the initial brief, then iterate page by page. The image assets will be
+delivered later inside a folder named "assets-in/" at the repository root.
+
+
+1. GOALS AND NON-GOALS
+----------------------
+
+GOALS
+
+Build a fast, secure, accessible, SEO-optimised marketing site for a small
+vacation rental business operating in Playa Del Carmen, Mexico. The site
+must showcase ~19 properties, capture qualified inquiries, and deep-link
+to external OTAs (Airbnb, VRBO, Booking.com) for actual reservations.
+
+The site must achieve Lighthouse scores of 95+ on Performance, 100 on
+Accessibility, 100 on Best Practices, and 100 on SEO across mobile and
+desktop. Largest Contentful Paint under 2.0 seconds on 4G mobile.
+Interaction to Next Paint under 200 ms.
+
+The site must be bilingual: English (default) and Spanish.
+
+NON-GOALS
+
+Do NOT build user accounts, registration, login, password reset, or a
+shopping cart. These existed in the legacy WordPress site and are removed.
+
+Do NOT build a custom payment engine or hold credit card data. Bookings
+finalise on third-party OTA platforms.
+
+Do NOT build a CMS in v1. Property data lives in versioned content files
+inside the repo (see section 7). A CMS can be added later if needed.
+
+
+2. TECH STACK (LOCKED)
+----------------------
+
+Framework: Next.js 15 (App Router) with React 19 and TypeScript 5.
+Styling: Tailwind CSS v4 with CSS variables for theme tokens.
+UI primitives: Radix UI for accessible dialog, popover, dropdown, accordion.
+Icons: lucide-react.
+Fonts: next/font with one display font (e.g. "Fraunces") and one body
+       font (e.g. "Inter"), self-hosted, subset latin and latin-ext.
+Image handling: next/image with AVIF and WebP, plus a static loader.
+Forms: react-hook-form + zod for client+server schema validation.
+Email delivery: Resend (transactional API).
+Anti-spam: Cloudflare Turnstile (free, GDPR-friendly, no Google).
+i18n: next-intl, default locale "en", second locale "es".
+Date handling: date-fns (no moment.js).
+Analytics: Plausible Analytics (privacy-first, cookieless) OR Vercel
+           Analytics. Pick one and stick to it.
+Markdown for blog: MDX via @next/mdx with remark-gfm and rehype-slug.
+Hosting: Vercel (Production + Preview deployments).
+DNS, WAF, CDN, bot mitigation: Cloudflare in front of Vercel.
+Package manager: pnpm.
+Node version: 22 LTS (pinned in .nvmrc and engines field).
+
+Linting and formatting: ESLint with next/core-web-vitals and
+typescript-eslint, Prettier with the tailwindcss plugin, Husky pre-commit
+hook running lint-staged.
+
+Testing:
+- Unit/component: Vitest + React Testing Library.
+- E2E: Playwright covering homepage, properties list, property detail,
+  contact form happy path, and 404.
+- Accessibility checks in Playwright via @axe-core/playwright.
+
+
+3. INFORMATION ARCHITECTURE
+---------------------------
+
+Routes (English shown; Spanish lives under /es/...):
+
+/                              Homepage
+/stays                         All properties (list + filter)
+/stays/[slug]                  Property detail
+/areas/[area]                  Properties in a neighbourhood
+/types/[type]                  Properties by type (villa, loft, condo)
+/about                         About Rudolph and Tranquilo
+/contact                       Contact form, map, phone, WhatsApp
+/blog                          Blog index
+/blog/[slug]                   Blog post
+/terms                         Terms and Conditions
+/privacy                       Privacy Policy
+/sitemap.xml                   Generated sitemap (next-sitemap)
+/robots.txt                    Generated robots file
+/api/inquiry                   POST endpoint for inquiry form
+/api/health                    GET endpoint returning 200 for uptime checks
+
+The legacy URL /properties-list-standard/ must 301-redirect to /stays.
+All legacy /properties/[slug]/ URLs must 301-redirect to /stays/[slug],
+keeping the same slug. See section 14 for the full redirect map.
+
+
+4. DESIGN SYSTEM
+----------------
+
+The visual identity is "tranquil, warm, coastal, modern Mexican". Avoid
+generic AI-template aesthetic.
+
+COLOR TOKENS (CSS variables in globals.css):
+
+--color-sand-50:  #FAF7F2
+--color-sand-100: #F2EBE0
+--color-sand-200: #E5D9C5
+--color-sand-900: #2A2620
+--color-ocean-50:  #EDF6F6
+--color-ocean-500: #2E8C8C   (primary accent)
+--color-ocean-700: #1E6464
+--color-coral-500: #E07856   (secondary accent, CTAs)
+--color-coral-600: #C75D3D
+--color-ink-900:   #14110E   (body text)
+--color-ink-600:   #5C534A
+--color-ink-300:   #B7AFA4
+--color-line:      #E8E0D2
+
+Use Tailwind's @theme directive to map these to utility classes such as
+bg-ocean-500, text-ink-900, border-line.
+
+TYPOGRAPHY
+
+Display: Fraunces, weights 400/600, used for h1 and h2 only.
+Body: Inter, weights 400/500/600, used everywhere else.
+Base size 17px on desktop, 16px on mobile. Line-height 1.55 for body,
+1.15 for display.
+
+SPACING
+
+Use Tailwind defaults plus a section padding scale: --space-section-y on
+mobile = clamp(3rem, 6vw, 5rem), on desktop = clamp(5rem, 8vw, 8rem).
+
+RADII
+
+Cards: 16px. Buttons: 12px. Inputs: 10px. Images inside cards: 12px.
+
+SHADOWS
+
+Subtle only. shadow-sm for cards at rest, shadow-md on hover. Never use
+heavy drop shadows.
+
+MOTION
+
+All transitions 150-250 ms ease-out. Honour prefers-reduced-motion: cut
+all non-essential motion to 0 ms when the user has set that preference.
+
+
+5. GLOBAL COMPONENTS
+--------------------
+
+Header
+- Logo on the left (use /assets-in/logo.svg once provided; fallback to a
+  text mark "Tranquilo" until then).
+- Center/right nav: Stays, Areas, Blog, About, Contact.
+- Right-aligned language switcher (EN / ES) and a "Inquire" button.
+- Mobile: hamburger opens a full-height Radix Dialog with the nav.
+- Becomes a translucent blurred bar on scroll past 80px (backdrop-blur).
+
+Footer
+- Three columns on desktop, stacked on mobile.
+- Column 1: brand blurb + social icons (Facebook, Instagram, YouTube,
+  Google Business). Use the URLs from the legacy site as defaults.
+- Column 2: Contact info (address, phone, email, WhatsApp link).
+- Column 3: Quick links and language switcher.
+- Bottom bar: copyright, Terms, Privacy.
+
+WhatsApp Floating Button
+- Position: fixed bottom-right, 24px from edges, z-index 40.
+- Opens https://wa.me/529981209715?text=<url-encoded greeting>
+- Greeting in current locale, e.g. "Hi, I'd like to know about your
+  properties." / "Hola, me interesa una de sus propiedades."
+- Hidden when the inquiry modal is open.
+- Aria-label set, focus ring visible.
+
+Inquiry Modal
+- Triggered from any "Inquire" or "Check availability" button.
+- Uses Radix Dialog (focus trap, escape to close).
+- Fields: name, email, phone (optional), check-in date, check-out date,
+  guests (adults, children, infants), property (pre-filled when launched
+  from a property page), message.
+- Client validation with zod, server re-validation in /api/inquiry.
+- Submits to /api/inquiry, which sends an email via Resend and returns a
+  JSON success/error.
+- Includes Cloudflare Turnstile widget.
+- On success shows a thank-you state and stays open until dismissed.
+
+PropertyCard
+- Image (16:10 aspect ratio, next/image with priority=false except for
+  the first 3 cards in the viewport).
+- Title, area, type, sleeps, bedrooms, bathrooms.
+- "From $X /night" price chip.
+- Click target wraps the whole card (use a stretched <Link>).
+- Hover: image scales 1.02, shadow upgrades.
+
+TestimonialCard
+- Avatar circle (or initials fallback if no photo), guest name, country,
+  star rating, quote (max 3 lines clamped).
+- Optional source badge: "Airbnb", "VRBO", "Google" so reviews look real.
+
+Breadcrumb
+- On every page except homepage.
+- Outputs BreadcrumbList JSON-LD.
+
+
+6. PAGE SPECIFICATIONS
+----------------------
+
+6.1 HOMEPAGE (/)
+
+Sections in order:
+
+A. HERO
+   Full-bleed background image of Playa del Carmen beach.
+   H1: "Your serene escape in the Riviera Maya."
+   Subhead: "Thoughtfully designed vacation rentals a short walk from
+   the best beaches in Playa del Carmen."
+   Primary CTA: "Browse stays" → /stays
+   Secondary CTA: "Talk to us on WhatsApp"
+   The hero image is one optimized AVIF/WebP at 1920x1080 served via
+   next/image priority=true and fetchpriority="high".
+
+B. SEARCH STRIP (optional)
+   Simple card with destination dropdown (currently only Playa del Carmen),
+   date pickers for check-in/check-out, guest selector, and a Search
+   button. On submit, route to /stays with URL params for filtering.
+
+C. INTRO BLURB
+   Two-column layout, headline + supporting paragraph + small photo.
+   Headline: "Authentic Playa, done right."
+   Body: the existing "Your Serene Beach Escape" copy rewritten without
+   the Tulum confusion. Keep it grounded in Playa del Carmen only.
+
+D. FEATURED PROPERTIES
+   Grid of 6 PropertyCard components (the 6 most-booked). On mobile,
+   horizontal scroll snap. Below the grid, a "See all stays" link.
+
+E. AMENITIES STRIP
+   Icon row of popular amenities (Outdoor pool, Kitchen, Air conditioning,
+   Free parking, WiFi, Beach access). Each links to /stays?amenity=...
+
+F. PROPERTY TYPES
+   Three tiles: Villas, Lofts, Condos. Each shows count and a hero image.
+
+G. TESTIMONIALS
+   Carousel of 6-10 TestimonialCard items. Uses Embla Carousel React.
+   Accessibility: arrow keys advance, screen reader announces position.
+
+H. BLOG TEASER
+   Three latest blog posts as cards (image, title, excerpt, read-time).
+
+I. CTA BAND
+   "Plan the perfect trip — talk to a real human, fast."
+   Two buttons: "Inquire" (opens modal) and "WhatsApp".
+
+J. CLOSING TRUST BAND
+   Logos / badges: "Superhost on Airbnb", "2,000+ five-star stays",
+   "Family-friendly", "Eco-conscious". Use neutral monochrome SVGs.
+
+6.2 ALL PROPERTIES (/stays)
+
+Left rail (desktop) or top sheet (mobile) filters:
+- Type: Villa, Loft, Condo
+- Bedrooms: 1, 2, 3, 4, 5, 6+
+- Bathrooms: 1, 2, 3, 4, 5, 6+
+- Guests: numeric
+- Price range slider (USD)
+- Amenities (multi-select chips): Pool, Kitchen, WiFi, AC, Heating,
+  Beachfront, Parking, Family-friendly, Workspace
+- Area: Centro, Zazil-Ha, Luis Donaldo Colosio (auto-populated from data)
+
+Filters update the URL query string. State must be SSR-friendly so a
+shared URL reproduces the same filtered view. Use nuqs for type-safe URL
+state.
+
+Sort: Recommended (default), Price low to high, Price high to low.
+
+Grid: 3 columns desktop, 2 tablet, 1 mobile. Pagination (12 per page) or
+infinite scroll with intersection observer — pick one and be consistent.
+
+Empty state with a friendly illustration when filters return zero.
+
+A map view toggle is a stretch goal for v2; do not implement in v1.
+
+6.3 PROPERTY DETAIL (/stays/[slug])
+
+Above-the-fold layout, two-column on desktop:
+
+LEFT (8/12)
+- Gallery: hero image plus mosaic of 4 thumbnails. Click opens a Radix
+  Dialog lightbox with keyboard navigation (← →), pinch-zoom on mobile.
+- Title, badges (Entire home, type, area).
+- Quick facts row: guests, bedrooms, beds, bathrooms, size in m² and ft².
+
+RIGHT (4/12), sticky on scroll
+- Booking widget card.
+- "From $X / night" headline.
+- Date picker (check-in, check-out) with the disabled dates from the
+  property's availability JSON.
+- Guest selector.
+- Estimated total preview (nightly × nights + cleaning fee), shown only
+  when valid dates are entered. Display as "estimate, not final price".
+- Primary CTA: "Inquire about these dates" (opens modal pre-filled).
+- Secondary CTAs (stacked): "Book on Airbnb", "Book on VRBO", "Book on
+  Booking.com" — each links out to the property's external URL with
+  rel="noopener noreferrer" target="_blank". Show only the platforms
+  configured for that property.
+- WhatsApp button: pre-fills the message with the property name.
+
+BELOW THE FOLD
+
+- Description (rich text from MDX, preserving the "Guests Say It Best"
+  block and the labelled sub-sections).
+- Amenities list, grouped: Bedroom, Bathroom, Kitchen, Outdoor, Tech,
+  Family, Accessibility. Show first 8, "Show all" reveals the rest.
+- Sleeping arrangements diagram (small icon per bed).
+- Location: embedded static map (no Google Maps JS to avoid third-party
+  scripts; use the Mapbox Static Images API or a screenshot pre-generated
+  per property and stored in /public/maps/[slug].jpg). Provide a "Get
+  directions" link to Google Maps with lat/lng.
+- House rules and cancellation policy.
+- Reviews carousel for this specific property if available.
+- Related properties (3 cards from the same type/area).
+- Final CTA band: Inquire + WhatsApp.
+
+STRUCTURED DATA
+
+Each property page emits JSON-LD of type LodgingBusiness (or
+VacationRental from schema.org if defined for the locale) including
+name, image, address (PostalAddress), geo (GeoCoordinates), telephone,
+priceRange, amenityFeature array, and aggregateRating if reviews exist.
+
+6.4 BLOG (/blog and /blog/[slug])
+
+MDX files in /content/blog/[locale]/[slug].mdx. Frontmatter: title,
+excerpt, date, cover image, tags, author. Render with prose styles
+(Tailwind typography plugin). Add a table-of-contents on the right rail
+for posts longer than 800 words. Reading time computed from word count.
+
+6.5 ABOUT (/about)
+
+Story of Rudolph and Tranquilo. Photo, mission statement, sustainability
+note, awards/recognition badges. Map of operating area. CTA to /contact.
+
+6.6 CONTACT (/contact)
+
+Two-column: form (same as inquiry modal but expanded) + static info
+card with address, phone, email, WhatsApp, hours, social. Embedded
+static map under the info card.
+
+6.7 LEGAL (/terms, /privacy)
+
+Use plain MDX. Reference Mexican consumer protection law (PROFECO) where
+relevant. Privacy policy must mention Cloudflare Turnstile, Plausible
+(or Vercel Analytics), Resend, and Vercel as data processors, plus the
+legal basis (legitimate interest for inquiries, consent for analytics if
+using Vercel Analytics — Plausible needs no consent).
+
+
+7. CONTENT MODEL
+----------------
+
+Properties live in /content/properties/[slug].ts as typed objects.
+Each file default-exports a Property of this shape:
+
+  type Property = {
+    slug: string;                       // matches filename
+    name: { en: string; es: string };
+    type: "villa" | "loft" | "condo";
+    area: string;                       // e.g. "Centro"
+    city: "Playa del Carmen";
+    addressLine: string;
+    coords: { lat: number; lng: number };
+    capacity: { guests: number; bedrooms: number; beds: number;
+                bathrooms: number };
+    sizeSqM?: number;
+    sizeSqFt?: number;
+    pricing: {
+      currency: "USD";
+      nightly: number;
+      nightly7Plus?: number;
+      nightly30Plus?: number;
+      weekend?: number;
+      cleaningFee?: number;
+      securityDeposit?: number;
+      minNights: number;
+    };
+    amenities: string[];                // from AMENITIES enum
+    rules: {
+      smoking: boolean; pets: boolean; party: boolean; children: boolean;
+      checkIn: string; checkOut: string;
+    };
+    description: { en: string; es: string };  // MDX strings or refs
+    images: { src: string; alt: string; width: number; height: number }[];
+    heroIndex: number;                  // which images[] is the hero
+    sleeping: { roomName: string; beds: { type: string; count: number }[] }[];
+    externalBooking: {
+      airbnb?: string; vrbo?: string; booking?: string; direct?: string;
+    };
+    reviews?: { author: string; country: string; rating: number;
+                source: "airbnb" | "vrbo" | "google" | "direct";
+                quote: string; date: string }[];
+    featured?: boolean;
+    published: boolean;
+  };
+
+Provide a registry file /content/properties/index.ts that imports all
+properties and exports an array, with type-safe slug lookup helpers.
+
+Provide a similar registry for /content/testimonials/index.ts and
+/content/blog/[locale]/*.mdx.
+
+Provide an AMENITIES constant in /lib/amenities.ts that lists every
+canonical amenity with its slug, English label, Spanish label, and
+lucide-react icon name.
+
+Initial property list to scaffold (use the legacy names; copy can be
+refined later):
+
+1.  romantic-maya-lun-nirvana   (Condo, Zazil-Ha, $64)
+2.  uvademar-1415-two-lofts     (Loft, Centro, $144)
+3.  uvademar-11-tropical-maya   (Loft, Centro, $64)
+4.  uvademar-14-aurora          (Loft, Centro, $64)
+5.  uvademar-15-xanadu          (Loft, Centro, $64)
+6.  lovely-hawaii-villa         (Villa, $54)
+7.  lovely-bali-villa           (Villa, $54)
+8.  lovely-honolulu-villa       (Villa, $54)
+9.  romantic-phuket-villa       (Villa, $54)
+10. romantic-ubud-villa         (Villa, $54)
+11. romantic-krabi-villa        (Villa, $54)
+12. romantic-tokyo-villa        (Villa, $54)
+13. romantic-capri-villa        (Villa, $54)
+14. romantic-paris-villa        (Villa, $54)
+15. romantic-santorini-villa    (Villa, $54)
+16. (plus four more villas to fill the 14 villa count — names TBD)
+
+Treat the above as placeholders. Real coordinates, addresses, and final
+descriptions will be supplied by the owner before launch.
+
+
+8. IMAGES
+---------
+
+Drop folder: /assets-in/ at the repo root contains raw uploaded photos.
+Structure expected:
+
+  /assets-in/properties/[slug]/01.jpg, 02.jpg, ...
+  /assets-in/brand/logo.svg, favicon-source.png
+  /assets-in/hero/homepage.jpg, ...
+  /assets-in/blog/[slug]/cover.jpg, ...
+  /assets-in/team/rudolph.jpg
+
+Build script /scripts/process-images.ts uses sharp to:
+- Resize each property photo to 1600w, 1200w, 800w, 400w.
+- Encode AVIF (quality 60) and WebP (quality 75).
+- Strip EXIF.
+- Output to /public/img/properties/[slug]/[index]-[width].[avif|webp].
+- Generate a content-hashed file name for cache busting.
+- Write a manifest JSON at /content/image-manifest.json mapping slug to
+  the produced files with dimensions, so the Property content files can
+  reference logical names while next/image sees real paths.
+
+Add npm script "images" that runs this on demand. Hook it into the build
+pipeline only when /assets-in changes (check via a checksum file).
+
+Every image MUST have descriptive alt text in the property content file.
+Decorative-only images (background, divider) use alt="".
+
+A favicon set (16, 32, 48, 180 Apple touch, 512 maskable PWA) is
+generated from /assets-in/brand/favicon-source.png by a small script.
+
+
+9. FORMS, API, AND EMAIL
+------------------------
+
+Endpoint: POST /api/inquiry
+
+Request body (JSON), validated with zod:
+  name: string, 2-100 chars
+  email: valid email, lowercased
+  phone: optional string, 6-30 chars
+  checkIn: ISO date, today or later
+  checkOut: ISO date, after checkIn, max 365 days out
+  guests: { adults: int 1-20, children: int 0-20, infants: int 0-10 }
+  propertySlug: optional string matching a known property
+  message: string, 10-2000 chars
+  locale: "en" | "es"
+  turnstileToken: string
+
+Server logic:
+1. Validate body with zod. Reject with 422 if invalid.
+2. Verify Turnstile token via the Cloudflare siteverify endpoint using
+   TURNSTILE_SECRET_KEY env var. Reject with 400 if not human.
+3. Apply rate limiting: max 3 submissions per IP per 10 minutes and 10
+   per IP per day. Use Upstash Redis (UPSTASH_REDIS_REST_URL and
+   UPSTASH_REDIS_REST_TOKEN) with @upstash/ratelimit. Respond 429 when
+   exceeded.
+4. Sanitise the message field (strip HTML, normalise whitespace).
+5. Send two emails via Resend:
+   a) To the owner (hello@tranquilovacationrentals.com): subject
+      "New inquiry — {propertyName or 'General'} — {checkIn} → {checkOut}".
+      Include all fields in a clean HTML template plus a plain-text fallback.
+   b) To the guest: subject "We received your inquiry — Tranquilo Vacation
+      Rentals". Confirmation copy in their chosen locale.
+6. Log a record of the inquiry to a private Notion database OR an
+   Airtable base via webhook (configurable). If neither configured, skip.
+7. Respond 200 with { ok: true, id: "<uuid>" }.
+
+Error responses always JSON, never leak stack traces. All errors are
+caught and logged via console.error so they show in Vercel logs.
+
+CSRF protection is unnecessary for fetch-based JSON POST from same
+origin when SameSite=Lax cookies are not used for auth — but still add
+an Origin check: reject requests whose Origin header does not match
+the deployed domain.
+
+
+10. SECURITY
+------------
+
+Headers (set in next.config.ts and middleware.ts):
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  Content-Security-Policy: see below
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(),
+                       interest-cohort=(), payment=()
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-site
+
+Content-Security-Policy (strict, nonce-based for inline scripts):
+  default-src 'self';
+  script-src 'self' 'nonce-{NONCE}' https://challenges.cloudflare.com
+             https://plausible.io;
+  style-src 'self' 'unsafe-inline';
+  img-src 'self' data: blob: https://*.tranquilovacationrentals.com;
+  font-src 'self';
+  connect-src 'self' https://plausible.io
+             https://challenges.cloudflare.com;
+  frame-src https://challenges.cloudflare.com;
+  frame-ancestors 'none';
+  base-uri 'self';
+  form-action 'self';
+  upgrade-insecure-requests;
+
+Generate a CSP nonce per request in middleware.ts and pass it to scripts
+through React context or the `nonce` prop on <Script>.
+
+All secrets via Vercel Project Environment Variables. Required:
+  RESEND_API_KEY
+  RESEND_FROM_EMAIL                  (e.g. "no-reply@tranquilovacationrentals.com")
+  OWNER_EMAIL                        (hello@tranquilovacationrentals.com)
+  TURNSTILE_SITE_KEY                 (also exposed as NEXT_PUBLIC_TURNSTILE_SITE_KEY)
+  TURNSTILE_SECRET_KEY
+  UPSTASH_REDIS_REST_URL
+  UPSTASH_REDIS_REST_TOKEN
+  NEXT_PUBLIC_SITE_URL               (e.g. "https://tranquilovacationrentals.com")
+  NEXT_PUBLIC_PLAUSIBLE_DOMAIN
+  NOTION_API_KEY                     (optional, leave empty if unused)
+  NOTION_INQUIRY_DB_ID               (optional)
+
+Other security measures:
+- Dependabot or Renovate enabled in GitHub for automatic dependency PRs.
+- pnpm audit passes with no high or critical findings; build fails on
+  high+ via CI.
+- All third-party SDKs loaded with next/script strategy="lazyOnload"
+  or strategy="afterInteractive", with subresource integrity where the
+  CDN supports it.
+- No third-party iframes except Cloudflare Turnstile.
+- All outbound links rel="noopener noreferrer".
+- Form inputs use autocomplete attributes correctly.
+
+
+11. ACCESSIBILITY
+-----------------
+
+Target: WCAG 2.2 AA, verified by axe-core in CI.
+- All interactive elements reachable by keyboard.
+- Visible focus ring (use focus-visible:ring-2 ring-ocean-500).
+- Skip link at top of every page: "Skip to main content".
+- Color contrast at least 4.5:1 for body, 3:1 for large text.
+- Form fields have visible labels (not placeholder-only).
+- Errors announced with aria-live="polite" and inline messages.
+- All images have meaningful alt text or alt="" if decorative.
+- The carousel components use the WAI-ARIA Authoring Practices pattern.
+- prefers-reduced-motion respected throughout.
+- Language attribute on the html element matches the active locale.
+
+
+12. SEO
+-------
+
+- Per-page metadata via the Next.js Metadata API. Each page exports a
+  generateMetadata() with title, description, canonical, og:image,
+  alternates (hreflang en, es, x-default).
+- robots.txt allows everything except /api/, generated.
+- sitemap.xml generated by next-sitemap, includes every locale variant
+  with hreflang annotations.
+- JSON-LD on:
+  - Site-wide: Organization, LocalBusiness with NAP, ContactPoint.
+  - Each property: LodgingBusiness with aggregateRating where available.
+  - Each blog post: BlogPosting with author and datePublished.
+  - Breadcrumbs on every non-home page.
+- Open Graph image generation: an /opengraph-image.tsx route per page
+  rendering a 1200x630 image using the OG image API.
+- Canonicals point to the English URL with hreflang to Spanish.
+
+
+13. PERFORMANCE BUDGET
+----------------------
+
+- JavaScript shipped per route <= 90 kB gzipped.
+- CSS shipped per route <= 25 kB gzipped.
+- Total transferred bytes on homepage cold load <= 1.2 MB.
+- LCP <= 2.0 s on Slow 4G mobile in WebPageTest.
+- INP <= 200 ms.
+- CLS <= 0.05.
+- All images served as AVIF with WebP fallback, lazy-loaded except hero.
+- Use route-level prefetch for the top nav links.
+- Use React Server Components everywhere; client components only for
+  interactivity (forms, carousels, modals, filters).
+
+
+14. URL MIGRATION (301 REDIRECTS)
+---------------------------------
+
+Add to next.config.ts redirects() the following permanent (308) redirects:
+
+  /properties-list-standard           -> /stays
+  /properties-list-standard/page/:n   -> /stays?page=:n
+  /properties/:slug                   -> /stays/:slug
+  /best-mexico-travel-blog            -> /blog
+  /things-to-do-playa-del-carmen      -> /blog/things-to-do-playa-del-carmen
+  /places-eat-playa-del-carmen        -> /blog/places-to-eat-playa-del-carmen
+  /top-5-beaches-playa-del-carmen     -> /blog/top-5-beaches-playa-del-carmen
+  /things-to-do-puerto-aventuras      -> /blog/things-to-do-puerto-aventuras
+  /places-eat-puerto-aventuras        -> /blog/places-to-eat-puerto-aventuras
+  /top-benefits-temazcal              -> /blog/top-benefits-temazcal
+  /best-tours-riviera-maya            -> /blog/best-tours-riviera-maya
+  /contact                            -> /contact (no change)
+  /terms-and-conditions               -> /terms
+  /gdpr-terms-and-conditions          -> /privacy
+  /cart                               -> /stays
+  /checkout                           -> /stays
+  /my-account                         -> /
+  /wp-admin                           -> /
+  /wp-login.php                       -> /
+
+For any /listings/:type and /area/:area and /city/:city, redirect:
+  /listings/:type   -> /types/:type
+  /area/:area       -> /areas/:area
+  /city/:city       -> /stays?city=:city
+  /features/:slug   -> /stays?amenity=:slug
+  /action/:slug     -> /stays
+
+
+15. INTERNATIONALIZATION
+------------------------
+
+next-intl with:
+- /messages/en.json and /messages/es.json holding UI strings.
+- Per-content translation kept inside the content files (e.g. property
+  description has { en, es } fields).
+- Locale prefix strategy "as-needed": English at root, Spanish at /es/...
+- Language switcher preserves the current path.
+- All dates formatted with the locale, currency formatted with USD
+  Intl.NumberFormat.
+
+
+16. FILE AND FOLDER LAYOUT
+--------------------------
+
+/  (repo root)
+├─ app/
+│  ├─ (marketing)/                  route group for marketing pages
+│  │  ├─ page.tsx                   homepage
+│  │  ├─ stays/page.tsx
+│  │  ├─ stays/[slug]/page.tsx
+│  │  ├─ areas/[area]/page.tsx
+│  │  ├─ types/[type]/page.tsx
+│  │  ├─ about/page.tsx
+│  │  ├─ contact/page.tsx
+│  │  ├─ blog/page.tsx
+│  │  ├─ blog/[slug]/page.tsx
+│  │  ├─ terms/page.tsx
+│  │  └─ privacy/page.tsx
+│  ├─ [locale]/                     mirrors above for es/
+│  ├─ api/
+│  │  ├─ inquiry/route.ts
+│  │  └─ health/route.ts
+│  ├─ layout.tsx
+│  ├─ not-found.tsx
+│  ├─ opengraph-image.tsx
+│  └─ globals.css
+├─ components/
+│  ├─ ui/                           Radix-backed primitives
+│  ├─ Header.tsx
+│  ├─ Footer.tsx
+│  ├─ WhatsAppButton.tsx
+│  ├─ InquiryModal.tsx
+│  ├─ PropertyCard.tsx
+│  ├─ PropertyGallery.tsx
+│  ├─ PropertyFilters.tsx
+│  ├─ TestimonialCarousel.tsx
+│  ├─ Breadcrumb.tsx
+│  └─ LangSwitch.tsx
+├─ content/
+│  ├─ properties/
+│  │  ├─ index.ts
+│  │  └─ *.ts
+│  ├─ testimonials/index.ts
+│  ├─ blog/
+│  │  ├─ en/*.mdx
+│  │  └─ es/*.mdx
+│  └─ image-manifest.json
+├─ lib/
+│  ├─ amenities.ts
+│  ├─ schema.ts                     JSON-LD builders
+│  ├─ resend.ts
+│  ├─ ratelimit.ts
+│  ├─ turnstile.ts
+│  └─ i18n.ts
+├─ messages/en.json, es.json
+├─ middleware.ts
+├─ next.config.ts
+├─ tailwind.config.ts
+├─ scripts/
+│  ├─ process-images.ts
+│  └─ generate-favicons.ts
+├─ assets-in/                       NOT committed images source
+├─ public/                          processed images and static files
+├─ tests/
+│  ├─ unit/
+│  └─ e2e/
+├─ .github/workflows/ci.yml
+├─ .nvmrc
+├─ .editorconfig
+├─ .gitignore
+├─ package.json
+└─ README.md
+
+
+17. CI / GITHUB ACTIONS
+-----------------------
+
+Workflow on every push and PR:
+1. pnpm install --frozen-lockfile
+2. pnpm lint
+3. pnpm typecheck
+4. pnpm test (unit)
+5. pnpm build
+6. Run Playwright e2e against the built app (CI mode).
+7. pnpm audit --prod --audit-level=high
+8. Upload Playwright HTML report as artifact.
+
+On main, additionally:
+9. Lighthouse CI against the Vercel preview, asserting category scores.
+
+
+18. ANALYTICS AND OBSERVABILITY
+-------------------------------
+
+- Plausible script added via next/script with strategy="afterInteractive"
+  and the data-domain attribute set from NEXT_PUBLIC_PLAUSIBLE_DOMAIN.
+- Track these custom events: inquiry_submitted (with property slug),
+  whatsapp_click, external_booking_click (with platform), language_switch.
+- Server-side: Vercel logs are sufficient for v1.
+- Health check endpoint /api/health used by an UptimeRobot monitor every
+  5 minutes.
+
+
+19. README REQUIREMENTS
+-----------------------
+
+The README must include:
+- Quick start (pnpm install, pnpm dev).
+- Environment variable list with descriptions.
+- How to add a property (step-by-step using the content file format).
+- How to add a blog post.
+- How to drop new images and run the image pipeline.
+- How to run tests.
+- How to deploy.
+
+
+20. ACCEPTANCE CRITERIA (DEFINITION OF DONE)
+--------------------------------------------
+
+The build is "done" for v1 launch when:
+
+- All routes in section 3 exist and render in EN and ES.
+- All 19 properties are scaffolded with placeholder content where real
+  copy is missing, clearly marked TODO.
+- Inquiry form sends an email to the owner and a confirmation to the
+  guest in their locale.
+- Lighthouse mobile scores (homepage and one property page) meet the
+  thresholds in section 13 in a Vercel preview.
+- Playwright e2e suite passes.
+- axe-core finds zero violations.
+- All 301 redirects in section 14 verified with a curl script.
+- Security headers verified via securityheaders.com (A+ grade) and
+  Mozilla Observatory (A+).
+- CSP has no console violations on any page.
+- Sitemap.xml is reachable and lists all locales.
+- robots.txt is reachable and correct.
+
+END OF SPECIFICATION

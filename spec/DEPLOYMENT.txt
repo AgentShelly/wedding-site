@@ -1,0 +1,316 @@
+TRANQUILO VACATION RENTALS — DEPLOYMENT GUIDE
+=============================================
+
+This guide walks you from a freshly built repo to a live production
+deployment at tranquilovacationrentals.com with zero downtime. Follow
+the steps in order. Wherever you see {placeholders}, substitute your
+real values.
+
+
+PREREQUISITES
+-------------
+
+Accounts you need (all free tiers are enough to start):
+
+  - GitHub                 source control
+  - Vercel                 hosting (free Hobby tier, or Pro if you want
+                           team features and higher build minutes)
+  - Cloudflare             DNS, WAF, CDN, Turnstile
+  - Resend                 transactional email
+  - Upstash                serverless Redis for rate limiting
+  - Plausible              analytics (paid, ~$9/mo) OR use Vercel
+                           Analytics (free with Vercel)
+  - UptimeRobot            uptime monitoring (free)
+  - A domain registrar     where tranquilovacationrentals.com is
+                           currently registered
+
+Local tooling:
+
+  - Node.js 22 LTS         install via fnm or nvm
+  - pnpm 9+                npm install -g pnpm
+  - git                    any recent version
+  - Vercel CLI             npm install -g vercel
+  - Cloudflare's wrangler  optional, only if you later add Workers
+
+
+STEP 1 — CREATE THE REPOSITORY
+------------------------------
+
+1. Go to github.com and create a new private repository named
+   "tranquilo-web".
+2. Locally, clone it: git clone git@github.com:{you}/tranquilo-web.git
+3. cd into the folder and place SPEC.txt and this DEPLOYMENT.txt at the
+   root.
+4. Hand SPEC.txt to Claude Code or Codex with a prompt such as:
+   "Build the project described in SPEC.txt in this empty repository.
+    Use the exact tech stack and file layout. Stop after scaffolding
+    and committing the basic structure so I can review."
+5. Iterate page by page. After each completed page or section, commit
+   to git with a clear message.
+
+
+STEP 2 — DROP IMAGE ASSETS
+--------------------------
+
+1. Create the folder at the repo root:
+     mkdir -p assets-in/properties assets-in/brand assets-in/hero \
+              assets-in/blog assets-in/team
+2. Place raw photos following the convention from SPEC.txt section 8.
+3. Add assets-in/ to .gitignore — these are large source files, only
+   the processed outputs in public/img belong in git.
+4. Run the pipeline:
+     pnpm install
+     pnpm images
+   This generates AVIF/WebP variants under public/img and writes
+   content/image-manifest.json. Commit the processed images and the
+   manifest.
+
+
+STEP 3 — SET UP RESEND
+----------------------
+
+1. Sign up at resend.com.
+2. Add and verify the domain tranquilovacationrentals.com. Resend will
+   give you three DNS records (SPF, DKIM, return-path). Save them; you
+   will add them in Step 6 when you move DNS to Cloudflare.
+3. Create an API key named "tranquilo-web-prod". Copy it — you will
+   paste it into Vercel as RESEND_API_KEY in Step 7.
+4. Create a sending identity:
+     From: "Tranquilo Vacation Rentals <no-reply@tranquilovacationrentals.com>"
+   Test by sending a sample email via the Resend dashboard once DNS is live.
+
+
+STEP 4 — SET UP UPSTASH REDIS
+-----------------------------
+
+1. Sign up at upstash.com.
+2. Create a new Redis database. Region: pick the closest to your
+   Vercel deployment region (e.g. us-east-1 if you serve North America).
+3. Enable REST API. Copy the REST URL and REST TOKEN. These become
+   UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN in Vercel.
+
+
+STEP 5 — SET UP CLOUDFLARE TURNSTILE
+------------------------------------
+
+1. Log in to dash.cloudflare.com.
+2. In the left nav, go to Turnstile and click "Add site".
+3. Site name: "Tranquilo Vacation Rentals".
+4. Hostnames: tranquilovacationrentals.com and www.tranquilovacationrentals.com.
+5. Widget mode: Managed.
+6. Copy the Site Key (public) and Secret Key (private). These become
+   NEXT_PUBLIC_TURNSTILE_SITE_KEY and TURNSTILE_SECRET_KEY.
+
+
+STEP 6 — MOVE DNS TO CLOUDFLARE
+-------------------------------
+
+Doing this BEFORE pointing the domain at the new site lets you keep the
+old WordPress site live until the very last moment.
+
+1. In Cloudflare dashboard, click "Add a site". Enter
+   tranquilovacationrentals.com. Choose the Free plan.
+2. Cloudflare will scan your current DNS records at your registrar.
+   Review them. Make sure the existing A/AAAA/CNAME records pointing to
+   your current WordPress host are imported correctly so the old site
+   stays up.
+3. Cloudflare gives you two nameservers (something like
+   liz.ns.cloudflare.com and adam.ns.cloudflare.com). Log in to your
+   domain registrar and replace the existing nameservers with these.
+   Save. Propagation typically completes within minutes to a few hours.
+4. While waiting, in the Cloudflare DNS panel add the three Resend
+   records from Step 3 (TXT for SPF if not already present, two CNAME
+   for DKIM, one CNAME for return-path). Confirm each record is set to
+   "DNS only" (grey cloud), not proxied — email records must not be
+   proxied.
+5. Once Cloudflare reports the zone is "Active", verify in Resend that
+   your domain shows "Verified". If not, fix the DNS values shown.
+
+
+STEP 7 — CREATE THE VERCEL PROJECT
+----------------------------------
+
+1. Log in to vercel.com. Click "Add New > Project".
+2. Import the tranquilo-web GitHub repo.
+3. Framework preset: Next.js (auto-detected).
+4. Root directory: leave as-is.
+5. Build command: pnpm build
+6. Install command: pnpm install --frozen-lockfile
+7. Node.js version: 22.x in Settings > General.
+8. Under Settings > Environment Variables, add ALL of the following
+   for Production AND Preview:
+
+     RESEND_API_KEY                  <from Step 3>
+     RESEND_FROM_EMAIL               no-reply@tranquilovacationrentals.com
+     OWNER_EMAIL                     hello@tranquilovacationrentals.com
+     TURNSTILE_SITE_KEY              <from Step 5>
+     NEXT_PUBLIC_TURNSTILE_SITE_KEY  <same as TURNSTILE_SITE_KEY>
+     TURNSTILE_SECRET_KEY            <from Step 5>
+     UPSTASH_REDIS_REST_URL          <from Step 4>
+     UPSTASH_REDIS_REST_TOKEN        <from Step 4>
+     NEXT_PUBLIC_SITE_URL            https://tranquilovacationrentals.com
+     NEXT_PUBLIC_PLAUSIBLE_DOMAIN    tranquilovacationrentals.com
+
+   For Preview environments, use the same secrets EXCEPT change
+   NEXT_PUBLIC_SITE_URL to the auto-generated preview URL pattern and
+   add the preview origins to Turnstile's allowed hostnames.
+
+9. Click Deploy. The first build will succeed against vercel.app
+   subdomain but is not yet live on the real domain.
+10. Open the Vercel preview URL and click around. Submit the inquiry
+    form against your test inbox. Verify Plausible records a pageview.
+
+
+STEP 8 — POINT THE DOMAIN AT VERCEL
+-----------------------------------
+
+This is the cutover. Do it when you are ready to retire WordPress.
+
+1. In Vercel: Settings > Domains > Add. Enter
+   tranquilovacationrentals.com. Vercel shows the DNS record to add
+   (typically a CNAME for www and an A record for the apex, or an
+   ALIAS/ANAME if your provider supports it).
+2. In Cloudflare DNS, REMOVE the old WordPress A/CNAME records and ADD
+   Vercel's records. Important: set the apex record to "Proxied" (orange
+   cloud) so Cloudflare's WAF and DDoS protection sit in front of Vercel.
+3. Repeat for www.tranquilovacationrentals.com.
+4. Within a few minutes, Vercel marks the domain as "Valid Configuration"
+   and provisions an SSL certificate.
+5. In Cloudflare > SSL/TLS, set encryption mode to "Full (strict)".
+   Anything less is insecure. Enable "Always use HTTPS", "Automatic
+   HTTPS Rewrites", and "HSTS" with max-age 1 year, include subdomains,
+   preload — but only enable preload after you have verified everything
+   works on HTTPS, because it is hard to undo.
+
+
+STEP 9 — CLOUDFLARE HARDENING
+-----------------------------
+
+In the Cloudflare dashboard, configure the following for the zone:
+
+  Security > WAF > Managed Rules: enable the Cloudflare Managed Ruleset.
+  Security > Bots: turn on Bot Fight Mode (free tier) or Super Bot Fight
+                   Mode if you upgrade.
+  Security > Settings: Security Level "Medium", Browser Integrity Check on.
+  Security > DDoS: leave defaults on.
+  Rules > Page Rules (or new Cache Rules):
+    - For /api/*, bypass cache and disable Apps.
+    - For /_next/static/*, set Edge Cache TTL to a month.
+  Speed > Optimization > Auto Minify: turn OFF for JS/CSS/HTML (Vercel
+    already optimizes; double-minification can break source maps).
+  Speed > Optimization > Brotli: ON.
+  Network > HTTP/3: ON. 0-RTT: ON.
+  Caching > Configuration > Browser Cache TTL: Respect existing headers.
+
+In Cloudflare > Email > Email Routing: set up forwarding for
+hello@tranquilovacationrentals.com to your real mailbox if you don't
+already host email elsewhere. (Cloudflare Email Routing is free and
+forwards only — it does not host mailboxes.)
+
+
+STEP 10 — GOOGLE SEARCH CONSOLE AND BING
+----------------------------------------
+
+1. Add tranquilovacationrentals.com (domain property) in Google Search
+   Console. Verify via DNS TXT record added in Cloudflare.
+2. Submit the sitemap: https://tranquilovacationrentals.com/sitemap.xml
+3. In the URL Inspection tool, request indexing for the homepage and
+   the /stays page.
+4. Repeat in Bing Webmaster Tools (it imports from GSC if you let it).
+5. Use the URL Removal tool for any old WordPress URLs that should not
+   be indexed (e.g. /wp-admin, /cart, /my-account). The 301 redirects
+   from SPEC.txt section 14 also tell search engines where to go.
+
+
+STEP 11 — SET UP UPTIME MONITORING
+----------------------------------
+
+1. Create an UptimeRobot account.
+2. Add an HTTPS monitor for https://tranquilovacationrentals.com/api/health,
+   interval 5 minutes.
+3. Add a second monitor for https://tranquilovacationrentals.com/ to
+   catch front-end-only outages.
+4. Configure alerts to your email and optionally to a phone via SMS or
+   WhatsApp through their integrations.
+
+
+STEP 12 — POST-LAUNCH QA CHECKLIST
+----------------------------------
+
+Run through this immediately after cutover:
+
+  [ ] Homepage loads over HTTPS without warnings.
+  [ ] Force-loading http://tranquilovacationrentals.com redirects to https.
+  [ ] www.tranquilovacationrentals.com redirects to apex (or vice versa,
+      pick one canonical and be consistent).
+  [ ] Every legacy URL in SPEC section 14 returns 301/308 to the new URL.
+      Test with: curl -I https://tranquilovacationrentals.com/properties/nirvana-mayalun
+  [ ] Inquiry form sends owner email AND guest confirmation.
+  [ ] Submitting the inquiry form 5 times in a row trips the rate limit.
+  [ ] Submitting without the Turnstile challenge fails on the server.
+  [ ] WhatsApp button opens wa.me with the correct number and prefilled
+      message in both EN and ES.
+  [ ] Language switch preserves the current path.
+  [ ] sitemap.xml lists all pages in both locales with hreflang.
+  [ ] robots.txt is correct and accessible.
+  [ ] Run https://securityheaders.com against the site — expect A+.
+  [ ] Run https://observatory.mozilla.org — expect A or A+.
+  [ ] Run https://pagespeed.web.dev on the homepage and a property page
+      — mobile Performance >= 95, all other categories 100.
+  [ ] Lighthouse run in Chrome DevTools confirms zero accessibility
+      violations.
+  [ ] No console errors on any page in production.
+  [ ] Plausible shows a pageview when you visit.
+  [ ] Open the inquiry form on iOS Safari, Android Chrome, desktop
+      Chrome, Firefox, and Safari. All work.
+  [ ] Test with keyboard only: tab through nav, open modal, submit form.
+  [ ] Test with VoiceOver or NVDA on the property detail page.
+
+
+STEP 13 — DECOMMISSION THE OLD WORDPRESS SITE
+---------------------------------------------
+
+Wait at least 30 days after cutover so Google has time to re-index and
+honour the 301s. Then:
+
+1. Export everything from the WordPress install: posts, media, settings.
+   Keep the export file in cold storage in case you need anything later.
+2. Cancel any WordPress-specific subscriptions (premium theme licence,
+   Slider Revolution licence, backup plugin, security plugin).
+3. Wipe the database and remove the files from the old host.
+4. Cancel the old hosting plan.
+5. In Cloudflare DNS, double-check there are no stale records pointing
+   at the old host.
+
+
+STEP 14 — ROUTINE MAINTENANCE
+-----------------------------
+
+Weekly: glance at the Vercel deployments tab, UptimeRobot status, and
+        Plausible top pages.
+
+Monthly: merge Dependabot/Renovate PRs after CI passes. Re-run a manual
+         Lighthouse audit. Review inquiry form spam rate; tighten
+         Turnstile or rate limits if needed.
+
+Quarterly: rotate RESEND_API_KEY and TURNSTILE_SECRET_KEY. Re-verify
+           DNS records. Confirm the WhatsApp number and contact email
+           are still correct.
+
+Yearly: renew the domain. Review the privacy policy for changes in
+        applicable law.
+
+
+STEP 15 — IF SOMETHING GOES WRONG DURING CUTOVER
+------------------------------------------------
+
+Rollback plan: in Cloudflare DNS, switch the A/CNAME records for the
+apex and www back to the old WordPress host. Propagation through
+Cloudflare's edge is near-instant because Cloudflare owns the resolver
+cache. You are back on WordPress within minutes.
+
+Keep the WordPress install running and untouched for at least 14 days
+after cutover specifically so this rollback remains an option.
+
+
+END OF DEPLOYMENT GUIDE

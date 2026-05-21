@@ -1,0 +1,40 @@
+# Version control
+.git
+.gitignore
+
+# Dev deps and tooling
+node_modules
+.pnpm-store
+
+# Next.js build output (rebuilt in Docker)
+.next
+
+# Raw image assets (not committed; processed outputs in public/ are included)
+assets-in
+
+# Test files
+tests
+playwright-report
+test-results
+coverage
+
+# CI and editor
+.github
+.vscode
+.editorconfig
+
+# Env files — secrets are injected at runtime via Fly.io
+.env
+.env.*
+!.env.example
+
+# Docs
+README.md
+spec
+
+# OS
+.DS_Store
+Thumbs.db
+
+# TypeScript build info
+*.tsbuildinfo

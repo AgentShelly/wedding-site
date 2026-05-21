@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
       "https://www.tranquilovacationrentals.com";
 
     // Create Stripe Checkout Session
-    const session = await stripe.checkout.sessions.create({
+    const session = await stripe().checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
       line_items: [

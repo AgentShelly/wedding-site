@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
 
   let event: Stripe.Event;
   try {
-    event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
+    event = stripe().webhooks.constructEvent(body, signature, webhookSecret);
   } catch (err) {
     console.error("[booking/confirm] webhook signature verification failed:", err);
     return NextResponse.json({ error: "Invalid webhook signature" }, { status: 400 });

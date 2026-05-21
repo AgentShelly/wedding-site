@@ -1,6 +1,10 @@
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+let _resend: Resend | null = null;
+function resend(): Resend {
+  if (!_resend) _resend = new Resend(process.env.RESEND_API_KEY ?? "");
+  return _resend;
+}
 
 const FROM_EMAIL =
   process.env.RESEND_FROM_EMAIL ?? "hello@tranquilovacationrentals.com";
@@ -53,7 +57,7 @@ export async function sendInquiryEmail(params: SendInquiryEmailParams) {
   const phoneLine = phone ? `<p><strong>Phone:</strong> ${phone}</p>` : "";
 
   // Send internal notification
-  await resend.emails.send({
+  await resend().emails.send({
     from: FROM_EMAIL,
     to: REPLY_TO,
     replyTo: email,
@@ -73,7 +77,7 @@ export async function sendInquiryEmail(params: SendInquiryEmailParams) {
   });
 
   // Send confirmation to guest
-  await resend.emails.send({
+  await resend().emails.send({
     from: FROM_EMAIL,
     to: email,
     replyTo: REPLY_TO,
@@ -112,7 +116,7 @@ export async function sendBookingConfirmationEmail(
     params;
 
   // Send to guest
-  await resend.emails.send({
+  await resend().emails.send({
     from: FROM_EMAIL,
     to,
     replyTo: REPLY_TO,
@@ -139,7 +143,7 @@ export async function sendBookingConfirmationEmail(
   });
 
   // Send internal notification
-  await resend.emails.send({
+  await resend().emails.send({
     from: FROM_EMAIL,
     to: REPLY_TO,
     subject: `New booking: ${propertyName} (${checkIn} → ${checkOut})`,

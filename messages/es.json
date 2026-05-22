@@ -1,0 +1,106 @@
+{
+  "nav": {
+    "stays": "Alojamientos",
+    "about": "Nosotros",
+    "blog": "Blog",
+    "contact": "Contacto",
+    "inquire": "Consultar"
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "Playa del Carmen, México",
+      "title": "Tu escape tranquilo te espera",
+      "subtitle": "Villas, lofts y condominios seleccionados en Playa del Carmen. Reserva directamente — sin comisiones ni intermediarios.",
+      "cta_primary": "Ver todos los alojamientos",
+      "cta_secondary": "Hacer una pregunta"
+    },
+    "featured": {
+      "eyebrow": "Alojamientos Destacados",
+      "title": "Nuestras propiedades más queridas",
+      "view_all": "Ver las 19 propiedades"
+    },
+    "areas": {
+      "eyebrow": "Vecindarios",
+      "title": "Encuentra tu área perfecta"
+    },
+    "types": {
+      "eyebrow": "Tipos de Propiedad",
+      "title": "Elige tu estilo"
+    },
+    "why_us": {
+      "eyebrow": "Por Qué Reservar Directo",
+      "title": "La diferencia Tranquilo"
+    },
+    "testimonials": {
+      "eyebrow": "Reseñas de Huéspedes",
+      "title": "Lo que dicen nuestros huéspedes"
+    },
+    "cta": {
+      "title": "¿Listo para encontrar tu escape tranquilo?",
+      "subtitle": "Explora nuestra colección completa de propiedades y reserva directamente sin comisiones.",
+      "cta_primary": "Ver todos los alojamientos",
+      "cta_secondary": "Ponerse en contacto"
+    }
+  },
+  "property": {
+    "book_now": "Reservar Ahora",
+    "inquire": "Enviar consulta",
+    "per_night": "/ noche",
+    "guests": "huéspedes",
+    "bedrooms": "habitaciones",
+    "bathrooms": "baños",
+    "amenities": "Comodidades",
+    "house_rules": "Reglas de la casa",
+    "location": "Ubicación",
+    "also_on": "También disponible en"
+  },
+  "booking": {
+    "check_in": "Entrada",
+    "check_out": "Salida",
+    "guests": "Huéspedes",
+    "nights": "noches",
+    "cleaning_fee": "Tarifa de limpieza",
+    "total": "Total",
+    "preparing": "Preparando el pago...",
+    "not_charged": "No se te cobrará todavía"
+  },
+  "inquiry": {
+    "title": "Enviar una consulta",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "phone": "Teléfono (opcional)",
+    "check_in": "Entrada",
+    "check_out": "Salida",
+    "guests": "Huéspedes",
+    "message": "Mensaje",
+    "send": "Enviar Consulta",
+    "sending": "Enviando...",
+    "success_title": "¡Consulta enviada!",
+    "success_body": "Te responderemos en 24 horas.",
+    "close": "Cerrar"
+  },
+  "filters": {
+    "title": "Filtros",
+    "clear_all": "Borrar todo",
+    "type": "Tipo de Propiedad",
+    "area": "Vecindario",
+    "bedrooms": "Habitaciones",
+    "guests": "Huéspedes",
+    "price": "Precio por noche",
+    "amenities": "Comodidades",
+    "min": "Mín",
+    "max": "Máx"
+  },
+  "footer": {
+    "tagline": "Alojamientos vacacionales seleccionados en Playa del Carmen, México. Reserva directamente — sin comisiones ni intermediarios.",
+    "stays": "Alojamientos",
+    "info": "Información",
+    "copyright": "Tranquilo Vacation Rentals. Todos los derechos reservados."
+  },
+  "errors": {
+    "not_found_title": "Página no encontrada",
+    "not_found_body": "La página que buscas no existe o ha sido movida.",
+    "back_home": "Volver al inicio",
+    "browse_stays": "Ver alojamientos"
+  }
+}

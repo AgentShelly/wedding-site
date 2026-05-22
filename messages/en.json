@@ -1,0 +1,106 @@
+{
+  "nav": {
+    "stays": "Stays",
+    "about": "About",
+    "blog": "Blog",
+    "contact": "Contact",
+    "inquire": "Inquire"
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "Playa del Carmen, Mexico",
+      "title": "Your tranquil escape awaits",
+      "subtitle": "Hand-picked villas, lofts, and condos in Playa del Carmen. Book direct — no fees, no middlemen.",
+      "cta_primary": "Browse all stays",
+      "cta_secondary": "Ask a question"
+    },
+    "featured": {
+      "eyebrow": "Featured Stays",
+      "title": "Our most loved properties",
+      "view_all": "View all 19 properties"
+    },
+    "areas": {
+      "eyebrow": "Neighbourhoods",
+      "title": "Find your perfect area"
+    },
+    "types": {
+      "eyebrow": "Property Types",
+      "title": "Choose your style"
+    },
+    "why_us": {
+      "eyebrow": "Why Book Direct",
+      "title": "The Tranquilo difference"
+    },
+    "testimonials": {
+      "eyebrow": "Guest Reviews",
+      "title": "What our guests say"
+    },
+    "cta": {
+      "title": "Ready to find your tranquil escape?",
+      "subtitle": "Browse our full collection of hand-picked properties and book directly with no fees.",
+      "cta_primary": "Browse all stays",
+      "cta_secondary": "Get in touch"
+    }
+  },
+  "property": {
+    "book_now": "Book Now",
+    "inquire": "Send an inquiry",
+    "per_night": "/ night",
+    "guests": "guests",
+    "bedrooms": "bedrooms",
+    "bathrooms": "bathrooms",
+    "amenities": "Amenities",
+    "house_rules": "House rules",
+    "location": "Location",
+    "also_on": "Also available on"
+  },
+  "booking": {
+    "check_in": "Check-in",
+    "check_out": "Check-out",
+    "guests": "Guests",
+    "nights": "nights",
+    "cleaning_fee": "Cleaning fee",
+    "total": "Total",
+    "preparing": "Preparing checkout...",
+    "not_charged": "You won't be charged yet"
+  },
+  "inquiry": {
+    "title": "Send an Inquiry",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone (optional)",
+    "check_in": "Check-in",
+    "check_out": "Check-out",
+    "guests": "Guests",
+    "message": "Message",
+    "send": "Send Inquiry",
+    "sending": "Sending...",
+    "success_title": "Inquiry sent!",
+    "success_body": "We'll get back to you within 24 hours.",
+    "close": "Close"
+  },
+  "filters": {
+    "title": "Filters",
+    "clear_all": "Clear all",
+    "type": "Property Type",
+    "area": "Neighbourhood",
+    "bedrooms": "Bedrooms",
+    "guests": "Guests",
+    "price": "Price per night",
+    "amenities": "Amenities",
+    "min": "Min",
+    "max": "Max"
+  },
+  "footer": {
+    "tagline": "Hand-picked vacation rentals in Playa del Carmen, Mexico. Book direct — no fees, no middlemen.",
+    "stays": "Stays",
+    "info": "Information",
+    "copyright": "Tranquilo Vacation Rentals. All rights reserved."
+  },
+  "errors": {
+    "not_found_title": "Page not found",
+    "not_found_body": "The page you're looking for doesn't exist or has been moved.",
+    "back_home": "Back to Home",
+    "browse_stays": "Browse Stays"
+  }
+}

@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+
+# AI crawlers — welcome to our properties data
+User-agent: GPTBot
+Allow: /api/properties
+Allow: /llms.txt
+Allow: /stays
+
+User-agent: ClaudeBot
+Allow: /api/properties
+Allow: /llms.txt
+Allow: /stays
+
+User-agent: PerplexityBot
+Allow: /api/properties
+Allow: /llms.txt
+Allow: /stays
+
+# Block admin and private paths (none currently, but future-proofing)
+Disallow: /api/booking/confirm
+
+Sitemap: https://www.tranquilovacationrentals.com/sitemap.xml

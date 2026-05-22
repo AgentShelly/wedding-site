@@ -1,0 +1,136 @@
+@import "tailwindcss";
+
+/* ============================================================
+   Cenote Luxe — CSS Custom Properties
+   ============================================================ */
+:root {
+  --color-limestone-50: #F7F5EF;
+  --color-limestone-100: #EDE9DF;
+  --color-limestone-200: #DDD7C8;
+  --color-limestone-900: #2A2620;
+
+  --color-emerald-50: #EAF2EE;
+  --color-emerald-500: #1B5E4B;
+  --color-emerald-700: #124035;
+
+  --color-gold-400: #D4A84B;
+  --color-gold-500: #C9953A;
+  --color-gold-600: #A87A2D;
+
+  --color-ink-900: #1C1A16;
+  --color-ink-600: #5A5248;
+  --color-ink-300: #B0A89C;
+
+  --color-line: #E2DDD2;
+
+  /* Semantic aliases */
+  --color-bg: var(--color-limestone-50);
+  --color-text: var(--color-ink-900);
+  --color-primary: var(--color-emerald-500);
+  --color-accent: var(--color-gold-500);
+}
+
+/* ============================================================
+   @theme directive — Tailwind v4 CSS variable bridge
+   ============================================================ */
+@theme {
+  --color-limestone-50: #F7F5EF;
+  --color-limestone-100: #EDE9DF;
+  --color-limestone-200: #DDD7C8;
+  --color-limestone-900: #2A2620;
+
+  --color-emerald-50: #EAF2EE;
+  --color-emerald-500: #1B5E4B;
+  --color-emerald-700: #124035;
+
+  --color-gold-400: #D4A84B;
+  --color-gold-500: #C9953A;
+  --color-gold-600: #A87A2D;
+
+  --color-ink-900: #1C1A16;
+  --color-ink-600: #5A5248;
+  --color-ink-300: #B0A89C;
+
+  --color-line: #E2DDD2;
+
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+}
+
+/* ============================================================
+   Base Styles
+   ============================================================ */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  background-color: var(--color-limestone-50);
+  color: var(--color-ink-900);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Skip Link */
+.skip-link {
+  position: absolute;
+  top: -9999px;
+  left: 0;
+  z-index: 9999;
+  padding: 0.75rem 1.5rem;
+  background: var(--color-emerald-500);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 0 0 0.5rem 0;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Focus rings */
+:focus-visible {
+  outline: 2px solid var(--color-emerald-500);
+  outline-offset: 2px;
+}
+
+/* Typography */
+h1,
+h2 {
+  font-family: var(--font-fraunces), Georgia, serif;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-limestone-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-ink-300);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-ink-600);
+}

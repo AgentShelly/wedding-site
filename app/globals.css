@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+@source "../app/**/*.{ts,tsx,mdx}";
+@source "../components/**/*.{ts,tsx}";
+@source "../content/**/*.{ts,tsx,mdx}";
+@source "../lib/**/*.{ts,tsx}";
+
 /* ============================================================
    Cenote Luxe — CSS Custom Properties
    ============================================================ */

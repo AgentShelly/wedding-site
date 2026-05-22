@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { getFeaturedProperties } from "@/content/properties/index";
+import { getFeaturedProperties, getPropertyCountByArea, COLLECTIONS } from "@/content/properties/index";
 import PropertyCard from "@/components/PropertyCard";
 import TestimonialCarousel from "@/components/TestimonialCarousel";
 import InquiryModal from "@/components/InquiryModal";
@@ -22,24 +22,26 @@ export const metadata: Metadata = {
   },
 };
 
-const areas = [
+// Areas are defined from COLLECTIONS so the neighbourhood names and
+// descriptions stay in sync with the property data file.
+const AREA_CARDS = [
   {
-    name: "Zazil-Ha",
-    slug: "zazil-ha",
-    description: "Beachside tranquility steps from Mamitas Beach",
-    count: 6,
+    collection: COLLECTIONS.UVADEMAR,
+    label: "Uva De Mar",
+    neighbourhood: "Centro",
+    description: "Stylish lofts in the heart of Playa — walk to La Quinta Avenida and the beach",
   },
   {
-    name: "Centro",
-    slug: "centro",
-    description: "Heart of Playa, walkable to La Quinta Avenida",
-    count: 9,
+    collection: COLLECTIONS.MAYALUN,
+    label: "Mayalun",
+    neighbourhood: "Zazil-Ha",
+    description: "Beachside retreats steps from Mamitas Beach Club and the Caribbean Sea",
   },
   {
-    name: "Colosio",
-    slug: "colosio",
-    description: "Residential calm with lush gardens",
-    count: 4,
+    collection: COLLECTIONS.CASITAS,
+    label: "Casitas",
+    neighbourhood: "Colosio",
+    description: "Tropical casitas in a lush residential neighbourhood — peaceful and private",
   },
 ];
 
@@ -84,6 +86,7 @@ const whyUs = [
 
 export default async function HomePage() {
   const featuredProperties = await getFeaturedProperties();
+  const countByArea = getPropertyCountByArea();
   const orgSchema = buildOrganizationSchema();
   const lodgingSchema = buildLodgingBusinessSchema();
 
@@ -206,32 +209,40 @@ export default async function HomePage() {
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {areas.map((area) => (
-              <Link
-                key={area.slug}
-                href={`/areas/${area.slug}`}
-                className="group relative rounded-2xl overflow-hidden bg-emerald-700 aspect-[4/3] hover:shadow-xl transition-shadow focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
-              >
-                <Image
-                  src="/img/placeholder.jpg"
-                  alt={area.name}
-                  fill
-                  className="object-cover opacity-50 group-hover:opacity-40 transition-opacity"
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                />
-                <div className="absolute inset-0 flex flex-col justify-end p-6">
-                  <h3 className="font-display text-2xl text-white font-semibold mb-1">
-                    {area.name}
-                  </h3>
-                  <p className="text-limestone-100 text-sm mb-2">
-                    {area.description}
-                  </p>
-                  <p className="text-gold-400 text-sm font-semibold">
-                    {area.count} properties
-                  </p>
-                </div>
-              </Link>
-            ))}
+            {AREA_CARDS.map((area) => {
+              const count = countByArea[area.collection.slug] ?? 0;
+              return (
+                <Link
+                  key={area.collection.slug}
+                  href={`/areas/${area.collection.slug}`}
+                  className="group relative rounded-2xl overflow-hidden bg-emerald-700 aspect-[4/3] hover:shadow-xl transition-shadow focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
+                >
+                  <Image
+                    src="/img/placeholder.jpg"
+                    alt={`${area.label} — ${area.neighbourhood}`}
+                    fill
+                    className="object-cover opacity-50 group-hover:opacity-40 transition-opacity"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
+                  <div className="absolute inset-0 flex flex-col justify-end p-6">
+                    <p className="text-gold-400 text-xs font-semibold uppercase tracking-widest mb-1">
+                      {area.neighbourhood}
+                    </p>
+                    <h3 className="font-display text-2xl text-white font-semibold mb-1">
+                      {area.label}
+                    </h3>
+                    <p className="text-limestone-100 text-sm mb-2">
+                      {area.description}
+                    </p>
+                    {count > 0 && (
+                      <p className="text-gold-400 text-sm font-semibold">
+                        {count} {count === 1 ? "property" : "properties"}
+                      </p>
+                    )}
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>

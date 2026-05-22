@@ -6,25 +6,28 @@ import Breadcrumb from "@/components/Breadcrumb";
 
 const AREA_INFO: Record<
   string,
-  { name: string; description: string; longDescription: string }
+  { name: string; collection: string; description: string; longDescription: string }
 > = {
   "zazil-ha": {
     name: "Zazil-Ha",
-    description: "Beachside tranquility steps from Mamitas Beach",
+    collection: "Mayalun",
+    description: "Beachside retreats steps from Mamitas Beach Club",
     longDescription:
-      "Zazil-Ha is Playa del Carmen's premier beachside neighbourhood. Wake up to the sound of waves, stroll to Mamitas Beach Club, and enjoy sunsets from your terrace. This upscale area blends Caribbean charm with modern comfort.",
+      "Mayalun in Zazil-Ha sits in Playa del Carmen's most sought-after beachside neighbourhood. Wake up to the sound of the Caribbean, stroll to Mamitas Beach Club in minutes, and watch the sun set over the sea from your terrace. This is the closest you can get to the water while still being steps from the restaurants and nightlife of La Quinta Avenida.",
   },
   centro: {
     name: "Centro",
-    description: "Heart of Playa, walkable to La Quinta Avenida",
+    collection: "Uva De Mar",
+    description: "Stylish lofts a short walk from La Quinta Avenida",
     longDescription:
-      "Centro puts you at the heart of everything Playa del Carmen has to offer. Walk to the iconic La Quinta Avenida for restaurants, boutiques, and nightlife. Everything is within reach in this vibrant neighbourhood.",
+      "Uva De Mar in Centro puts you at the beating heart of Playa del Carmen. The iconic La Quinta Avenida — lined with restaurants, boutiques, street art, and open-air bars — is right on your doorstep. The beach is a 5-minute walk. These lofts are ideal for travellers who want to be in the middle of everything, with a stylish home base to return to.",
   },
   colosio: {
     name: "Colosio",
-    description: "Residential calm with lush gardens",
+    collection: "Casitas",
+    description: "Tropical casitas in a lush, peaceful neighbourhood",
     longDescription:
-      "Colosio is a peaceful residential neighbourhood perfect for families and those seeking a quieter stay. Lush tropical gardens, friendly neighbours, and easy access to local markets make this area a hidden gem.",
+      "The Casitas in Colosio offer a different side of Playa del Carmen — one of leafy streets, neighbours chatting over garden walls, and a pace of life that's genuinely relaxing. Colosio is a residential neighbourhood beloved by locals, with excellent local restaurants, markets, and parks. The beach and La Quinta are a short ride away, but you may find you don't want to leave.",
   },
 };
 
@@ -70,8 +73,11 @@ export default async function AreaPage({ params }: AreaPageProps) {
       <div className="bg-limestone-100 border-b border-line py-8 px-4">
         <div className="max-w-7xl mx-auto">
           <Breadcrumb items={breadcrumbs} />
-          <h1 className="font-display text-4xl text-ink-900 font-semibold mt-4">
-            {info.name} Vacation Rentals
+          <p className="text-emerald-500 font-semibold text-sm uppercase tracking-widest mt-4 mb-1">
+            {info.name}
+          </p>
+          <h1 className="font-display text-4xl text-ink-900 font-semibold">
+            {info.collection}
           </h1>
           <p className="text-ink-600 mt-2 max-w-2xl">{info.longDescription}</p>
         </div>

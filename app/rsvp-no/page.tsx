@@ -9,7 +9,9 @@ export default function RSVPNoPage() {
     <main className="min-h-screen bg-ivory peranakan-grid flex items-center justify-center px-6 py-16">
       <div className="max-w-xl w-full text-center">
         <div className="bg-white border border-gold/40 rounded-sm overflow-hidden shadow-md">
-          <img src="/wedding-thankyou.jpg" alt="Alice and Rudolph" className="w-full" />
+          <div className="p-6 pb-0">
+            <img src="/wedding-thankyou.jpg" alt="Alice and Rudolph" className="w-full rounded-sm" />
+          </div>
           <div className="p-10">
             <div className="flex items-center justify-center gap-4 mb-6">
               <div className="h-px w-10 bg-gold/50" />

@@ -32,14 +32,7 @@ export function VenueSection() {
             <div className="space-y-4 font-body text-sm text-ivory/80">
               <div>
                 <p className="font-semibold text-ivory text-sm uppercase tracking-wider">Dress Code</p>
-                <p className="mt-1">Formal / Black Tie Preferred</p>
-              </div>
-              <div>
-                <p className="font-semibold text-ivory text-sm uppercase tracking-wider">Colour Guide</p>
-                <p className="mt-1">
-                  Jewel tones — teal, jade, coral, or gold — would delight us.
-                  We kindly ask that you avoid white, ivory, and cream.
-                </p>
+                <p className="mt-1">Smart Casual</p>
               </div>
             </div>
           </Card>

@@ -59,15 +59,6 @@ function GuestBlock({
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Field label="First Name" value={guest.firstName} onChange={(v) => onChange("firstName", v)} required />
         <Field label="Last Name" value={guest.lastName} onChange={(v) => onChange("lastName", v)} required />
-        <Field label="Email" type="email" value={guest.email} onChange={(v) => onChange("email", v)} required />
-        <Field
-          label="Phone"
-          type="tel"
-          value={guest.phone}
-          onChange={(v) => onChange("phone", v)}
-          placeholder="+65 9123 4567"
-          required
-        />
       </div>
     </div>
   );

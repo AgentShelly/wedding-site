@@ -81,7 +81,7 @@ export function RSVPNoForm() {
         {/* Reason */}
         <div className="flex flex-col gap-2">
           <label className="font-body text-xs font-semibold uppercase tracking-wider text-teal-dark">
-            I cannot be at your celebration because: <span className="text-coral">*</span>
+            I cannot be at your celebration because: <span className="text-muted text-xs">(optional)</span>
           </label>
           <div className="space-y-2">
             {REASONS.map((r) => (

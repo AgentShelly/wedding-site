@@ -42,9 +42,9 @@ export function TimelineSection() {
         </div>
 
         {/* Timeline */}
-        <div className="relative pl-8 sm:pl-0">
+        <div className="relative pl-16 sm:pl-0">
           {/* Vertical line */}
-          <div className="absolute left-3 sm:left-1/2 sm:-translate-x-px top-0 bottom-0 w-px bg-gold/35" />
+          <div className="absolute left-6 sm:left-1/2 sm:-translate-x-px top-0 bottom-0 w-px bg-gold/35" />
 
           <div className="space-y-10">
             {events.map((ev, i) => (

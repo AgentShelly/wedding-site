@@ -41,7 +41,7 @@ export function HeroSection() {
           <h1 className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-[96px] text-ivory font-light tracking-widest leading-tight">
             Alice
           </h1>
-          <p className="font-display text-3xl md:text-4xl text-gold italic tracking-wider my-1">
+          <p className="font-display text-3xl md:text-4xl text-white italic tracking-wider my-1">
             &amp;
           </p>
           <h1 className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-[96px] text-ivory font-light tracking-widest leading-tight">

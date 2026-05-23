@@ -1,14 +1,14 @@
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[110vh] flex flex-col items-center justify-center overflow-hidden">
+    <section className="relative min-h-[130vh] flex flex-col items-center justify-center overflow-hidden">
       {/* ── Background: swap /hero-photo.jpg with your own photo ── */}
       <div
         className="absolute inset-0"
         style={{
           backgroundImage: "url('/hero-photo.jpg')",
           backgroundSize: "cover",
-          backgroundPosition: "center 60%",
+          backgroundPosition: "center 75%",
           backgroundRepeat: "no-repeat",
         }}
       />
@@ -16,8 +16,6 @@ export function HeroSection() {
       {/* Fallback gradient shown when no photo present */}
 
 
-      {/* Dark overlay for readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-teal-dark/55 via-teal/35 to-teal-dark/65" />
 
       {/* Peranakan double-frame border */}
       <div className="absolute inset-4 md:inset-8 border border-gold/35 pointer-events-none" />
@@ -50,11 +48,11 @@ export function HeroSection() {
 
         {/* Date line */}
         <div className="flex items-center justify-center gap-4 mb-10">
-          <div className="h-px flex-1 max-w-[80px] bg-gold/50" />
+          <div className="h-px flex-1 max-w-[80px] bg-teal" />
           <p className="font-body text-sm sm:text-base text-gold tracking-[0.3em] uppercase">
             12 · September · 2026
           </p>
-          <div className="h-px flex-1 max-w-[80px] bg-gold/50" />
+          <div className="h-px flex-1 max-w-[80px] bg-teal" />
         </div>
 
       </div>
@@ -78,16 +76,16 @@ export function HeroSection() {
 function Divider() {
   return (
     <div className="flex items-center justify-center gap-4">
-      <div className="h-px w-12 sm:w-20 bg-gold/50" />
+      <div className="h-px w-12 sm:w-20 bg-teal" />
       <FlowerSvg />
-      <div className="h-px w-12 sm:w-20 bg-gold/50" />
+      <div className="h-px w-12 sm:w-20 bg-teal" />
     </div>
   );
 }
 
 function FlowerSvg() {
   return (
-    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" className="text-gold shrink-0">
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" className="text-teal shrink-0">
       <circle cx="14" cy="14" r="3.5" fill="currentColor" />
       <ellipse cx="14" cy="5" rx="3" ry="5.5" fill="currentColor" opacity="0.65" />
       <ellipse cx="14" cy="23" rx="3" ry="5.5" fill="currentColor" opacity="0.65" />
@@ -104,7 +102,7 @@ function FlowerSvg() {
 function CornerOrnament({ pos }: { pos: string }) {
   return (
     <div className={`absolute ${pos} w-8 h-8 pointer-events-none`}>
-      <svg viewBox="0 0 32 32" fill="none" className="w-full h-full text-gold opacity-50">
+      <svg viewBox="0 0 32 32" fill="none" className="w-full h-full text-teal opacity-80">
         <path d="M2 2 L14 2 L2 14 Z" fill="currentColor" opacity="0.5" />
         <circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" strokeWidth="0.8" />
       </svg>

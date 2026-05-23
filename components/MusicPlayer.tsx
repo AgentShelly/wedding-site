@@ -12,6 +12,7 @@ export function MusicPlayer() {
     if (!audio) return;
     audio.volume = 0.35;
     audio.loop = true;
+    audio.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
   }, []);
 
   const toggle = async () => {

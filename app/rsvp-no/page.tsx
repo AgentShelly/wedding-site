@@ -7,7 +7,16 @@ export const metadata = {
 
 export default function RSVPNoPage() {
   return (
-    <main className="min-h-screen bg-cream flex items-center justify-center px-6 py-16">
+    <main className="min-h-screen bg-cream">
+      <div className="relative w-full h-[40vh] overflow-hidden">
+        <img src="/wedding-thankyou.jpg" alt="Alice and Rudolph" className="w-full h-full object-cover object-center" />
+        <div className="absolute inset-0 bg-black/30" />
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <p className="font-display text-5xl md:text-7xl text-white font-light tracking-widest">Thank You</p>
+          <p className="font-body text-sm text-yellow-200 tracking-[0.3em] uppercase mt-3">Alice &amp; Rudolph</p>
+        </div>
+      </div>
+      <div className="flex items-center justify-center px-6 py-16">
       <div className="max-w-xl w-full text-center">
         <div className="bg-white border border-gold/40 rounded-sm p-10 shadow-md">
           {/* Top ornament */}

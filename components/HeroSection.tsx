@@ -2,14 +2,14 @@ import { CountdownClock } from "./CountdownClock";
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
+    <section className="relative min-h-[110vh] flex flex-col items-center justify-center overflow-hidden">
       {/* ── Background: swap /hero-photo.jpg with your own photo ── */}
       <div
         className="absolute inset-0"
         style={{
           backgroundImage: "url('/hero-photo.jpg')",
           backgroundSize: "cover",
-          backgroundPosition: "center",
+          backgroundPosition: "center 60%",
           backgroundRepeat: "no-repeat",
         }}
       />

@@ -1,14 +1,14 @@
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[130vh] flex flex-col items-center justify-center overflow-hidden">
+    <section className="relative min-h-[150vh] flex flex-col items-center justify-center overflow-hidden">
       {/* ── Background: swap /hero-photo.jpg with your own photo ── */}
       <div
         className="absolute inset-0"
         style={{
           backgroundImage: "url('/hero-photo.jpg')",
           backgroundSize: "cover",
-          backgroundPosition: "center 75%",
+          backgroundPosition: "center 85%",
           backgroundRepeat: "no-repeat",
         }}
       />
@@ -16,6 +16,9 @@ export function HeroSection() {
       {/* Fallback gradient shown when no photo present */}
 
 
+
+      {/* Subtle edge gradient - only top and bottom, not middle */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/40" />
 
       {/* Peranakan double-frame border */}
       <div className="absolute inset-4 md:inset-8 border border-gold/35 pointer-events-none" />
@@ -35,13 +38,13 @@ export function HeroSection() {
 
         {/* Names */}
         <div className="mt-8 mb-6">
-          <h1 className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-[96px] text-ivory font-light tracking-widest leading-tight">
+          <h1 className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-[96px] text-white font-light tracking-widest leading-tight" style={{textShadow: "2px 2px 12px rgba(0,0,0,0.8)"}}>
             Alice
           </h1>
-          <p className="font-display text-3xl md:text-4xl text-white italic tracking-wider my-1">
+          <p className="font-display text-3xl md:text-4xl text-white italic tracking-wider my-1" style={{textShadow: "2px 2px 8px rgba(0,0,0,0.8)"}}>
             &amp;
           </p>
-          <h1 className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-[96px] text-ivory font-light tracking-widest leading-tight">
+          <h1 className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-[96px] text-white font-light tracking-widest leading-tight" style={{textShadow: "2px 2px 12px rgba(0,0,0,0.8)"}}>
             Rudolph
           </h1>
         </div>
@@ -49,7 +52,7 @@ export function HeroSection() {
         {/* Date line */}
         <div className="flex items-center justify-center gap-4 mb-10">
           <div className="h-px flex-1 max-w-[80px] bg-teal" />
-          <p className="font-body text-sm sm:text-base text-gold tracking-[0.3em] uppercase">
+          <p className="font-body text-sm sm:text-base text-white tracking-[0.3em] uppercase" style={{textShadow: "1px 1px 6px rgba(0,0,0,0.9)"}}>
             12 · September · 2026
           </p>
           <div className="h-px flex-1 max-w-[80px] bg-teal" />

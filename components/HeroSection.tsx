@@ -1,4 +1,3 @@
-import { CountdownClock } from "./CountdownClock";
 
 export function HeroSection() {
   return (
@@ -58,13 +57,6 @@ export function HeroSection() {
           <div className="h-px flex-1 max-w-[80px] bg-gold/50" />
         </div>
 
-        {/* Countdown */}
-        <div className="bg-teal-dark/40 backdrop-blur-sm border border-gold/20 rounded-sm px-6 py-8 inline-block w-full max-w-lg">
-          <p className="font-body text-[11px] uppercase tracking-[0.25em] text-ivory/55 mb-5">
-            Counting down to the celebration
-          </p>
-          <CountdownClock />
-        </div>
       </div>
 
       {/* Scroll cue */}

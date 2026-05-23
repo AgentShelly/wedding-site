@@ -7,10 +7,10 @@ export const metadata = {
 export default function RSVPYesPage() {
   return (
     <main className="min-h-screen bg-ivory peranakan-grid flex items-center justify-center px-6 py-16">
-        <div className="max-w-xl w-full text-center">
-          <div className="bg-white border-2 border-gold/50 rounded-sm overflow-hidden shadow-lg">
-            <img src="/wedding-thankyou.jpg" alt="Alice and Rudolph" className="w-full" />
-            <div className="p-10">
+      <div className="max-w-xl w-full text-center">
+        <div className="bg-white border-2 border-gold/50 rounded-sm overflow-hidden shadow-lg">
+          <img src="/wedding-thankyou.jpg" alt="Alice and Rudolph" className="w-full" />
+          <div className="p-10">
             <div className="flex items-center justify-center gap-4 mb-6">
               <div className="h-px w-10 bg-gold/60" />
               <span className="text-gold text-lg">✦</span>
@@ -39,6 +39,7 @@ export default function RSVPYesPage() {
             </Link>
           </div>
         </div>
+      </div>
     </main>
   );
 }

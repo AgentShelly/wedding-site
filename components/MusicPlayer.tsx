@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 
 // Royalty-free bossa nova — Bensound "Bossa" (free with attribution)
 // Replace with your own track if preferred: place file at /public/music/bossa-nova.mp3
-const AUDIO_SRC = "https://cdn.pixabay.com/audio/2022/08/04/audio_2dde668d05.mp3";
+const AUDIO_SRC = "https://res.cloudinary.com/ddu33nzrb/video/upload/v1779529024/bossa-nova_tyqjpp.mp3";
 
 export function MusicPlayer() {
   const ref = useRef<HTMLAudioElement>(null);

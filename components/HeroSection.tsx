@@ -52,7 +52,7 @@ export function HeroSection() {
         {/* Date line */}
         <div className="flex items-center justify-center gap-4 mb-10">
           <div className="h-px flex-1 max-w-[80px] bg-[#D67B01]" />
-          <p className="font-body text-sm sm:text-base text-white tracking-[0.3em] uppercase" style={{textShadow: "0 0 15px rgba(0,0,0,1), 2px 2px 4px rgba(0,0,0,1)"}}>
+          <p className="font-body text-sm sm:text-base text-white tracking-[0.3em] uppercase" style={{textShadow: "0 0 30px rgba(0,0,0,1), 3px 3px 6px rgba(0,0,0,1), -1px -1px 6px rgba(0,0,0,1)"}}>
             12 · September · 2026
           </p>
           <div className="h-px flex-1 max-w-[80px] bg-[#D67B01]" />

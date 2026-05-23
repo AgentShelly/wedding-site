@@ -38,13 +38,13 @@ export function HeroSection() {
 
         {/* Names */}
         <div className="mt-8 mb-6">
-          <h1 className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-[96px] text-white font-light tracking-widest leading-tight" style={{textShadow: "2px 2px 12px rgba(0,0,0,0.8)"}}>
+          <h1 className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-[96px] text-white font-light tracking-widest leading-tight" style={{textShadow: "0 0 30px rgba(0,0,0,1), 3px 3px 6px rgba(0,0,0,1), -1px -1px 6px rgba(0,0,0,1)"}}>
             Alice
           </h1>
           <p className="font-display text-3xl md:text-4xl text-white italic tracking-wider my-1" style={{textShadow: "2px 2px 8px rgba(0,0,0,0.8)"}}>
             &amp;
           </p>
-          <h1 className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-[96px] text-white font-light tracking-widest leading-tight" style={{textShadow: "2px 2px 12px rgba(0,0,0,0.8)"}}>
+          <h1 className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-[96px] text-white font-light tracking-widest leading-tight" style={{textShadow: "0 0 30px rgba(0,0,0,1), 3px 3px 6px rgba(0,0,0,1), -1px -1px 6px rgba(0,0,0,1)"}}>
             Rudolph
           </h1>
         </div>
@@ -52,7 +52,7 @@ export function HeroSection() {
         {/* Date line */}
         <div className="flex items-center justify-center gap-4 mb-10">
           <div className="h-px flex-1 max-w-[80px] bg-[#D67B01]" />
-          <p className="font-body text-sm sm:text-base text-white tracking-[0.3em] uppercase" style={{textShadow: "1px 1px 6px rgba(0,0,0,0.9)"}}>
+          <p className="font-body text-sm sm:text-base text-white tracking-[0.3em] uppercase" style={{textShadow: "0 0 15px rgba(0,0,0,1), 2px 2px 4px rgba(0,0,0,1)"}}>
             12 · September · 2026
           </p>
           <div className="h-px flex-1 max-w-[80px] bg-[#D67B01]" />

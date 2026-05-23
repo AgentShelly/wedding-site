@@ -91,7 +91,7 @@ export function RSVPYesForm() {
     });
 
   const addGuest = () => {
-    if (extras.length < 4) setExtras((p) => [...p, blank()]);
+    if (extras.length < 5) setExtras((p) => [...p, blank()]);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -131,7 +131,7 @@ export function RSVPYesForm() {
         </div>
         <h3 className="font-display text-3xl text-teal">We&apos;re so glad!</h3>
         <p className="font-body text-muted text-sm mt-1">
-          Please fill in your details below. You may bring up to 4 additional guests.
+          Please fill in your details below. You may RSVP on behalf of your immediate family group.
         </p>
       </div>
 
@@ -149,8 +149,8 @@ export function RSVPYesForm() {
           />
         ))}
 
-        {/* Add guest button — disappears after 4 additions */}
-        {extras.length < 4 && (
+        {/* Add guest button — disappears after 5 additions */}
+        {extras.length < 5 && (
           <button
             type="button"
             onClick={addGuest}

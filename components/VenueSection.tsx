@@ -16,7 +16,7 @@ export function VenueSection() {
         <div className="grid md:grid-cols-2 gap-6">
           {/* Venue card */}
           <Card icon="📍" title="The Venue">
-            <p className="font-body text-ivory/90 text-lg font-semibold">To Be Determined</p>
+            <p className="font-body text-ivory/90 text-lg font-semibold">Singapore</p>
             <p className="font-body text-ivory/70 text-sm mt-1">Venue details coming soon</p>
             
             
@@ -31,8 +31,9 @@ export function VenueSection() {
           <Card icon="👗" title="What to Wear">
             <div className="space-y-4 font-body text-sm text-ivory/80">
               <div>
-                <p className="font-semibold text-ivory text-sm uppercase tracking-wider">Dress Code</p>
-                <p className="mt-1">Smart Casual</p>
+                <p className="font-semibold text-ivory text-sm uppercase tracking-wider">Smart Casual</p>
+                <p className="mt-1 text-ivory/70">Look good, feel good —</p>
+                <p className="mt-1 text-ivory/70">No shorts or flip flops please!</p>
               </div>
             </div>
           </Card>

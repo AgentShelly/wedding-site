@@ -21,8 +21,8 @@ export function HeroSection() {
       <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/40" />
 
       {/* Peranakan double-frame border */}
-      <div className="absolute inset-4 md:inset-8 border border-[#C59A3D]/35 pointer-events-none" />
-      <div className="absolute inset-[22px] md:inset-[42px] border border-[#C59A3D]/15 pointer-events-none" />
+      <div className="absolute inset-4 md:inset-8 border border-[#D67B01]/35 pointer-events-none" />
+      <div className="absolute inset-[22px] md:inset-[42px] border border-[#D67B01]/15 pointer-events-none" />
 
       {/* Corner ornaments */}
       {["top-3 left-3", "top-3 right-3", "bottom-3 left-3", "bottom-3 right-3"].map(
@@ -41,7 +41,7 @@ export function HeroSection() {
           <h1 className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-[96px] text-white font-light tracking-widest leading-tight" style={{textShadow: "2px 2px 12px rgba(0,0,0,0.8)"}}>
             Alice
           </h1>
-          <p className="font-display text-3xl md:text-4xl text-[#C59A3D] italic tracking-wider my-1" style={{textShadow: "2px 2px 8px rgba(0,0,0,0.8)"}}>
+          <p className="font-display text-3xl md:text-4xl text-[#D67B01] italic tracking-wider my-1" style={{textShadow: "2px 2px 8px rgba(0,0,0,0.8)"}}>
             &amp;
           </p>
           <h1 className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-[96px] text-white font-light tracking-widest leading-tight" style={{textShadow: "2px 2px 12px rgba(0,0,0,0.8)"}}>
@@ -65,9 +65,9 @@ export function HeroSection() {
         <svg
           viewBox="0 0 24 24"
           fill="none"
-          stroke="#FFD700"
+          stroke="#D67B01"
           strokeWidth="1.5"
-          className="w-6 h-6 text-[#C59A3D]/60"
+          className="w-6 h-6 text-[#D67B01]/60"
         >
           <path strokeLinecap="round" strokeLinejoin="round" d="m19 9-7 7-7-7" />
         </svg>
@@ -89,15 +89,15 @@ function Divider() {
 function FlowerSvg() {
   return (
     <svg width="28" height="28" viewBox="0 0 28 28" fill="none" className="text-teal shrink-0">
-      <circle cx="14" cy="14" r="3.5" fill="#C59A3D" />
-      <ellipse cx="14" cy="5" rx="3" ry="5.5" fill="#C59A3D" opacity="0.65" />
-      <ellipse cx="14" cy="23" rx="3" ry="5.5" fill="#C59A3D" opacity="0.65" />
-      <ellipse cx="5" cy="14" rx="5.5" ry="3" fill="#C59A3D" opacity="0.65" />
-      <ellipse cx="23" cy="14" rx="5.5" ry="3" fill="#C59A3D" opacity="0.65" />
-      <ellipse cx="8.1" cy="8.1" rx="2.8" ry="5" fill="#C59A3D" opacity="0.45" transform="rotate(45 8.1 8.1)" />
-      <ellipse cx="19.9" cy="8.1" rx="2.8" ry="5" fill="#C59A3D" opacity="0.45" transform="rotate(-45 19.9 8.1)" />
-      <ellipse cx="8.1" cy="19.9" rx="2.8" ry="5" fill="#C59A3D" opacity="0.45" transform="rotate(-45 8.1 19.9)" />
-      <ellipse cx="19.9" cy="19.9" rx="2.8" ry="5" fill="#C59A3D" opacity="0.45" transform="rotate(45 19.9 19.9)" />
+      <circle cx="14" cy="14" r="3.5" fill="#D67B01" />
+      <ellipse cx="14" cy="5" rx="3" ry="5.5" fill="#D67B01" opacity="0.65" />
+      <ellipse cx="14" cy="23" rx="3" ry="5.5" fill="#D67B01" opacity="0.65" />
+      <ellipse cx="5" cy="14" rx="5.5" ry="3" fill="#D67B01" opacity="0.65" />
+      <ellipse cx="23" cy="14" rx="5.5" ry="3" fill="#D67B01" opacity="0.65" />
+      <ellipse cx="8.1" cy="8.1" rx="2.8" ry="5" fill="#D67B01" opacity="0.45" transform="rotate(45 8.1 8.1)" />
+      <ellipse cx="19.9" cy="8.1" rx="2.8" ry="5" fill="#D67B01" opacity="0.45" transform="rotate(-45 19.9 8.1)" />
+      <ellipse cx="8.1" cy="19.9" rx="2.8" ry="5" fill="#D67B01" opacity="0.45" transform="rotate(-45 8.1 19.9)" />
+      <ellipse cx="19.9" cy="19.9" rx="2.8" ry="5" fill="#D67B01" opacity="0.45" transform="rotate(45 19.9 19.9)" />
     </svg>
   );
 }
@@ -106,8 +106,8 @@ function CornerOrnament({ pos }: { pos: string }) {
   return (
     <div className={`absolute ${pos} w-8 h-8 pointer-events-none`}>
       <svg viewBox="0 0 32 32" fill="none" className="w-full h-full text-teal opacity-80">
-        <path d="M2 2 L14 2 L2 14 Z" fill="#C59A3D" opacity="0.5" />
-        <circle cx="8" cy="8" r="3" fill="none" stroke="#FFD700" strokeWidth="0.8" />
+        <path d="M2 2 L14 2 L2 14 Z" fill="#D67B01" opacity="0.5" />
+        <circle cx="8" cy="8" r="3" fill="none" stroke="#D67B01" strokeWidth="0.8" />
       </svg>
     </div>
   );

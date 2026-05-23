@@ -8,8 +8,9 @@ export default function RSVPYesPage() {
   return (
     <main className="min-h-screen bg-ivory peranakan-grid flex items-center justify-center px-6 py-16">
         <div className="max-w-xl w-full text-center">
-          <div className="bg-white border-2 border-gold/50 rounded-sm p-10 shadow-lg">
-            <img src="/wedding-thankyou.jpg" alt="Alice and Rudolph" className="w-full rounded-sm mb-6" />
+          <div className="bg-white border-2 border-gold/50 rounded-sm overflow-hidden shadow-lg">
+            <img src="/wedding-thankyou.jpg" alt="Alice and Rudolph" className="w-full" />
+            <div className="p-10">
             <div className="flex items-center justify-center gap-4 mb-6">
               <div className="h-px w-10 bg-gold/60" />
               <span className="text-gold text-lg">✦</span>
@@ -28,7 +29,6 @@ export default function RSVPYesPage() {
               <p className="font-display text-2xl text-teal">Alice &amp; Rudolph</p>
               <p className="font-body text-gold text-xs tracking-widest mt-1 uppercase">12 · September · 2026</p>
             </div>
-            <img src="/wedding-thankyou.jpg" alt="Alice and Rudolph" className="w-full rounded-sm mb-6" />
             <div className="flex items-center justify-center gap-4 mb-6">
               <div className="h-px w-10 bg-gold/40" />
               <span className="text-gold/60 text-sm">♥</span>

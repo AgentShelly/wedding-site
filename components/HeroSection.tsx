@@ -21,8 +21,8 @@ export function HeroSection() {
       <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/40" />
 
       {/* Peranakan double-frame border */}
-      <div className="absolute inset-4 md:inset-8 border border-gold/35 pointer-events-none" />
-      <div className="absolute inset-[22px] md:inset-[42px] border border-gold/15 pointer-events-none" />
+      <div className="absolute inset-4 md:inset-8 border border-[#FFD700]/35 pointer-events-none" />
+      <div className="absolute inset-[22px] md:inset-[42px] border border-[#FFD700]/15 pointer-events-none" />
 
       {/* Corner ornaments */}
       {["top-3 left-3", "top-3 right-3", "bottom-3 left-3", "bottom-3 right-3"].map(
@@ -65,7 +65,7 @@ export function HeroSection() {
         <svg
           viewBox="0 0 24 24"
           fill="none"
-          stroke="currentColor"
+          stroke="#FFD700"
           strokeWidth="1.5"
           className="w-6 h-6 text-[#FFD700]/60"
         >
@@ -89,15 +89,15 @@ function Divider() {
 function FlowerSvg() {
   return (
     <svg width="28" height="28" viewBox="0 0 28 28" fill="none" className="text-teal shrink-0">
-      <circle cx="14" cy="14" r="3.5" fill="currentColor" />
-      <ellipse cx="14" cy="5" rx="3" ry="5.5" fill="currentColor" opacity="0.65" />
-      <ellipse cx="14" cy="23" rx="3" ry="5.5" fill="currentColor" opacity="0.65" />
-      <ellipse cx="5" cy="14" rx="5.5" ry="3" fill="currentColor" opacity="0.65" />
-      <ellipse cx="23" cy="14" rx="5.5" ry="3" fill="currentColor" opacity="0.65" />
-      <ellipse cx="8.1" cy="8.1" rx="2.8" ry="5" fill="currentColor" opacity="0.45" transform="rotate(45 8.1 8.1)" />
-      <ellipse cx="19.9" cy="8.1" rx="2.8" ry="5" fill="currentColor" opacity="0.45" transform="rotate(-45 19.9 8.1)" />
-      <ellipse cx="8.1" cy="19.9" rx="2.8" ry="5" fill="currentColor" opacity="0.45" transform="rotate(-45 8.1 19.9)" />
-      <ellipse cx="19.9" cy="19.9" rx="2.8" ry="5" fill="currentColor" opacity="0.45" transform="rotate(45 19.9 19.9)" />
+      <circle cx="14" cy="14" r="3.5" fill="#FFD700" />
+      <ellipse cx="14" cy="5" rx="3" ry="5.5" fill="#FFD700" opacity="0.65" />
+      <ellipse cx="14" cy="23" rx="3" ry="5.5" fill="#FFD700" opacity="0.65" />
+      <ellipse cx="5" cy="14" rx="5.5" ry="3" fill="#FFD700" opacity="0.65" />
+      <ellipse cx="23" cy="14" rx="5.5" ry="3" fill="#FFD700" opacity="0.65" />
+      <ellipse cx="8.1" cy="8.1" rx="2.8" ry="5" fill="#FFD700" opacity="0.45" transform="rotate(45 8.1 8.1)" />
+      <ellipse cx="19.9" cy="8.1" rx="2.8" ry="5" fill="#FFD700" opacity="0.45" transform="rotate(-45 19.9 8.1)" />
+      <ellipse cx="8.1" cy="19.9" rx="2.8" ry="5" fill="#FFD700" opacity="0.45" transform="rotate(-45 8.1 19.9)" />
+      <ellipse cx="19.9" cy="19.9" rx="2.8" ry="5" fill="#FFD700" opacity="0.45" transform="rotate(45 19.9 19.9)" />
     </svg>
   );
 }
@@ -106,8 +106,8 @@ function CornerOrnament({ pos }: { pos: string }) {
   return (
     <div className={`absolute ${pos} w-8 h-8 pointer-events-none`}>
       <svg viewBox="0 0 32 32" fill="none" className="w-full h-full text-teal opacity-80">
-        <path d="M2 2 L14 2 L2 14 Z" fill="currentColor" opacity="0.5" />
-        <circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" strokeWidth="0.8" />
+        <path d="M2 2 L14 2 L2 14 Z" fill="#FFD700" opacity="0.5" />
+        <circle cx="8" cy="8" r="3" fill="none" stroke="#FFD700" strokeWidth="0.8" />
       </svg>
     </div>
   );

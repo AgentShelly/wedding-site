@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { RSVPYesForm } from "./RSVPYesForm";
 import { RSVPNoForm } from "./RSVPNoForm";
+import { CountdownClock } from "./CountdownClock";
 
 type Choice = "yes" | "no" | null;
 
@@ -10,6 +11,12 @@ export function RSVPSection() {
 
   return (
     <section id="rsvp" className="py-20 px-6 bg-ivory peranakan-grid">
+      {/* Countdown Strip */}
+      <div className="text-center pb-10 mb-10 border-b border-gold/20">
+        <p className="font-body text-[11px] uppercase tracking-[0.25em] text-muted mb-5">Counting down to the celebration</p>
+        <CountdownClock />
+      </div>
+
       <div className="max-w-3xl mx-auto">
         {/* Heading */}
         <div className="text-center mb-12">

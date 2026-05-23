@@ -6,40 +6,7 @@ export const metadata = {
 
 export default function RSVPNoPage() {
   return (
-    <main className="min-h-screen bg-ivory peranakan-grid">
-      {/* Full Hero Photo - v2 */}
-      <div
-        className="relative min-h-[50vh] flex flex-col items-center justify-center overflow-hidden"
-        style={{
-          backgroundImage: "url('/wedding-thankyou.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/50" />
-        <div className="relative z-10 text-center px-6">
-          <div className="flex items-center justify-center gap-4 mb-4">
-            <div className="h-px w-16 bg-[#D67B01]/70" />
-            <svg width="24" height="24" viewBox="0 0 28 28" fill="none" className="shrink-0">
-              <circle cx="14" cy="14" r="3.5" fill="#D67B01" />
-              <ellipse cx="14" cy="5" rx="3" ry="5.5" fill="#D67B01" opacity="0.65" />
-              <ellipse cx="14" cy="23" rx="3" ry="5.5" fill="#D67B01" opacity="0.65" />
-              <ellipse cx="5" cy="14" rx="5.5" ry="3" fill="#D67B01" opacity="0.65" />
-              <ellipse cx="23" cy="14" rx="5.5" ry="3" fill="#D67B01" opacity="0.65" />
-            </svg>
-            <div className="h-px w-16 bg-[#D67B01]/70" />
-          </div>
-          <p className="font-display text-5xl md:text-7xl text-white font-light tracking-widest" style={{textShadow: "2px 2px 12px rgba(0,0,0,0.9)"}}>
-            We&apos;ll Miss You!
-          </p>
-          <p className="font-body text-sm text-[#D67B01] tracking-[0.3em] uppercase mt-4" style={{textShadow: "1px 1px 6px rgba(0,0,0,0.9)"}}>
-            Alice &amp; Rudolph · 12 September 2026
-          </p>
-        </div>
-      </div>
-
-      {/* Content Card */}
-      <div className="flex items-center justify-center px-6 py-16">
+    <main className="min-h-screen bg-ivory peranakan-grid flex items-center justify-center px-6 py-16">
         <div className="max-w-xl w-full text-center">
           <div className="bg-white border border-gold/40 rounded-sm p-10 shadow-md">
             <div className="flex items-center justify-center gap-4 mb-6">
@@ -47,7 +14,9 @@ export default function RSVPNoPage() {
               <span className="text-gold/70 text-lg">✦</span>
               <div className="h-px w-10 bg-gold/50" />
             </div>
-            <div className="text-5xl mb-4">🥹</div>
+            <div className="w-full h-48 mb-6 overflow-hidden rounded-sm">
+              <img src="/wedding-thankyou.jpg" alt="Alice and Rudolph" className="w-full h-full object-cover object-center" />
+            </div>
             <h1 className="font-display text-4xl md:text-5xl text-teal mb-4 italic">
               Oh, we&apos;ll miss you terribly!
             </h1>
@@ -73,7 +42,6 @@ export default function RSVPNoPage() {
             </Link>
           </div>
         </div>
-      </div>
     </main>
   );
 }

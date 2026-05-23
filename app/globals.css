@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+@theme {
+  /* Peranakan palette */
+  --color-ivory: #FDF8F0;
+  --color-cream: #F5EDD8;
+  --color-teal: #0A5F6E;
+  --color-teal-dark: #073F4A;
+  --color-teal-light: #1A7E90;
+  --color-jade: #2D7A5E;
+  --color-jade-light: #3A9470;
+  --color-coral: #D4685A;
+  --color-coral-light: #E07C6E;
+  --color-gold: #C49A3C;
+  --color-gold-light: #D4AE55;
+  --color-dark: #2C1810;
+  --color-muted: #6B5A52;
+}
+
+/* Font utilities wired to Next.js font variables */
+@layer utilities {
+  .font-display {
+    font-family: var(--font-cormorant, "Cormorant Garamond", serif);
+  }
+  .font-body {
+    font-family: var(--font-dmsans, "DM Sans", sans-serif);
+  }
+}
+
+@layer base {
+  body {
+    background-color: #FDF8F0;
+    color: #2C1810;
+    font-family: var(--font-dmsans, "DM Sans", sans-serif);
+    -webkit-font-smoothing: antialiased;
+  }
+  /* Smooth scroll */
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Peranakan diamond grid — subtle repeat for section backgrounds */
+.peranakan-grid {
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 28px,
+      rgba(196, 154, 60, 0.07) 28px,
+      rgba(196, 154, 60, 0.07) 29px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 28px,
+      rgba(196, 154, 60, 0.07) 28px,
+      rgba(196, 154, 60, 0.07) 29px
+    );
+}
+
+/* Peranakan border glow */
+.peranakan-frame {
+  box-shadow:
+    0 0 0 1px rgba(196, 154, 60, 0.4),
+    0 0 0 4px rgba(253, 248, 240, 0.9),
+    0 0 0 5px rgba(196, 154, 60, 0.2);
+}
+
+/* Countdown flip-card feel */
+.countdown-unit {
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+/* Animated underline for section headings */
+.heading-underline::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, #C49A3C, #D4AE55);
+  margin: 12px auto 0;
+  border-radius: 2px;
+}

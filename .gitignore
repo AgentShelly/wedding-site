@@ -1,0 +1,10 @@
+.next/
+node_modules/
+.env.local
+.env.*.local
+out/
+*.log
+.DS_Store
+.vercel
+public/music/*.mp3
+instant-icon-497208-h2-e80600283320.json

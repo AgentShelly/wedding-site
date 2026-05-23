@@ -14,9 +14,6 @@ export default function RSVPNoPage() {
               <span className="text-gold/70 text-lg">✦</span>
               <div className="h-px w-10 bg-gold/50" />
             </div>
-            <div className="w-full mb-6 overflow-hidden rounded-sm">
-              <img src="/wedding-thankyou.jpg" alt="Alice and Rudolph" className="w-full h-auto" style={{transform: "rotate(90deg)", transformOrigin: "center"}} />
-            </div>
             <h1 className="font-display text-4xl md:text-5xl text-teal mb-4 italic">
               Oh, we&apos;ll miss you terribly!
             </h1>

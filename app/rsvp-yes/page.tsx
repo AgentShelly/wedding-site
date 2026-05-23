@@ -14,9 +14,6 @@ export default function RSVPYesPage() {
               <span className="text-gold text-lg">✦</span>
               <div className="h-px w-10 bg-gold/60" />
             </div>
-            <div className="w-full mb-6 overflow-hidden rounded-sm">
-              <img src="/wedding-thankyou.jpg" alt="Alice and Rudolph" className="w-full h-auto" style={{transform: "rotate(90deg)", transformOrigin: "center"}} />
-            </div>
             <h1 className="font-display text-4xl md:text-5xl text-teal mb-4 italic">
               We can&apos;t wait to see you!
             </h1>

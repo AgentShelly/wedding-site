@@ -24,12 +24,12 @@ export function MusicPlayer() {
   const toggle = () => {
     const audio = ref.current;
     if (!audio) return;
-    if (!playing) {
-      audio.play().then(() => { setPlaying(true); setMuted(false); });
-      return;
+    if (playing) {
+      audio.pause();
+      setPlaying(false);
+    } else {
+      audio.play().then(() => setPlaying(true)).catch(() => {});
     }
-    audio.muted = !muted;
-    setMuted(!muted);
   };
 
   return (

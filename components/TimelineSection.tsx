@@ -60,7 +60,7 @@ export function TimelineSection() {
                 </div>
 
                 {/* Dot */}
-                <div className="absolute left-[-5px] sm:left-1/2 sm:-translate-x-1/2 top-1 w-3 h-3 rounded-full bg-gold ring-2 ring-cream shadow-sm" />
+                <div className="absolute left-[-2px] sm:left-1/2 sm:-translate-x-1/2 top-1 w-3 h-3 rounded-full bg-gold ring-2 ring-cream shadow-sm" />
 
                 {/* Content */}
                 <div className="sm:w-[45%] sm:pl-0 pl-12">

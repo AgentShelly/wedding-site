@@ -12,31 +12,34 @@ export function MusicPlayer() {
     if (!audio) return;
     audio.volume = 0.35;
     audio.loop = true;
-    audio.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
+    audio.play().then(() => setPlaying(true)).catch(() => {
+      const tryPlay = () => {
+        audio.play().then(() => {
+          setPlaying(true);
+          document.removeEventListener("click", tryPlay);
+          document.removeEventListener("touchstart", tryPlay);
+        }).catch(() => {});
+      };
+      document.addEventListener("click", tryPlay);
+      document.addEventListener("touchstart", tryPlay);
+    });
   }, []);
 
   const toggle = async () => {
     const audio = ref.current;
     if (!audio) return;
-    try {
-      if (playing) {
-        audio.pause();
-        setPlaying(false);
-      } else {
-        audio.load();
-        await audio.play();
-        setPlaying(true);
-      }
-    } catch (e) {
-      console.error("Audio error:", e);
+    if (playing) {
+      audio.pause();
+      setPlaying(false);
+    } else {
+      await audio.play();
+      setPlaying(true);
     }
   };
 
   return (
     <>
-      <audio ref={ref} preload="none" crossOrigin="anonymous">
-        <source src={AUDIO_SRC} type="audio/mpeg" />
-      </audio>
+      <audio ref={ref} src={AUDIO_SRC} preload="auto" loop />
       <button
         onClick={toggle}
         aria-label={playing ? "Pause music" : "Play music"}

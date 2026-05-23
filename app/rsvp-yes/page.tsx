@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export const metadata = {
@@ -6,7 +7,17 @@ export const metadata = {
 
 export default function RSVPYesPage() {
   return (
-    <main className="min-h-screen bg-ivory peranakan-grid flex items-center justify-center px-6 py-16">
+    <main className="min-h-screen bg-ivory peranakan-grid">
+      {/* Photo Banner */}
+      <div className="relative w-full h-[40vh] overflow-hidden">
+        <Image src="/wedding-thankyou.jpg" alt="Alice and Rudolph" fill className="object-cover object-center" priority />
+        <div className="absolute inset-0 bg-gradient-to-b from-teal-dark/50 via-black/30 to-teal-dark/55" />
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <p className="font-display text-5xl md:text-7xl text-ivory font-light tracking-widest">Thank You</p>
+          <p className="font-body text-sm text-gold tracking-[0.3em] uppercase mt-3">Alice &amp; Rudolph</p>
+        </div>
+      </div>
+      <div className="flex items-center justify-center px-6 py-16">
       <div className="max-w-xl w-full text-center">
         {/* Peranakan-framed card */}
         <div className="bg-white border-2 border-gold/50 rounded-sm p-10 shadow-lg peranakan-frame">
@@ -74,6 +85,7 @@ export default function RSVPYesPage() {
             <div key={c} className={`w-1.5 h-1.5 rounded-full ${c} opacity-40`} />
           ))}
         </div>
+      </div>
       </div>
     </main>
   );

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export const metadata = {
@@ -82,6 +83,7 @@ export default function RSVPNoPage() {
             <div key={c} className={`w-1.5 h-1.5 rounded-full ${c} opacity-30`} />
           ))}
         </div>
+      </div>
       </div>
     </main>
   );

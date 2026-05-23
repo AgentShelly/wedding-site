@@ -34,7 +34,7 @@ export function CountdownClock() {
       {units.map(({ label, value }, i) => (
         <div key={label} className="flex items-end gap-2 sm:gap-4">
           <div className="flex flex-col items-center">
-            <div className="countdown-unit font-display text-4xl sm:text-5xl md:text-6xl font-semibold text-white tabular-nums min-w-[2ch] text-center">
+            <div className="countdown-unit font-display text-4xl sm:text-5xl md:text-6xl font-semibold text-white tabular-nums min-w-[2ch] text-center" style={{textShadow: "0 0 20px rgba(0,0,0,1), 2px 2px 4px rgba(0,0,0,1), -1px -1px 4px rgba(0,0,0,1)"}}>
               {String(value).padStart(2, "0")}
             </div>
             <div className="font-body text-[10px] sm:text-xs uppercase tracking-[0.2em] text-gold-light mt-1.5 opacity-90">

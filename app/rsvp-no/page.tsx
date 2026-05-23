@@ -24,9 +24,9 @@ export default function RSVPNoPage() {
             <div className="space-y-4 font-body text-muted text-sm leading-relaxed mb-8 text-left">
               <p>Your response has been received, and while our hearts are just a little heavy, we completely understand. Life has a funny way of filling calendars at the most inopportune moments.</p>
               <p>Whether it&apos;s a pet grooming appointment, your <em>own</em> grooming appointment, a cell group that simply cannot be missed, or — the absolute classic — <strong>all of the above</strong>&hellip; we salute your commitment to personal hygiene and spiritual growth.</p>
-              <p>We&apos;ll save you a piece of wedding cake. Wrapped. Labelled. Possibly eaten before we remember. But the intention will be there.</p>
+
               <p className="text-teal font-display text-lg italic text-center">&ldquo;True friends celebrate together — even from afar.&rdquo;</p>
-              <p>We hope to catch up with you soon to share the joy. And who knows — there may be a wedding anniversary dinner that finally fits your schedule. 😉</p>
+              <p>We hope to catch up with you soon to share the joy.</p>
             </div>
             <div className="bg-ivory border border-gold/30 rounded-sm px-5 py-4 mb-8">
               <p className="font-body text-muted text-xs mb-1">With love &amp; understanding,</p>

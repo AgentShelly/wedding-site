@@ -67,7 +67,7 @@ export function HeroSection() {
           fill="none"
           stroke="currentColor"
           strokeWidth="1.5"
-          className="w-6 h-6 text-gold/60"
+          className="w-6 h-6 text-[#FFD700]/60"
         >
           <path strokeLinecap="round" strokeLinejoin="round" d="m19 9-7 7-7-7" />
         </svg>

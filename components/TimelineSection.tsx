@@ -63,7 +63,7 @@ export function TimelineSection() {
                 <div className="absolute left-[-5px] sm:left-1/2 sm:-translate-x-1/2 top-1 w-3 h-3 rounded-full bg-gold ring-2 ring-cream shadow-sm" />
 
                 {/* Content */}
-                <div className="sm:w-[45%] sm:pl-0 pl-4">
+                <div className="sm:w-[45%] sm:pl-0 pl-8">
                   <h3 className="font-display text-xl text-teal">{ev.title}</h3>
                   <p className="font-body text-muted text-sm mt-0.5 leading-relaxed">{ev.desc}</p>
                 </div>

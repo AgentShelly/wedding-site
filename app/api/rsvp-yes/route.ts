@@ -23,7 +23,9 @@ const Body = z.object({
 
 export async function POST(req: NextRequest) {
   try {
-    const { primaryGuest, additionalGuests } = Body.parse(await req.json());
+    const raw = await req.json();
+    console.log("RSVP YES RAW BODY:", JSON.stringify(raw));
+    const { primaryGuest, additionalGuests } = Body.parse(raw);
     const normalizedGuests = additionalGuests.map(g => ({
       firstName: g.firstName,
       lastName: g.lastName,
@@ -34,7 +36,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: true });
   } catch (err) {
     if (err instanceof z.ZodError) {
-      return NextResponse.json({ error: err.errors[0].message }, { status: 400 });
+      console.log("ZOD ERRORS:", JSON.stringify(err.errors));
+      return NextResponse.json({ error: err.errors[0].message, details: err.errors }, { status: 400 });
     }
     console.error("rsvp-yes error:", err);
     return NextResponse.json({ error: "Failed to submit RSVP" }, { status: 500 });

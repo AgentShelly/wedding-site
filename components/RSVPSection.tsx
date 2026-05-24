@@ -26,7 +26,7 @@ export function RSVPSection() {
           </h2>
           <p className="font-body text-muted mt-6 max-w-sm mx-auto text-sm leading-relaxed">
             We would be honoured to have you celebrate with us on our special day.
-            Kindly respond by <strong>1 August 2026</strong>.
+            Kindly respond by <strong>30 June 2026</strong>.
           </p>
         </div>
 

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { sendYesRSVP } from "@/lib/resend";
+import { appendYesRow } from "@/lib/sheets";
 
 const PrimaryGuestSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -32,12 +33,25 @@ export async function POST(req: NextRequest) {
       email: g.email ?? "",
       phone: g.phone ?? "",
     }));
-    await sendYesRSVP(primaryGuest, normalizedGuests);
+
+    await Promise.all([
+      sendYesRSVP(primaryGuest, normalizedGuests),
+      appendYesRow({
+        timestamp: new Date().toISOString(),
+        totalGuests: 1 + normalizedGuests.length,
+        primaryFirst: primaryGuest.firstName,
+        primaryLast: primaryGuest.lastName,
+        primaryEmail: primaryGuest.email,
+        primaryPhone: primaryGuest.phone,
+        guests: normalizedGuests,
+      }),
+    ]);
+
     return NextResponse.json({ success: true });
   } catch (err) {
     if (err instanceof z.ZodError) {
       console.log("ZOD ERRORS:", JSON.stringify(err.errors));
-      return NextResponse.json({ error: err.errors[0].message, details: err.errors }, { status: 400 });
+      return NextResponse.json({ error: err.errors[0].message }, { status: 400 });
     }
     console.error("rsvp-yes error:", err);
     return NextResponse.json({ error: "Failed to submit RSVP" }, { status: 500 });

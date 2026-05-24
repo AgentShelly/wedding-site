@@ -133,7 +133,7 @@ export function RSVPYesForm() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Field label="First Name" value={primary.firstName} onChange={(v) => updatePrimary("firstName", v)} required />
             <Field label="Last Name" value={primary.lastName} onChange={(v) => updatePrimary("lastName", v)} required />
-            <Field label="Email" type="email" value={primary.email} onChange={(v) => updatePrimary("email", v)} required />
+            <Field label="Email" type="email" value={primary.email} onChange={(v) => updatePrimary("email", v)} placeholder="e.g. alice@gmail.com" required />
             <Field label="Phone" type="tel" value={primary.phone} onChange={(v) => updatePrimary("phone", v)} placeholder="+65 9123 4567" required />
           </div>
         </div>

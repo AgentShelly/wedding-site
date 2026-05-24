@@ -41,7 +41,7 @@ export function HeroSection() {
           <h1 className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-[96px] text-white font-light tracking-widest leading-tight" style={{textShadow: "0 0 30px rgba(0,0,0,1), 3px 3px 6px rgba(0,0,0,1), -1px -1px 6px rgba(0,0,0,1)"}}>
             Alice
           </h1>
-          <p className="font-display text-3xl md:text-4xl text-white italic tracking-wider my-1" style={{textShadow: "2px 2px 8px rgba(0,0,0,0.8)"}}>
+          <p className="font-display text-3xl md:text-4xl text-white italic tracking-wider my-1" style={{textShadow: "0 0 30px rgba(0,0,0,1), 3px 3px 6px rgba(0,0,0,1), -1px -1px 6px rgba(0,0,0,1)"}}>
             &amp;
           </p>
           <h1 className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-[96px] text-white font-light tracking-widest leading-tight" style={{textShadow: "0 0 30px rgba(0,0,0,1), 3px 3px 6px rgba(0,0,0,1), -1px -1px 6px rgba(0,0,0,1)"}}>

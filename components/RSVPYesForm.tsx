@@ -134,7 +134,7 @@ export function RSVPYesForm() {
             <Field label="First Name" value={primary.firstName} onChange={(v) => updatePrimary("firstName", v)} required />
             <Field label="Last Name" value={primary.lastName} onChange={(v) => updatePrimary("lastName", v)} required />
             <Field label="Email" type="email" value={primary.email} onChange={(v) => updatePrimary("email", v)} placeholder="e.g. alice@gmail.com" required />
-            <Field label="Phone" type="tel" value={primary.phone} onChange={(v) => updatePrimary("phone", v)} placeholder="+65 9123 4567" required />
+            <Field label="Phone" type="tel" value={primary.phone} onChange={(v) => updatePrimary("phone", v)} placeholder="e.g. 91234567 or +65 9123 4567" required />
           </div>
         </div>
 

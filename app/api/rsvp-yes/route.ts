@@ -2,16 +2,23 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { sendYesRSVP } from "@/lib/resend";
 
-const GuestSchema = z.object({
+const PrimaryGuestSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
   email: z.string().email("Valid email required"),
   phone: z.string().min(6, "Phone number is required"),
 });
 
+const AdditionalGuestSchema = z.object({
+  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, "Last name is required"),
+  email: z.string().optional(),
+  phone: z.string().optional(),
+});
+
 const Body = z.object({
-  primaryGuest: GuestSchema,
-  additionalGuests: z.array(GuestSchema).max(4),
+  primaryGuest: PrimaryGuestSchema,
+  additionalGuests: z.array(AdditionalGuestSchema).max(5),
 });
 
 export async function POST(req: NextRequest) {

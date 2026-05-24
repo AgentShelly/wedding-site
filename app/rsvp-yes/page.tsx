@@ -4,6 +4,21 @@ export const metadata = {
   title: "See You There! — Alice & Rudolph",
 };
 
+const icsContent = [
+  "BEGIN:VCALENDAR",
+  "VERSION:2.0",
+  "BEGIN:VEVENT",
+  "DTSTART:20260912T120000",
+  "DTEND:20260912T150000",
+  "SUMMARY:Alice & Rudolph's Wedding Lunch",
+  "LOCATION:Singapore",
+  "DESCRIPTION:We are so glad you can make it!",
+  "END:VEVENT",
+  "END:VCALENDAR",
+].join("\n");
+
+const icsUrl = `data:text/calendar;charset=utf8,${encodeURIComponent(icsContent)}`;
+
 export default function RSVPYesPage() {
   return (
     <main className="min-h-screen bg-ivory peranakan-grid flex items-center justify-center px-6 py-16">
@@ -45,7 +60,7 @@ export default function RSVPYesPage() {
                   📅 Google Calendar
                 </a>
                 
-                  href="data:text/calendar;charset=utf8,BEGIN:VCALENDAR%0AVERSION:2.0%0ABEGIN:VEVENT%0ADTSTART:20260912T120000%0ADTEND:20260912T150000%0ASUMMARY:Alice%20%26%20Rudolph%27s%20Wedding%20Lunch%0ALOCATION:Singapore%0ADESCRIPTION:We%20are%20so%20glad%20you%20can%20make%20it!%0AEND:VEVENT%0AEND:VCALENDAR"
+                  href={icsUrl}
                   download="alice-rudolph-wedding.ics"
                   className="inline-flex items-center justify-center gap-2 px-4 py-2 border border-gold/40 rounded-sm font-body text-xs text-teal hover:bg-gold/10 transition-colors"
                 >

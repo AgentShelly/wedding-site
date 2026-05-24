@@ -4,20 +4,13 @@ export const metadata = {
   title: "See You There! — Alice & Rudolph",
 };
 
-const icsContent = [
-  "BEGIN:VCALENDAR",
-  "VERSION:2.0",
-  "BEGIN:VEVENT",
-  "DTSTART:20260912T120000",
-  "DTEND:20260912T150000",
-  "SUMMARY:Alice & Rudolph's Wedding Lunch",
-  "LOCATION:Singapore",
-  "DESCRIPTION:We are so glad you can make it!",
-  "END:VEVENT",
-  "END:VCALENDAR",
-].join("\n");
+const googleCalUrl = "https://calendar.google.com/calendar/render?action=TEMPLATE&text=Alice+%26+Rudolph%27s+Wedding+Lunch&dates=20260912T120000%2B0800%2F20260912T150000%2B0800&location=Singapore&details=We+are+so+glad+you+can+make+it%21";
 
-const icsUrl = `data:text/calendar;charset=utf8,${encodeURIComponent(icsContent)}`;
+const outlookUrl = "https://outlook.live.com/calendar/0/deeplink/compose?subject=Alice+%26+Rudolph%27s+Wedding+Lunch&startdt=2026-09-12T12%3A00%3A00%2B08%3A00&enddt=2026-09-12T15%3A00%3A00%2B08%3A00&location=Singapore&body=We+are+so+glad+you+can+make+it%21";
+
+const icsContent = "BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nDTSTART:20260912T120000\nDTEND:20260912T150000\nSUMMARY:Alice and Rudolph Wedding Lunch\nLOCATION:Singapore\nDESCRIPTION:We are so glad you can make it!\nEND:VEVENT\nEND:VCALENDAR";
+
+const icsUrl = "data:text/calendar;charset=utf8," + encodeURIComponent(icsContent);
 
 export default function RSVPYesPage() {
   return (
@@ -46,37 +39,20 @@ export default function RSVPYesPage() {
               <p className="font-display text-2xl text-teal">Alice &amp; Rudolph</p>
               <p className="font-body text-gold text-xs tracking-widest mt-1 uppercase">12 · September · 2026</p>
             </div>
-
-            {/* Add to Calendar */}
             <div className="mb-8">
               <p className="font-body text-muted text-xs uppercase tracking-wider mb-3">Add to your calendar</p>
               <div className="flex flex-col sm:flex-row gap-2 justify-center">
-                
-                  href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Alice+%26+Rudolph%27s+Wedding+Lunch&dates=20260912T120000%2B0800%2F20260912T150000%2B0800&location=Singapore&details=We+are+so+glad+you+can+make+it!"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 px-4 py-2 border border-gold/40 rounded-sm font-body text-xs text-teal hover:bg-gold/10 transition-colors"
-                >
+                <a href={googleCalUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-4 py-2 border border-gold/40 rounded-sm font-body text-xs text-teal hover:bg-gold/10 transition-colors">
                   📅 Google Calendar
                 </a>
-                
-                  href={icsUrl}
-                  download="alice-rudolph-wedding.ics"
-                  className="inline-flex items-center justify-center gap-2 px-4 py-2 border border-gold/40 rounded-sm font-body text-xs text-teal hover:bg-gold/10 transition-colors"
-                >
+                <a href={icsUrl} download="alice-rudolph-wedding.ics" className="inline-flex items-center justify-center gap-2 px-4 py-2 border border-gold/40 rounded-sm font-body text-xs text-teal hover:bg-gold/10 transition-colors">
                   🍎 Apple Calendar
                 </a>
-                
-                  href="https://outlook.live.com/calendar/0/deeplink/compose?subject=Alice+%26+Rudolph%27s+Wedding+Lunch&startdt=2026-09-12T12:00:00%2B08:00&enddt=2026-09-12T15:00:00%2B08:00&location=Singapore&body=We+are+so+glad+you+can+make+it!"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 px-4 py-2 border border-gold/40 rounded-sm font-body text-xs text-teal hover:bg-gold/10 transition-colors"
-                >
+                <a href={outlookUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-4 py-2 border border-gold/40 rounded-sm font-body text-xs text-teal hover:bg-gold/10 transition-colors">
                   📆 Outlook
                 </a>
               </div>
             </div>
-
             <div className="flex items-center justify-center gap-4 mb-6">
               <div className="h-px w-10 bg-gold/40" />
               <span className="text-gold/60 text-sm">♥</span>

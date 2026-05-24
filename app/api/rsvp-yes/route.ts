@@ -24,7 +24,12 @@ const Body = z.object({
 export async function POST(req: NextRequest) {
   try {
     const { primaryGuest, additionalGuests } = Body.parse(await req.json());
-    await sendYesRSVP(primaryGuest, additionalGuests);
+    const normalizedGuests = additionalGuests.map(g => ({
+      ...g,
+      email: g.email ?? "",
+      phone: g.phone ?? "",
+    }));
+    await sendYesRSVP(primaryGuest, normalizedGuests);
     return NextResponse.json({ success: true });
   } catch (err) {
     if (err instanceof z.ZodError) {

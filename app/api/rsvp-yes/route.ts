@@ -12,8 +12,8 @@ const PrimaryGuestSchema = z.object({
 const AdditionalGuestSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
-  email: z.string().optional(),
-  phone: z.string().optional(),
+  email: z.string().optional().default(""),
+  phone: z.string().optional().default(""),
 });
 
 const Body = z.object({
@@ -25,7 +25,8 @@ export async function POST(req: NextRequest) {
   try {
     const { primaryGuest, additionalGuests } = Body.parse(await req.json());
     const normalizedGuests = additionalGuests.map(g => ({
-      ...g,
+      firstName: g.firstName,
+      lastName: g.lastName,
       email: g.email ?? "",
       phone: g.phone ?? "",
     }));

@@ -2,6 +2,18 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+function validateField(type: string, value: string): string | null {
+  if (type === "email" && value) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(value)) return "Please enter a valid email e.g. alice@gmail.com";
+  }
+  if (type === "tel" && value) {
+    const digits = value.replace(/[\s+\-()]/g, "");
+    if (digits.length < 4) return "Please enter a valid phone number e.g. 91234567";
+  }
+  return null;
+}
+
 interface GuestInfo {
   firstName: string;
   lastName: string;
@@ -26,6 +38,10 @@ function Field({
   placeholder?: string;
   required?: boolean;
 }) {
+  const [touched, setTouched] = useState(false);
+  const fieldError = touched ? validateField(type, value) : null;
+  const isEmpty = touched && required && !value;
+
   return (
     <div className="flex flex-col gap-1">
       <label className="font-body text-xs font-semibold uppercase tracking-wider text-teal-dark">
@@ -36,10 +52,17 @@ function Field({
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        onBlur={() => setTouched(true)}
         required={required}
         placeholder={placeholder}
-        className="px-4 py-2.5 border border-gold/40 rounded-sm bg-white text-dark font-body text-sm placeholder:text-muted/40 focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal/20 transition-colors"
+        className={`px-4 py-2.5 border rounded-sm bg-white text-dark font-body text-sm placeholder:text-muted/40 focus:outline-none focus:ring-1 transition-colors ${
+          fieldError || isEmpty
+            ? "border-coral focus:border-coral focus:ring-coral/20"
+            : "border-gold/40 focus:border-teal focus:ring-teal/20"
+        }`}
       />
+      {isEmpty && <p className="text-coral text-xs mt-0.5">This field is required</p>}
+      {fieldError && !isEmpty && <p className="text-coral text-xs mt-0.5">{fieldError}</p>}
     </div>
   );
 }

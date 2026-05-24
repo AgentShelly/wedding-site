@@ -13,6 +13,36 @@ export default function RSVPYesPage() {
             <img src="/wedding-thankyou.jpg" alt="Alice and Rudolph" className="w-full rounded-sm" />
           </div>
           <div className="p-10">
+
+            {/* Add to Calendar */}
+            <div className="mb-8">
+              <p className="font-body text-muted text-xs uppercase tracking-wider mb-3">Add to your calendar</p>
+              <div className="flex flex-col sm:flex-row gap-2 justify-center">
+                
+                  href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Alice+%26+Rudolph%27s+Wedding+Lunch&dates=20260912T120000%2B0800%2F20260912T150000%2B0800&location=Singapore&details=We+are+so+glad+you+can+make+it!"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 px-4 py-2 border border-gold/40 rounded-sm font-body text-xs text-teal hover:bg-gold/10 transition-colors"
+                >
+                  📅 Google Calendar
+                </a>
+                
+                  href="data:text/calendar;charset=utf8,BEGIN:VCALENDAR%0AVERSION:2.0%0ABEGIN:VEVENT%0ADTSTART:20260912T120000%0ADTEND:20260912T150000%0ASUMMARY:Alice%20%26%20Rudolph%27s%20Wedding%20Lunch%0ALOCATION:Singapore%0ADESCRIPTION:We%20are%20so%20glad%20you%20can%20make%20it!%0AEND:VEVENT%0AEND:VCALENDAR"
+                  download="alice-rudolph-wedding.ics"
+                  className="inline-flex items-center justify-center gap-2 px-4 py-2 border border-gold/40 rounded-sm font-body text-xs text-teal hover:bg-gold/10 transition-colors"
+                >
+                  🍎 Apple Calendar
+                </a>
+                
+                  href="https://outlook.live.com/calendar/0/deeplink/compose?subject=Alice+%26+Rudolph%27s+Wedding+Lunch&startdt=2026-09-12T12:00:00%2B08:00&enddt=2026-09-12T15:00:00%2B08:00&location=Singapore&body=We+are+so+glad+you+can+make+it!"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 px-4 py-2 border border-gold/40 rounded-sm font-body text-xs text-teal hover:bg-gold/10 transition-colors"
+                >
+                  📆 Outlook
+                </a>
+              </div>
+            </div>
             <div className="flex items-center justify-center gap-4 mb-6">
               <div className="h-px w-10 bg-gold/60" />
               <span className="text-gold text-lg">✦</span>
@@ -30,6 +60,36 @@ export default function RSVPYesPage() {
               <p className="font-body text-muted text-xs mb-1">With so much love,</p>
               <p className="font-display text-2xl text-teal">Alice &amp; Rudolph</p>
               <p className="font-body text-gold text-xs tracking-widest mt-1 uppercase">12 · September · 2026</p>
+            </div>
+
+            {/* Add to Calendar */}
+            <div className="mb-8">
+              <p className="font-body text-muted text-xs uppercase tracking-wider mb-3">Add to your calendar</p>
+              <div className="flex flex-col sm:flex-row gap-2 justify-center">
+                
+                  href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Alice+%26+Rudolph%27s+Wedding+Lunch&dates=20260912T120000%2B0800%2F20260912T150000%2B0800&location=Singapore&details=We+are+so+glad+you+can+make+it!"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 px-4 py-2 border border-gold/40 rounded-sm font-body text-xs text-teal hover:bg-gold/10 transition-colors"
+                >
+                  📅 Google Calendar
+                </a>
+                
+                  href="data:text/calendar;charset=utf8,BEGIN:VCALENDAR%0AVERSION:2.0%0ABEGIN:VEVENT%0ADTSTART:20260912T120000%0ADTEND:20260912T150000%0ASUMMARY:Alice%20%26%20Rudolph%27s%20Wedding%20Lunch%0ALOCATION:Singapore%0ADESCRIPTION:We%20are%20so%20glad%20you%20can%20make%20it!%0AEND:VEVENT%0AEND:VCALENDAR"
+                  download="alice-rudolph-wedding.ics"
+                  className="inline-flex items-center justify-center gap-2 px-4 py-2 border border-gold/40 rounded-sm font-body text-xs text-teal hover:bg-gold/10 transition-colors"
+                >
+                  🍎 Apple Calendar
+                </a>
+                
+                  href="https://outlook.live.com/calendar/0/deeplink/compose?subject=Alice+%26+Rudolph%27s+Wedding+Lunch&startdt=2026-09-12T12:00:00%2B08:00&enddt=2026-09-12T15:00:00%2B08:00&location=Singapore&body=We+are+so+glad+you+can+make+it!"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 px-4 py-2 border border-gold/40 rounded-sm font-body text-xs text-teal hover:bg-gold/10 transition-colors"
+                >
+                  📆 Outlook
+                </a>
+              </div>
             </div>
             <div className="flex items-center justify-center gap-4 mb-6">
               <div className="h-px w-10 bg-gold/40" />

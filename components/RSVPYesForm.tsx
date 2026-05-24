@@ -128,7 +128,15 @@ export function RSVPYesForm() {
 
       <div className="space-y-5">
         {/* Primary guest */}
-        <GuestBlock guest={primary} label="Your Details" onChange={updatePrimary} />
+        <div className="border border-gold/25 rounded-sm p-5 bg-cream/40">
+          <p className="font-display text-teal text-lg mb-4 italic">Your Details</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Field label="First Name" value={primary.firstName} onChange={(v) => updatePrimary("firstName", v)} required />
+            <Field label="Last Name" value={primary.lastName} onChange={(v) => updatePrimary("lastName", v)} required />
+            <Field label="Email" type="email" value={primary.email} onChange={(v) => updatePrimary("email", v)} required />
+            <Field label="Phone" type="tel" value={primary.phone} onChange={(v) => updatePrimary("phone", v)} placeholder="+65 9123 4567" required />
+          </div>
+        </div>
 
         {/* Additional guests */}
         {extras.map((g, i) => (

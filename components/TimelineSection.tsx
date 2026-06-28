@@ -1,28 +1,18 @@
 const events = [
   {
-    time: "3:00 PM",
-    title: "Guest Arrival",
-    desc: "Welcome drinks and seating — please arrive promptly",
+    time: "11:00 AM",
+    title: "Tea Ceremony",
+    desc: "A cherished tradition honouring our families",
+  },
+  {
+    time: "12:00 PM",
+    title: "Lunch",
+    desc: "A celebratory meal shared with loved ones",
   },
   {
     time: "4:00 PM",
-    title: "Solemnisation",
-    desc: "Exchange of vows, rings, and a lifetime of promises",
-  },
-  {
-    time: "5:00 PM",
-    title: "Cocktail Hour",
-    desc: "Champagne, canapés, and warm conversation",
-  },
-  {
-    time: "7:00 PM",
-    title: "Dinner Banquet",
-    desc: "Eight-course feast to celebrate the newlyweds",
-  },
-  {
-    time: "10:00 PM",
-    title: "Last Dance & Send-Off",
-    desc: "Dancing, desserts, and a joyful farewell",
+    title: "Close of Ceremony",
+    desc: "Thank you for being part of our story",
   },
 ];
 

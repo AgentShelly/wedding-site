@@ -19,9 +19,10 @@ interface GuestInfo {
   lastName: string;
   email: string;
   phone: string;
+  dietaryRestrictions: string;
 }
 
-const blank = (): GuestInfo => ({ firstName: "", lastName: "", email: "", phone: "" });
+const blank = (): GuestInfo => ({ firstName: "", lastName: "", email: "", phone: "", dietaryRestrictions: "" });
 
 function Field({
   label,
@@ -82,6 +83,14 @@ function GuestBlock({
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Field label="First Name" value={guest.firstName} onChange={(v) => onChange("firstName", v)} required />
         <Field label="Last Name" value={guest.lastName} onChange={(v) => onChange("lastName", v)} required />
+        <div className="sm:col-span-2">
+          <Field
+            label="Dietary Restrictions"
+            value={guest.dietaryRestrictions}
+            onChange={(v) => onChange("dietaryRestrictions", v)}
+            placeholder="e.g. vegetarian, halal, nut allergy — leave blank if none"
+          />
+        </div>
       </div>
     </div>
   );
@@ -158,6 +167,14 @@ export function RSVPYesForm() {
             <Field label="Last Name" value={primary.lastName} onChange={(v) => updatePrimary("lastName", v)} required />
             <Field label="Email" type="email" value={primary.email} onChange={(v) => updatePrimary("email", v)} placeholder="e.g. alice@gmail.com" required />
             <Field label="Phone" type="tel" value={primary.phone} onChange={(v) => updatePrimary("phone", v)} placeholder="e.g. 91234567 or +65 9123 4567" required />
+            <div className="sm:col-span-2">
+              <Field
+                label="Dietary Restrictions"
+                value={primary.dietaryRestrictions}
+                onChange={(v) => updatePrimary("dietaryRestrictions", v)}
+                placeholder="e.g. vegetarian, halal, nut allergy — leave blank if none"
+              />
+            </div>
           </div>
         </div>
 

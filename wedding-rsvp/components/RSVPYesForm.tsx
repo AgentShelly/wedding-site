@@ -7,9 +7,10 @@ interface GuestInfo {
   lastName: string;
   email: string;
   phone: string;
+  dietaryRestrictions: string;
 }
 
-const blank = (): GuestInfo => ({ firstName: "", lastName: "", email: "", phone: "" });
+const blank = (): GuestInfo => ({ firstName: "", lastName: "", email: "", phone: "", dietaryRestrictions: "" });
 
 function Field({
   label,
@@ -68,6 +69,14 @@ function GuestBlock({
           placeholder="+65 9123 4567"
           required
         />
+        <div className="sm:col-span-2">
+          <Field
+            label="Dietary Restrictions"
+            value={guest.dietaryRestrictions}
+            onChange={(v) => onChange("dietaryRestrictions", v)}
+            placeholder="e.g. vegetarian, halal, nut allergy — leave blank if none"
+          />
+        </div>
       </div>
     </div>
   );

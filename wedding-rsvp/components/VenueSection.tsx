@@ -16,14 +16,13 @@ export function VenueSection() {
         <div className="grid md:grid-cols-2 gap-6">
           {/* Venue card */}
           <Card icon="📍" title="The Venue">
-            <p className="font-body text-ivory/90 text-lg font-semibold">[Venue Name]</p>
-            <p className="font-body text-ivory/70 text-sm mt-1">[Street Address]</p>
-            <p className="font-body text-ivory/70 text-sm">[City · Postal Code]</p>
-            <p className="font-body text-ivory/70 text-sm">[Country]</p>
+            <p className="font-body text-ivory/90 text-lg font-semibold">Fulin Pavilion</p>
+            <p className="font-body text-ivory/70 text-sm mt-1">70 Eu Tong Sen Street</p>
+            <p className="font-body text-ivory/70 text-sm">Yue Hwa Building, #06-01</p>
+            <p className="font-body text-ivory/70 text-sm">Singapore 059805</p>
             <div className="mt-5 pt-5 border-t border-gold/20">
               <p className="font-body text-ivory/50 text-xs leading-relaxed">
-                Complimentary parking available on-site.<br />
-                Nearest MRT: [Station Name] · [X] minutes walk.
+                Nearest MRT: Chinatown · ~3 minutes walk.
               </p>
             </div>
           </Card>

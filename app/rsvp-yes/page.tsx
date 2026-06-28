@@ -4,11 +4,13 @@ export const metadata = {
   title: "See You There! — Alice & Rudolph",
 };
 
-const googleCalUrl = "https://calendar.google.com/calendar/render?action=TEMPLATE&text=Alice+%26+Rudolph%27s+Wedding+Lunch&dates=20260912T120000%2B0800%2F20260912T150000%2B0800&location=Singapore&details=We+are+so+glad+you+can+make+it%21";
+const venue = "Fulin+Pavilion%2C+70+Eu+Tong+Sen+Street%2C+Yue+Hwa+Building+%2306-01%2C+Singapore+059805";
 
-const outlookUrl = "https://outlook.live.com/calendar/0/deeplink/compose?subject=Alice+%26+Rudolph%27s+Wedding+Lunch&startdt=2026-09-12T12%3A00%3A00%2B08%3A00&enddt=2026-09-12T15%3A00%3A00%2B08%3A00&location=Singapore&body=We+are+so+glad+you+can+make+it%21";
+const googleCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=Alice+%26+Rudolph%27s+Wedding+Tea+Ceremony+%26+Lunch&dates=20260912T110000%2B0800%2F20260912T160000%2B0800&location=${venue}&details=We+are+so+glad+you+can+make+it%21`;
 
-const icsContent = "BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nDTSTART:20260912T120000\nDTEND:20260912T150000\nSUMMARY:Alice and Rudolph Wedding Lunch\nLOCATION:Singapore\nDESCRIPTION:We are so glad you can make it!\nEND:VEVENT\nEND:VCALENDAR";
+const outlookUrl = `https://outlook.live.com/calendar/0/deeplink/compose?subject=Alice+%26+Rudolph%27s+Wedding+Tea+Ceremony+%26+Lunch&startdt=2026-09-12T11%3A00%3A00%2B08%3A00&enddt=2026-09-12T16%3A00%3A00%2B08%3A00&location=Fulin+Pavilion%2C+70+Eu+Tong+Sen+Street%2C+Singapore+059805&body=We+are+so+glad+you+can+make+it%21`;
+
+const icsContent = "BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nDTSTART:20260912T110000\nDTEND:20260912T160000\nSUMMARY:Alice and Rudolph Wedding Tea Ceremony & Lunch\nLOCATION:Fulin Pavilion\\, 70 Eu Tong Sen Street\\, Yue Hwa Building #06-01\\, Singapore 059805\nDESCRIPTION:We are so glad you can make it!\nEND:VEVENT\nEND:VCALENDAR";
 
 const icsUrl = "data:text/calendar;charset=utf8," + encodeURIComponent(icsContent);
 

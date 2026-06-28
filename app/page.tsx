@@ -10,7 +10,7 @@ export default function Home() {
       <MusicPlayer />
       <HeroSection />
       <RSVPSection />
-      {/* <TimelineSection /> */}
+      <TimelineSection />
       <VenueSection />
 
       {/* Footer */}

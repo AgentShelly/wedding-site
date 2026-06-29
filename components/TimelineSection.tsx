@@ -43,7 +43,7 @@ export function TimelineSection() {
                 className="relative flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-8"
               >
                 {/* Time — left col on desktop */}
-                <div className="sm:w-[45%] sm:text-right sm:pt-0.5">
+                <div className="pl-8 sm:pl-0 sm:w-[45%] sm:text-right sm:pt-0.5">
                   <span className="font-body text-xs font-semibold uppercase tracking-widest text-gold">
                     {ev.time}
                   </span>

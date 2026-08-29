@@ -2,6 +2,7 @@ import { HeroSection } from "@/components/HeroSection";
 import { RSVPSection } from "@/components/RSVPSection";
 import { TimelineSection } from "@/components/TimelineSection";
 import { VenueSection } from "@/components/VenueSection";
+import { PhotosSection } from "@/components/PhotosSection";
 import { MusicPlayer } from "@/components/MusicPlayer";
 
 export default function Home() {
@@ -12,6 +13,7 @@ export default function Home() {
       <RSVPSection />
       <TimelineSection />
       <VenueSection />
+      <PhotosSection />
 
       {/* Footer */}
       <footer className="bg-teal-dark py-12 px-6 text-center">

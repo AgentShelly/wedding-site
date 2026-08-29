@@ -10,7 +10,7 @@ const events = [
     desc: "A celebratory meal shared with loved ones",
   },
   {
-    time: "4:00 PM",
+    time: "3:00 – 4:00 PM",
     title: "Close of Ceremony",
     desc: "Thank you for being part of our story",
   },

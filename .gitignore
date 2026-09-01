@@ -11,3 +11,5 @@ instant-icon-497208-h2-e80600283320.json
 
 # Next.js
 next-env.d.ts
+.env*
+*.tsbuildinfo

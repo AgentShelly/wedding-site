@@ -1,4 +1,4 @@
-const ALBUM_URL = "https://photos.app.goo.gl/LaN6PFnpSzY8XcPg8";
+import Link from "next/link";
 
 export function PhotosSection() {
   return (
@@ -9,27 +9,26 @@ export function PhotosSection() {
           Share Your Photos
         </h2>
         <p className="font-body text-ivory/70 text-sm mt-4 leading-relaxed">
-          You&apos;ll see moments we won&apos;t. Add every photo and video you
-          take on the day to our shared album — and take home everyone
-          else&apos;s too.
+          You&apos;ll see moments we won&apos;t. Add the photos you take on the
+          day to our album — full-resolution, straight off your phone — and see
+          everyone else&apos;s too.
         </p>
 
-        <div className="mt-10">
-          <a
-            href={ALBUM_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <Link
+            href="/photos"
             className="inline-flex items-center gap-3 bg-gold hover:bg-gold-light transition-colors text-teal-dark font-body font-semibold text-sm uppercase tracking-[0.2em] px-8 py-4 rounded-sm"
           >
             <span className="text-lg">📷</span>
-            Add &amp; View Photos
-          </a>
+            Add Your Photos
+          </Link>
+          <Link
+            href="/gallery"
+            className="font-body text-sm text-gold hover:text-gold-light underline underline-offset-4"
+          >
+            View the album →
+          </Link>
         </div>
-
-        <p className="font-body text-ivory/40 text-xs mt-6">
-          Opens our Google Photos album. Anyone with the link can view; sign in
-          to Google to add your own.
-        </p>
       </div>
     </section>
   );

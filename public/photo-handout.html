@@ -40,20 +40,28 @@
     min-height: 100vh;
   }
 
+  /* On screen the two cards sit side by side, exactly as they print. */
+  .sheet {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0;
+  }
+
   .hint {
     font-size: 12px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.5);
     text-align: center;
-    max-width: 148mm;
+    max-width: 279mm;
   }
   .hint b { color: rgba(255, 255, 255, 0.8); font-weight: 500; }
 
-  /* ---- The card — A5 portrait ---- */
+  /* ---- The card — half US Letter (5.5in × 8.5in), two per landscape sheet ---- */
   .card {
-    width: 148mm;
-    min-height: 210mm;
+    width: 139.7mm;
+    height: 215.9mm;
     background:
       radial-gradient(120% 80% at 50% -10%, var(--teal-glow) 0%, var(--teal) 34%, var(--teal-deep) 100%);
     color: var(--ivory);
@@ -243,26 +251,76 @@
   }
 
   @media print {
-    body { background: #fff; padding: 0; gap: 0; min-height: 0; }
+    body { background: #fff; padding: 0; gap: 0; min-height: 0; display: block; }
     .hint { display: none; }
+    .sheet { gap: 0; }
     .card {
-      width: 148mm;
-      height: 210mm;
-      page-break-after: avoid;
+      width: 139.7mm;
+      height: 215.9mm;
+      break-inside: avoid;
     }
-    @page { size: A5 portrait; margin: 0; }
+    /* Letter, landscape: 279.4mm wide holds exactly two 139.7mm cards. */
+    @page { size: 11in 8.5in; margin: 0; }
   }
 
   @media (max-width: 640px) {
     body { padding: 4mm; }
-    .card { width: 100%; min-height: 0; padding: 16mm 8mm 12mm; }
+    .card { width: 100%; height: auto; min-height: 0; padding: 16mm 8mm 12mm; }
   }
 </style>
 
 <p class="hint">
-  Print at <b>A5 portrait</b> · one per guest, or set two-up on A4 · then just
-  <b>⌘P</b>
+  Print on <b>US Letter, landscape</b> · two cards per sheet · then cut down the
+  middle · <b>⌘P</b>
 </p>
+
+<div class="sheet">
+<article class="card">
+  <div class="frame"></div>
+
+  <div class="monogram">A &nbsp;&amp;&nbsp; R</div>
+  <div class="rule"></div>
+
+  <h1>Share Your Photos</h1>
+  <p class="lede">
+    You&rsquo;ll see moments we won&rsquo;t. Add the photos you take today to our
+    album &mdash; <em>full-resolution, straight off your phone</em> &mdash; and
+    take home everyone else&rsquo;s too.
+  </p>
+
+  <div class="qr-well">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 41 41" shape-rendering="crispEdges" role="img" aria-label="QR code linking to the photo upload page">
+      <path fill="#fdf8f0" d="M0 0h41v41H0z" />
+      <path stroke="#0a1f24" d="M4 4.5h7m5 0h3m1 0h4m3 0h2m1 0h7M4 5.5h1m5 0h1m4 0h7m4 0h1m3 0h1m5 0h1M4 6.5h1m1 0h3m1 0h1m1 0h1m1 0h1m2 0h1m1 0h4m7 0h1m1 0h3m1 0h1M4 7.5h1m1 0h3m1 0h1m1 0h1m1 0h2m2 0h3m2 0h4m1 0h1m1 0h1m1 0h3m1 0h1M4 8.5h1m1 0h3m1 0h1m1 0h1m6 0h1m1 0h2m5 0h1m1 0h1m1 0h3m1 0h1M4 9.5h1m5 0h1m1 0h1m1 0h1m2 0h1m1 0h2m3 0h3m3 0h1m5 0h1M4 10.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M12 11.5h2m5 0h1m5 0h4M4 12.5h1m1 0h5m6 0h3m1 0h2m3 0h1m1 0h1m1 0h5M4 13.5h1m2 0h3m4 0h1m1 0h1m3 0h1m2 0h5m2 0h2m1 0h2m1 0h1M4 14.5h2m2 0h1m1 0h2m4 0h1m2 0h1m2 0h1m2 0h1m6 0h1m1 0h1M4 15.5h2m3 0h1m1 0h1m1 0h1m4 0h1m1 0h1m4 0h4m3 0h3M5 16.5h3m1 0h2m1 0h5m2 0h1m2 0h1m2 0h1m3 0h1m2 0h2m1 0h2M9 17.5h1m3 0h4m1 0h3m3 0h4m2 0h1m2 0h1m1 0h2M4 18.5h3m1 0h1m1 0h1m4 0h1m2 0h1m2 0h3m5 0h2m1 0h1m2 0h1M4 19.5h1m1 0h3m2 0h1m1 0h1m3 0h2m1 0h1m1 0h4m1 0h1m1 0h2m1 0h3M5 20.5h3m1 0h3m1 0h1m1 0h2m3 0h5m1 0h4m1 0h2m3 0h1M4 21.5h1m1 0h2m1 0h1m2 0h2m2 0h2m2 0h2m1 0h2m1 0h2m2 0h2m1 0h2m1 0h1M6 22.5h2m1 0h3m2 0h1m1 0h2m1 0h1m1 0h1m4 0h1m3 0h3m1 0h2M4 23.5h1m3 0h2m1 0h2m5 0h1m1 0h3m1 0h1m3 0h1m2 0h5M4 24.5h1m1 0h1m1 0h3m1 0h1m1 0h4m2 0h1m2 0h7m1 0h3m1 0h1M4 25.5h1m1 0h1m2 0h1m1 0h1m1 0h1m2 0h1m1 0h2m2 0h1m2 0h1m1 0h1m2 0h2m2 0h1m1 0h1M4 26.5h1m1 0h7m1 0h1m3 0h3m1 0h1m1 0h3m1 0h1m2 0h1m1 0h3M4 27.5h1m1 0h1m5 0h1m1 0h3m2 0h1m2 0h1m2 0h2m2 0h1m1 0h1m1 0h2M4 28.5h1m1 0h2m1 0h2m1 0h4m1 0h1m1 0h1m1 0h2m3 0h1m1 0h6m1 0h2M12 29.5h1m1 0h1m1 0h1m1 0h1m4 0h3m2 0h1m3 0h1m1 0h1m1 0h1M4 30.5h7m5 0h1m1 0h2m2 0h1m1 0h2m1 0h2m1 0h1m1 0h1m1 0h2M4 31.5h1m5 0h1m1 0h1m2 0h4m1 0h1m2 0h6m3 0h5M4 32.5h1m1 0h3m1 0h1m1 0h2m4 0h2m2 0h2m1 0h1m2 0h6M4 33.5h1m1 0h3m1 0h1m1 0h1m2 0h6m3 0h3m1 0h2m2 0h1m1 0h1m1 0h1M4 34.5h1m1 0h3m1 0h1m1 0h1m1 0h1m3 0h1m2 0h3m1 0h3m2 0h2m2 0h1M4 35.5h1m5 0h1m2 0h2m1 0h2m2 0h1m1 0h4m1 0h1m1 0h2m1 0h3M4 36.5h7m1 0h5m1 0h1m1 0h4m2 0h6m1 0h1m1 0h1" />
+    </svg>
+  </div>
+
+  <div class="scan-label">Point your camera &middot; no app needed</div>
+
+  <ol class="steps">
+    <li class="step">
+      <span class="n">1</span>
+      <span><strong>Scan</strong> the square with your phone camera and tap the link.</span>
+    </li>
+    <li class="step">
+      <span class="n">2</span>
+      <span><strong>Type your name</strong> so we know whose eye caught what.</span>
+    </li>
+    <li class="step">
+      <span class="n">3</span>
+      <span><strong>Upload your photos.</strong> Add as many as you like &mdash; we&rsquo;ll shape the album afterwards.</span>
+    </li>
+  </ol>
+
+  <div class="foot">
+    <p class="url">
+      <span class="k">Or open</span>
+      alice-rudolph-2026.vercel.app/photos
+    </p>
+    <p class="names">Alice &amp; Rudolph</p>
+    <p class="date">12 September 2026</p>
+  </div>
+</article>
 
 <article class="card">
   <div class="frame"></div>
@@ -310,3 +368,4 @@
     <p class="date">12 September 2026</p>
   </div>
 </article>
+</div>

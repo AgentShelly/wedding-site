@@ -154,7 +154,7 @@ export function UploadClient() {
           onClick={() => inputRef.current?.click()}
           className="w-full bg-gold hover:bg-gold-light disabled:opacity-50 transition-colors text-teal-dark font-body font-semibold text-sm uppercase tracking-[0.2em] px-6 py-4 rounded-sm"
         >
-          {busy ? "Uploading…" : "Choose photos"}
+          {busy ? "Uploading…" : "Upload photos"}
         </button>
         <input
           ref={inputRef}

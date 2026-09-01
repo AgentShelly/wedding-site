@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { getGalleryPhotos } from "@/lib/photo-store";
 import { GalleryClient } from "./GalleryClient";
+import { MusicPlayer } from "@/components/MusicPlayer";
 
 export const metadata: Metadata = {
   title: "Photo Album — Alice & Rudolph",
@@ -16,6 +17,7 @@ export default async function GalleryPage() {
 
   return (
     <main className="min-h-screen bg-teal-dark px-4 sm:px-6 py-14">
+      <MusicPlayer />
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-10">
           <p className="font-body text-xs tracking-[0.35em] uppercase text-gold/80">

@@ -1,0 +1,312 @@
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap"
+/>
+
+<style>
+  :root {
+    /* Peranakan palette — carried over from the wedding site */
+    --teal-deep: #063540;
+    --teal: #0a5f6e;
+    --teal-glow: #12798c;
+    --gold: #c49a3c;
+    --gold-light: #dcb765;
+    --ivory: #fdf8f0;
+    --cream: #f4ebd4;
+    --ink: #05242c;
+    --ivory-dim: rgba(253, 248, 240, 0.66);
+    --ivory-faint: rgba(253, 248, 240, 0.4);
+    --gold-line: rgba(196, 154, 60, 0.38);
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    background: #3a3a3a;
+    color: var(--ivory);
+    font-family: "DM Sans", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10mm;
+    padding: 12mm;
+    min-height: 100vh;
+  }
+
+  .hint {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+    max-width: 148mm;
+  }
+  .hint b { color: rgba(255, 255, 255, 0.8); font-weight: 500; }
+
+  /* ---- The card — A5 portrait ---- */
+  .card {
+    width: 148mm;
+    min-height: 210mm;
+    background:
+      radial-gradient(120% 80% at 50% -10%, var(--teal-glow) 0%, var(--teal) 34%, var(--teal-deep) 100%);
+    color: var(--ivory);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20mm 18mm 16mm;
+    isolation: isolate;
+  }
+
+  /* Peranakan tile lattice — quiet, behind everything */
+  .card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image:
+      linear-gradient(45deg, var(--gold-line) 1px, transparent 1px),
+      linear-gradient(-45deg, var(--gold-line) 1px, transparent 1px);
+    background-size: 14mm 14mm;
+    background-position: center;
+    opacity: 0.5;
+    -webkit-mask-image: radial-gradient(circle at 50% 42%, #000 0%, rgba(0,0,0,0.15) 62%, transparent 82%);
+    mask-image: radial-gradient(circle at 50% 42%, #000 0%, rgba(0,0,0,0.15) 62%, transparent 82%);
+  }
+
+  .frame {
+    position: absolute;
+    inset: 7mm;
+    border: 1px solid var(--gold-line);
+    z-index: -1;
+  }
+  .frame::after {
+    content: "";
+    position: absolute;
+    inset: 2mm;
+    border: 1px solid rgba(196, 154, 60, 0.16);
+  }
+
+  .monogram {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 15px;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    padding-left: 0.42em;
+  }
+
+  .rule {
+    width: 46px;
+    height: 1px;
+    background: var(--gold);
+    margin: 9mm 0 8mm;
+    position: relative;
+  }
+  .rule::before,
+  .rule::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 4px;
+    height: 4px;
+    background: var(--gold);
+    border-radius: 50%;
+    transform: translateY(-50%) rotate(45deg);
+  }
+  .rule::before { left: -12px; }
+  .rule::after { right: -12px; }
+
+  h1 {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 500;
+    font-size: 38px;
+    line-height: 1.05;
+    text-wrap: balance;
+    letter-spacing: 0.01em;
+  }
+
+  .lede {
+    margin-top: 5mm;
+    max-width: 105mm;
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--ivory-dim);
+  }
+  .lede em {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-style: italic;
+    font-size: 1.15em;
+    color: var(--ivory);
+  }
+
+  /* ---- QR well ---- */
+  .qr-well {
+    margin: 10mm 0 9mm;
+    background: var(--ivory);
+    padding: 7mm;
+    position: relative;
+  }
+  .qr-well::before {
+    content: "";
+    position: absolute;
+    inset: -3.4mm;
+    border: 1px solid var(--gold);
+  }
+  .qr-well svg {
+    display: block;
+    width: 52mm;
+    height: 52mm;
+  }
+
+  .scan-label {
+    font-size: 11px;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 8mm;
+  }
+
+  /* ---- Steps — a real sequence ---- */
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5mm;
+    width: 100%;
+    max-width: 96mm;
+    text-align: left;
+  }
+  .step {
+    display: grid;
+    grid-template-columns: 8mm 1fr;
+    align-items: baseline;
+    gap: 4mm;
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--ivory-dim);
+  }
+  .step .n {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 19px;
+    color: var(--gold-light);
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+  }
+  .step strong {
+    color: var(--ivory);
+    font-weight: 500;
+  }
+
+  .foot {
+    margin-top: auto;
+    padding-top: 10mm;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2mm;
+  }
+  .url {
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--ivory-dim);
+  }
+  .url .k {
+    color: var(--ivory-faint);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-size: 10px;
+    display: block;
+    margin-bottom: 1.5mm;
+  }
+  .names {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 17px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding-left: 0.2em;
+    margin-top: 4mm;
+  }
+  .date {
+    font-size: 10px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+  }
+
+  @media print {
+    body { background: #fff; padding: 0; gap: 0; min-height: 0; }
+    .hint { display: none; }
+    .card {
+      width: 148mm;
+      height: 210mm;
+      page-break-after: avoid;
+    }
+    @page { size: A5 portrait; margin: 0; }
+  }
+
+  @media (max-width: 640px) {
+    body { padding: 4mm; }
+    .card { width: 100%; min-height: 0; padding: 16mm 8mm 12mm; }
+  }
+</style>
+
+<p class="hint">
+  Print at <b>A5 portrait</b> · one per guest, or set two-up on A4 · then just
+  <b>⌘P</b>
+</p>
+
+<article class="card">
+  <div class="frame"></div>
+
+  <div class="monogram">A &nbsp;&amp;&nbsp; R</div>
+  <div class="rule"></div>
+
+  <h1>Share Your Photos</h1>
+  <p class="lede">
+    You&rsquo;ll see moments we won&rsquo;t. Add the photos you take today to our
+    album &mdash; <em>full-resolution, straight off your phone</em> &mdash; and
+    take home everyone else&rsquo;s too.
+  </p>
+
+  <div class="qr-well">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 41 41" shape-rendering="crispEdges" role="img" aria-label="QR code linking to the photo upload page">
+      <path fill="#fdf8f0" d="M0 0h41v41H0z" />
+      <path stroke="#0a1f24" d="M4 4.5h7m5 0h3m1 0h4m3 0h2m1 0h7M4 5.5h1m5 0h1m4 0h7m4 0h1m3 0h1m5 0h1M4 6.5h1m1 0h3m1 0h1m1 0h1m1 0h1m2 0h1m1 0h4m7 0h1m1 0h3m1 0h1M4 7.5h1m1 0h3m1 0h1m1 0h1m1 0h2m2 0h3m2 0h4m1 0h1m1 0h1m1 0h3m1 0h1M4 8.5h1m1 0h3m1 0h1m1 0h1m6 0h1m1 0h2m5 0h1m1 0h1m1 0h3m1 0h1M4 9.5h1m5 0h1m1 0h1m1 0h1m2 0h1m1 0h2m3 0h3m3 0h1m5 0h1M4 10.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M12 11.5h2m5 0h1m5 0h4M4 12.5h1m1 0h5m6 0h3m1 0h2m3 0h1m1 0h1m1 0h5M4 13.5h1m2 0h3m4 0h1m1 0h1m3 0h1m2 0h5m2 0h2m1 0h2m1 0h1M4 14.5h2m2 0h1m1 0h2m4 0h1m2 0h1m2 0h1m2 0h1m6 0h1m1 0h1M4 15.5h2m3 0h1m1 0h1m1 0h1m4 0h1m1 0h1m4 0h4m3 0h3M5 16.5h3m1 0h2m1 0h5m2 0h1m2 0h1m2 0h1m3 0h1m2 0h2m1 0h2M9 17.5h1m3 0h4m1 0h3m3 0h4m2 0h1m2 0h1m1 0h2M4 18.5h3m1 0h1m1 0h1m4 0h1m2 0h1m2 0h3m5 0h2m1 0h1m2 0h1M4 19.5h1m1 0h3m2 0h1m1 0h1m3 0h2m1 0h1m1 0h4m1 0h1m1 0h2m1 0h3M5 20.5h3m1 0h3m1 0h1m1 0h2m3 0h5m1 0h4m1 0h2m3 0h1M4 21.5h1m1 0h2m1 0h1m2 0h2m2 0h2m2 0h2m1 0h2m1 0h2m2 0h2m1 0h2m1 0h1M6 22.5h2m1 0h3m2 0h1m1 0h2m1 0h1m1 0h1m4 0h1m3 0h3m1 0h2M4 23.5h1m3 0h2m1 0h2m5 0h1m1 0h3m1 0h1m3 0h1m2 0h5M4 24.5h1m1 0h1m1 0h3m1 0h1m1 0h4m2 0h1m2 0h7m1 0h3m1 0h1M4 25.5h1m1 0h1m2 0h1m1 0h1m1 0h1m2 0h1m1 0h2m2 0h1m2 0h1m1 0h1m2 0h2m2 0h1m1 0h1M4 26.5h1m1 0h7m1 0h1m3 0h3m1 0h1m1 0h3m1 0h1m2 0h1m1 0h3M4 27.5h1m1 0h1m5 0h1m1 0h3m2 0h1m2 0h1m2 0h2m2 0h1m1 0h1m1 0h2M4 28.5h1m1 0h2m1 0h2m1 0h4m1 0h1m1 0h1m1 0h2m3 0h1m1 0h6m1 0h2M12 29.5h1m1 0h1m1 0h1m1 0h1m4 0h3m2 0h1m3 0h1m1 0h1m1 0h1M4 30.5h7m5 0h1m1 0h2m2 0h1m1 0h2m1 0h2m1 0h1m1 0h1m1 0h2M4 31.5h1m5 0h1m1 0h1m2 0h4m1 0h1m2 0h6m3 0h5M4 32.5h1m1 0h3m1 0h1m1 0h2m4 0h2m2 0h2m1 0h1m2 0h6M4 33.5h1m1 0h3m1 0h1m1 0h1m2 0h6m3 0h3m1 0h2m2 0h1m1 0h1m1 0h1M4 34.5h1m1 0h3m1 0h1m1 0h1m1 0h1m3 0h1m2 0h3m1 0h3m2 0h2m2 0h1M4 35.5h1m5 0h1m2 0h2m1 0h2m2 0h1m1 0h4m1 0h1m1 0h2m1 0h3M4 36.5h7m1 0h5m1 0h1m1 0h4m2 0h6m1 0h1m1 0h1" />
+    </svg>
+  </div>
+
+  <div class="scan-label">Point your camera &middot; no app needed</div>
+
+  <ol class="steps">
+    <li class="step">
+      <span class="n">1</span>
+      <span><strong>Scan</strong> the square with your phone camera and tap the link.</span>
+    </li>
+    <li class="step">
+      <span class="n">2</span>
+      <span><strong>Type your name</strong> so we know whose eye caught what.</span>
+    </li>
+    <li class="step">
+      <span class="n">3</span>
+      <span><strong>Choose your photos.</strong> Add as many as you like &mdash; we&rsquo;ll shape the album afterwards.</span>
+    </li>
+  </ol>
+
+  <div class="foot">
+    <p class="url">
+      <span class="k">Or open</span>
+      alice-rudolph-2026.vercel.app/photos
+    </p>
+    <p class="names">Alice &amp; Rudolph</p>
+    <p class="date">12 September 2026</p>
+  </div>
+</article>

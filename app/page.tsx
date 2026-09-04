@@ -1,5 +1,5 @@
 import { HeroSection } from "@/components/HeroSection";
-import { RSVPSection } from "@/components/RSVPSection";
+import { CountdownClock } from "@/components/CountdownClock";
 import { TimelineSection } from "@/components/TimelineSection";
 import { VenueSection } from "@/components/VenueSection";
 import { PhotosSection } from "@/components/PhotosSection";
@@ -10,10 +10,20 @@ export default function Home() {
     <main className="min-h-screen">
       <MusicPlayer />
       <HeroSection />
-      <RSVPSection />
+
+      {/* Countdown strip */}
+      <section className="py-16 px-6 bg-ivory peranakan-grid">
+        <div className="text-center">
+          <p className="font-body text-[11px] uppercase tracking-[0.25em] text-muted mb-5">
+            Counting down to the celebration
+          </p>
+          <CountdownClock />
+        </div>
+      </section>
+
+      <PhotosSection />
       <TimelineSection />
       <VenueSection />
-      <PhotosSection />
 
       {/* Footer */}
       <footer className="bg-teal-dark py-12 px-6 text-center">

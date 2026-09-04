@@ -143,7 +143,7 @@ export function UploadClient() {
       <input
         value={name}
         onChange={(e) => setName(e.target.value)}
-        placeholder="e.g. Priya Menon"
+        placeholder="e.g. Lawrence Wong"
         className="w-full px-4 py-2.5 border border-muted/30 rounded-sm bg-white text-dark font-body text-sm placeholder:text-muted/40 focus:outline-none focus:ring-1 focus:ring-gold"
       />
 

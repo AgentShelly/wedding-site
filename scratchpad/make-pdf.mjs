@@ -1,12 +1,17 @@
 import { chromium } from "playwright-core";
 
-const exe =
-  process.env.HOME +
-  "/Library/Caches/ms-playwright/chromium-1223/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing";
+const exe = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 
-// pass the basename (without extension) as arg, defaults to the teal card
+// usage: node make-pdf.mjs <basename> [size]
+//   size: "letter-landscape" (default) | "a4"
 const name = process.argv[2] || "photo-handout";
+const size = process.argv[3] || "letter-landscape";
 const dir = "/Users/rudolph/alice-rudolph-wedding";
+
+const dims =
+  size === "a4"
+    ? { width: "210mm", height: "297mm" }
+    : { width: "279.4mm", height: "215.9mm" };
 
 const browser = await chromium.launch({ executablePath: exe });
 const page = await browser.newPage();
@@ -14,11 +19,10 @@ await page.goto(`file://${dir}/public/${name}.html`, { waitUntil: "networkidle" 
 await page.waitForTimeout(1200);
 await page.pdf({
   path: `${dir}/scratchpad/${name}.pdf`,
-  width: "279.4mm",
-  height: "215.9mm",
+  ...dims,
   printBackground: true,
   preferCSSPageSize: true,
   margin: { top: 0, right: 0, bottom: 0, left: 0 },
 });
 await browser.close();
-console.log(`wrote ${name}.pdf`);
+console.log(`wrote ${name}.pdf (${size})`);

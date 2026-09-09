@@ -13,3 +13,6 @@ instant-icon-497208-h2-e80600283320.json
 next-env.d.ts
 .env*
 *.tsbuildinfo
+
+# generated PDFs
+*.pdf

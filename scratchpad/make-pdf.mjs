@@ -11,7 +11,9 @@ const dir = "/Users/rudolph/alice-rudolph-wedding";
 const dims =
   size === "a4"
     ? { width: "210mm", height: "297mm" }
-    : { width: "279.4mm", height: "215.9mm" };
+    : size === "a4-landscape"
+      ? { width: "297mm", height: "210mm" }
+      : { width: "279.4mm", height: "215.9mm" };
 
 const browser = await chromium.launch({ executablePath: exe });
 const page = await browser.newPage();

@@ -47,8 +47,8 @@ export async function PhotosSection() {
               Take Our Photo Challenge
             </h2>
             <p className="mx-auto mt-4 mb-10 max-w-md font-body text-sm leading-relaxed text-ivory/70">
-              Seven shots to hunt down through the night. Tap an album, pick your
-              photos, done — full-resolution, straight off your phone.
+              Seven shots to hunt down over lunch. Tap an album, pick your photos
+              — as many as you like — full-resolution, straight off your phone.
             </p>
 
             <ChallengeAlbums sections={sections} />

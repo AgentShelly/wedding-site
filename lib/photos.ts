@@ -14,7 +14,7 @@ export const ALBUMS = [
   { slug: "candid", name: "Candid & Sweet", prompt: "Happy (or sad) tears" },
   { slug: "details", name: "The Details", prompt: "Food, flowers, anything gold" },
   { slug: "people", name: "Selfies & Everyone", prompt: "A selfie with someone you love" },
-  { slug: "wildcard", name: "Wildcard", prompt: "Your shot of the night" },
+  { slug: "wildcard", name: "Wildcard", prompt: "Your shot of the day" },
 ] as const;
 
 export type AlbumSlug = (typeof ALBUMS)[number]["slug"];

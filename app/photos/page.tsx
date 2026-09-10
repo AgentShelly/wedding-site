@@ -18,8 +18,8 @@ export default function PhotosPage() {
           Take Our Photo Challenge
         </h1>
         <p className="font-body text-ivory/70 text-sm mt-4 mb-10 leading-relaxed">
-          Seven shots to hunt down. Tap an album, pick your photos — that&apos;s it.
-          Full-resolution, straight off your phone.
+          Seven shots to hunt down over lunch. Tap an album, pick your photos —
+          as many as you like — full-resolution, straight off your phone.
         </p>
 
         <ChallengeAlbums />

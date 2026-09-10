@@ -44,15 +44,15 @@ export function PhotosSection() {
             </div>
 
             <h2 className="font-display text-4xl text-ivory md:text-5xl">
-              Share Your Photos
+              Take Our Photo Challenge
             </h2>
             <p className="mx-auto mt-5 max-w-md font-body text-sm leading-relaxed text-ivory/70">
-              You&apos;ll see moments we won&apos;t. Add the photos you take on the
-              day to our album —{" "}
+              Seven shots to hunt down through the night — the march-in, your
+              table, the yum seng, a sweet moment.{" "}
               <span className="font-display text-base italic text-ivory">
-                full-resolution, straight off your phone
+                Look for the tent card on your table
               </span>{" "}
-              — and take home everyone else&apos;s too.
+              — or start here.
             </p>
 
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">

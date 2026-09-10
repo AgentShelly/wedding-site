@@ -3,10 +3,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { upload } from "@vercel/blob/client";
 import {
+  ALBUMS,
   ALLOWED_TYPES,
   MAX_FILE_BYTES,
   buildPhotoPath,
   thumbPathFor,
+  type AlbumSlug,
 } from "@/lib/photos";
 
 type Status = "pending" | "uploading" | "done" | "error";
@@ -37,7 +39,8 @@ async function makeThumb(file: File): Promise<Blob | null> {
   }
 }
 
-export function UploadClient() {
+export function UploadClient({ initialAlbum }: { initialAlbum: AlbumSlug }) {
+  const [album, setAlbum] = useState<AlbumSlug>(initialAlbum);
   const [name, setName] = useState("");
   const [items, setItems] = useState<Item[]>([]);
   const [busy, setBusy] = useState(false);
@@ -67,6 +70,7 @@ export function UploadClient() {
     } catch {}
 
     const files = Array.from(fileList);
+    const forAlbum = album;
     setBusy(true);
     setAllDone(false);
 
@@ -101,7 +105,7 @@ export function UploadClient() {
 
       update(item.id, { status: "uploading" });
       try {
-        const photoPath = buildPhotoPath(trimmed, file.name);
+        const photoPath = buildPhotoPath(forAlbum, trimmed, file.name);
 
         const thumb = await makeThumb(file);
         if (thumb) {
@@ -138,6 +142,22 @@ export function UploadClient() {
   return (
     <div className="w-full max-w-md mx-auto">
       <label className="block font-body text-xs font-semibold uppercase tracking-wider text-teal-dark mb-1">
+        Album <span className="text-coral">*</span>
+      </label>
+      <select
+        value={album}
+        onChange={(e) => setAlbum(e.target.value as AlbumSlug)}
+        disabled={busy}
+        className="w-full px-4 py-2.5 border border-muted/30 rounded-sm bg-white text-dark font-body text-sm focus:outline-none focus:ring-1 focus:ring-gold disabled:opacity-50"
+      >
+        {ALBUMS.map((a) => (
+          <option key={a.slug} value={a.slug}>
+            {a.name} — {a.prompt}
+          </option>
+        ))}
+      </select>
+
+      <label className="block font-body text-xs font-semibold uppercase tracking-wider text-teal-dark mb-1 mt-5">
         Your name <span className="text-coral">*</span>
       </label>
       <input
@@ -168,7 +188,7 @@ export function UploadClient() {
 
       <p className="font-body text-muted text-xs mt-3 text-center">
         Full-resolution originals. JPEG, PNG or HEIC, up to 12 MB each. Add as
-        many as you like — we&apos;ll curate the album afterwards.
+        many as you like — switch album any time.
       </p>
 
       {items.length > 0 && (

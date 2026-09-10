@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import type { GalleryPhoto } from "@/lib/photo-store";
+import { ALBUMS } from "@/lib/photos";
 
 type Props = {
   photos: GalleryPhoto[];
@@ -11,6 +12,7 @@ type Props = {
 
 export function GalleryClient({ photos, admin = false, onDelete }: Props) {
   const [filter, setFilter] = useState("all");
+  const [albumFilter, setAlbumFilter] = useState("all");
   const [active, setActive] = useState<GalleryPhoto | null>(null);
   const [deleting, setDeleting] = useState<string | null>(null);
   const [hidden, setHidden] = useState<Set<string>>(new Set());
@@ -21,7 +23,10 @@ export function GalleryClient({ photos, admin = false, onDelete }: Props) {
   );
 
   const shown = photos.filter(
-    (p) => !hidden.has(p.pathname) && (filter === "all" || p.uploader === filter),
+    (p) =>
+      !hidden.has(p.pathname) &&
+      (filter === "all" || p.uploader === filter) &&
+      (albumFilter === "all" || p.album === albumFilter),
   );
 
   async function remove(p: GalleryPhoto) {
@@ -49,16 +54,25 @@ export function GalleryClient({ photos, admin = false, onDelete }: Props) {
 
   return (
     <div>
-      <div className="flex items-center justify-center gap-3 mb-8">
-        <label className="font-body text-xs uppercase tracking-wider text-ivory/50">
-          Show
-        </label>
+      <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
+        <select
+          value={albumFilter}
+          onChange={(e) => setAlbumFilter(e.target.value)}
+          className="bg-teal border border-gold/30 text-ivory font-body text-sm rounded-sm px-3 py-1.5 focus:outline-none"
+        >
+          <option value="all">All albums ({photos.length})</option>
+          {ALBUMS.map((a) => (
+            <option key={a.slug} value={a.slug}>
+              {a.name} ({photos.filter((p) => p.album === a.slug).length})
+            </option>
+          ))}
+        </select>
         <select
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
           className="bg-teal border border-gold/30 text-ivory font-body text-sm rounded-sm px-3 py-1.5 focus:outline-none"
         >
-          <option value="all">Everyone ({photos.length})</option>
+          <option value="all">Everyone</option>
           {uploaders.map((u) => (
             <option key={u} value={u}>
               {u} ({photos.filter((p) => p.uploader === u).length})

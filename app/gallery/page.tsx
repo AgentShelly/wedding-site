@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { getGalleryPhotos } from "@/lib/photo-store";
-import { GalleryClient } from "./GalleryClient";
+import { getAlbumSections } from "@/lib/photo-store";
+import { AlbumGallery } from "./AlbumGallery";
 import { MusicPlayer } from "@/components/MusicPlayer";
 
 export const metadata: Metadata = {
@@ -9,11 +9,11 @@ export const metadata: Metadata = {
   description: "Photos from our wedding, shared by the people who were there.",
 };
 
-// Listed fresh per request — the album changes as guests upload.
+// Listed fresh per request — the albums change as guests upload.
 export const dynamic = "force-dynamic";
 
 export default async function GalleryPage() {
-  const photos = await getGalleryPhotos();
+  const sections = await getAlbumSections();
 
   return (
     <main className="min-h-screen bg-teal-dark px-4 sm:px-6 py-14">
@@ -27,7 +27,8 @@ export default async function GalleryPage() {
             The Photo Album
           </h1>
           <p className="font-body text-ivory/60 text-sm mt-4">
-            Tap any photo to view full size and download.{" "}
+            Seven challenges, seven albums. Tap a photo to view full size and
+            download.{" "}
             <Link
               href="/photos"
               className="text-gold hover:text-gold-light underline underline-offset-4"
@@ -37,7 +38,7 @@ export default async function GalleryPage() {
           </p>
         </div>
 
-        <GalleryClient photos={photos} />
+        <AlbumGallery sections={sections} />
       </div>
     </main>
   );

@@ -1,6 +1,17 @@
 import { handleUpload, type HandleUploadBody } from "@vercel/blob/client";
 import { NextRequest, NextResponse } from "next/server";
-import { ALLOWED_TYPES, MAX_FILE_BYTES } from "@/lib/photos";
+import { ALLOWED_TYPES, MAX_FILE_BYTES, isAlbumSlug } from "@/lib/photos";
+
+// photos/<album>/<name>/<file> or thumbs/<album>/<name>/<file>
+function validUploadPath(pathname: string): boolean {
+  const parts = pathname.split("/");
+  return (
+    (parts[0] === "photos" || parts[0] === "thumbs") &&
+    isAlbumSlug(parts[1]) &&
+    parts.length >= 4 &&
+    parts.every((p) => p.length > 0)
+  );
+}
 
 // Issues short-lived client tokens so guests upload straight to Blob storage.
 // The pathname is decided client-side (photos/<name>/...) and passed through here.
@@ -12,7 +23,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       body,
       request,
       onBeforeGenerateToken: async (pathname) => {
-        if (!pathname.startsWith("photos/")) {
+        if (!validUploadPath(pathname)) {
           throw new Error("Invalid upload path");
         }
         return {

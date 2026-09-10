@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { getAlbumSections } from "@/lib/photo-store";
-import { AlbumGallery } from "./AlbumGallery";
+import { ChallengeAlbums } from "@/components/ChallengeAlbums";
 import { MusicPlayer } from "@/components/MusicPlayer";
 
 export const metadata: Metadata = {
@@ -9,7 +9,6 @@ export const metadata: Metadata = {
   description: "Photos from our wedding, shared by the people who were there.",
 };
 
-// Listed fresh per request — the albums change as guests upload.
 export const dynamic = "force-dynamic";
 
 export default async function GalleryPage() {
@@ -18,7 +17,7 @@ export default async function GalleryPage() {
   return (
     <main className="min-h-screen bg-teal-dark px-4 sm:px-6 py-14">
       <MusicPlayer />
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <div className="text-center mb-10">
           <p className="font-body text-xs tracking-[0.35em] uppercase text-gold/80">
             Alice &amp; Rudolph
@@ -27,18 +26,18 @@ export default async function GalleryPage() {
             The Photo Album
           </h1>
           <p className="font-body text-ivory/60 text-sm mt-4">
-            Seven challenges, seven albums. Tap a photo to view full size and
-            download.{" "}
+            Seven challenges, seven albums. Tap <span className="text-ivory/80">Add photos</span> on
+            any album, or a photo to view it full size.{" "}
             <Link
-              href="/photos"
+              href="/"
               className="text-gold hover:text-gold-light underline underline-offset-4"
             >
-              Add yours
+              Back home
             </Link>
           </p>
         </div>
 
-        <AlbumGallery sections={sections} />
+        <ChallengeAlbums sections={sections} variant="gallery" />
       </div>
     </main>
   );

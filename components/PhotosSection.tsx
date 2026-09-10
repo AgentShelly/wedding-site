@@ -1,7 +1,9 @@
 import Link from "next/link";
+import { getAlbumSections } from "@/lib/photo-store";
 import { ChallengeAlbums } from "./ChallengeAlbums";
 
-export function PhotosSection() {
+export async function PhotosSection() {
+  const sections = await getAlbumSections();
   return (
     <section id="photos" className="bg-teal-dark px-6 py-20">
       <div className="mx-auto max-w-2xl">
@@ -49,7 +51,7 @@ export function PhotosSection() {
               photos, done — full-resolution, straight off your phone.
             </p>
 
-            <ChallengeAlbums />
+            <ChallengeAlbums sections={sections} />
 
             <Link
               href="/gallery"

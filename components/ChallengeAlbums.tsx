@@ -182,10 +182,38 @@ export function ChallengeAlbums({
           const sec = bySlug.get(a.slug);
           const p = progress[a.slug] ?? emptyProg;
           const count = sec?.photos.length ?? 0;
+          const cover = sec?.photos[0];
           return (
             <div key={a.slug} id={`album-${a.slug}`} className="scroll-mt-6">
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <div className="text-left">
+              <div className="flex flex-wrap items-center gap-4">
+                {variant === "list" && (
+                  <div className="h-14 w-14 shrink-0 overflow-hidden rounded-sm border border-gold/25">
+                    {cover ? (
+                      <button
+                        type="button"
+                        onClick={() => setActive(cover)}
+                        className="group block h-full w-full"
+                        aria-label={`Latest photo in ${a.name}`}
+                      >
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={cover.thumbUrl}
+                          alt=""
+                          loading="lazy"
+                          className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                        />
+                      </button>
+                    ) : (
+                      <div className="flex h-full w-full items-center justify-center bg-white/[0.04]">
+                        <svg viewBox="0 0 24 24" className="h-4 w-4 text-gold/40" fill="none" stroke="currentColor" strokeWidth="1.5">
+                          <path d="M4 8h3l1.5-2h7L18 8h2v11H4z" />
+                          <circle cx="12" cy="13" r="3.5" />
+                        </svg>
+                      </div>
+                    )}
+                  </div>
+                )}
+                <div className="min-w-0 flex-1 text-left">
                   <p className="font-display text-lg text-ivory md:text-xl">{a.name}</p>
                   <p className="font-body text-xs text-ivory/50">
                     {a.prompt}

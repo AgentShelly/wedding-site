@@ -5,6 +5,10 @@ import { VenueSection } from "@/components/VenueSection";
 import { PhotosSection } from "@/components/PhotosSection";
 import { MusicPlayer } from "@/components/MusicPlayer";
 
+// Revalidate so album cover photos appear as guests upload, without
+// making every homepage hit a fresh blob list.
+export const revalidate = 60;
+
 export default function Home() {
   return (
     <main className="min-h-screen">

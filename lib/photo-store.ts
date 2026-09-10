@@ -32,13 +32,18 @@ const TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
 async function listAll(prefix: string) {
   const out: { pathname: string; url: string; size: number; uploadedAt: Date }[] = [];
   let cursor: string | undefined;
-  do {
-    const res = await list({ prefix, cursor, limit: 1000, token: TOKEN });
-    for (const b of res.blobs) {
-      out.push({ pathname: b.pathname, url: b.url, size: b.size, uploadedAt: b.uploadedAt });
-    }
-    cursor = res.hasMore ? res.cursor : undefined;
-  } while (cursor);
+  try {
+    do {
+      const res = await list({ prefix, cursor, limit: 1000, token: TOKEN });
+      for (const b of res.blobs) {
+        out.push({ pathname: b.pathname, url: b.url, size: b.size, uploadedAt: b.uploadedAt });
+      }
+      cursor = res.hasMore ? res.cursor : undefined;
+    } while (cursor);
+  } catch {
+    // No blob credentials at build time — render empty, ISR fills it in at runtime.
+    return [];
+  }
   return out;
 }
 

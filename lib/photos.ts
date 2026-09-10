@@ -11,7 +11,7 @@ export const ALBUMS = [
   { slug: "ceremony", name: "The Ceremony", prompt: "The march-in & tea ceremony" },
   { slug: "table", name: "Your Table", prompt: "Your table, all together" },
   { slug: "toasts", name: "Speeches & Toasts", prompt: "A speech — or the yum seng" },
-  { slug: "candid", name: "Candid & Sweet", prompt: "Happy tears or a sweet moment" },
+  { slug: "candid", name: "Candid & Sweet", prompt: "Happy (or sad) tears" },
   { slug: "details", name: "The Details", prompt: "Food, flowers, anything gold" },
   { slug: "people", name: "Selfies & Everyone", prompt: "A selfie with someone you love" },
   { slug: "wildcard", name: "Wildcard", prompt: "Your shot of the night" },

@@ -1,21 +1,3 @@
-const events = [
-  {
-    time: "11:00 AM",
-    title: "Tea Ceremony",
-    desc: "A cherished tradition honouring our families",
-  },
-  {
-    time: "12:00 PM",
-    title: "Lunch",
-    desc: "A celebratory meal shared with loved ones",
-  },
-  {
-    time: "3:00 – 4:00 PM",
-    title: "Close of Ceremony",
-    desc: "Thank you for being part of our story",
-  },
-];
-
 export function TimelineSection() {
   return (
     <section id="timeline" className="py-20 px-6 bg-cream">
@@ -24,7 +6,7 @@ export function TimelineSection() {
         <div className="text-center mb-14">
           <SectionDivider />
           <h2 className="font-display text-4xl md:text-5xl text-teal mt-6 heading-underline">
-            The Day Unfolds
+            R&amp;A: A Short Story
           </h2>
           <p className="font-body text-muted text-sm mt-6 tracking-wide uppercase">
             Saturday · 12 September 2026
@@ -32,7 +14,7 @@ export function TimelineSection() {
         </div>
 
         {/* Wedding video */}
-        <div className="mb-16 overflow-hidden rounded-sm border border-gold/30 shadow-lg">
+        <div className="overflow-hidden rounded-sm border border-gold/30 shadow-lg">
           <video
             controls
             preload="metadata"
@@ -44,37 +26,6 @@ export function TimelineSection() {
               type="video/mp4"
             />
           </video>
-        </div>
-
-        {/* Timeline */}
-        <div className="relative pl-16 sm:pl-0">
-          {/* Vertical line */}
-          <div className="absolute left-6 sm:left-1/2 sm:-translate-x-px top-0 bottom-0 w-px bg-gold/35" />
-
-          <div className="space-y-10">
-            {events.map((ev, i) => (
-              <div
-                key={i}
-                className="relative flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-8"
-              >
-                {/* Time — left col on desktop */}
-                <div className="pl-8 sm:pl-0 sm:w-[45%] sm:text-right sm:pt-0.5">
-                  <span className="font-body text-xs font-semibold uppercase tracking-widest text-gold">
-                    {ev.time}
-                  </span>
-                </div>
-
-                {/* Dot */}
-                <div className="absolute left-[18px] sm:left-1/2 sm:-translate-x-1/2 top-[6px] w-2 h-2 rounded-full bg-gold" />
-
-                {/* Content */}
-                <div className="sm:w-[45%] sm:pl-6 pl-14">
-                  <h3 className="font-display text-xl text-teal">{ev.title}</h3>
-                  <p className="font-body text-muted text-sm mt-0.5 leading-relaxed">{ev.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     </section>

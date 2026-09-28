@@ -1,13 +1,13 @@
 import Link from "next/link";
-import { getAlbumSections } from "@/lib/photo-store";
-import { ChallengeAlbums } from "./ChallengeAlbums";
+import { getGalleryPhotos } from "@/lib/photo-store";
 
 export async function PhotosSection() {
-  const sections = await getAlbumSections();
+  const photos = await getGalleryPhotos();
+  const preview = photos.slice(0, 12);
+
   return (
     <section id="photos" className="bg-teal-dark px-6 py-20">
       <div className="mx-auto max-w-2xl">
-        {/* Framed card — echoes the printed guest card */}
         <div
           className="relative overflow-hidden px-6 py-14 text-center sm:px-12"
           style={{
@@ -44,20 +44,41 @@ export async function PhotosSection() {
             </div>
 
             <h2 className="font-display text-4xl text-ivory md:text-5xl">
-              Take Our Photo Challenge
+              The Photo Gallery
             </h2>
             <p className="mx-auto mt-4 mb-10 max-w-md font-body text-sm leading-relaxed text-ivory/70">
-              Seven shots to hunt down over lunch. Tap an album, pick your photos
-              — as many as you like — full-resolution, straight off your phone.
+              Photos from the people who were there, straight off their phones.
             </p>
 
-            <ChallengeAlbums sections={sections} />
+            {preview.length === 0 ? (
+              <p className="font-body text-ivory/60 text-sm">
+                No photos yet. Be the first to add some.
+              </p>
+            ) : (
+              <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                {preview.map((p) => (
+                  <Link
+                    key={p.pathname}
+                    href="/gallery"
+                    className="block aspect-square overflow-hidden bg-teal rounded-sm"
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={p.thumbUrl}
+                      alt={`Photo by ${p.uploader}`}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition-transform hover:scale-105"
+                    />
+                  </Link>
+                ))}
+              </div>
+            )}
 
             <Link
               href="/gallery"
               className="mt-10 inline-block font-body text-sm text-gold underline underline-offset-4 transition-colors hover:text-gold-light"
             >
-              View the album →
+              View the full album →
             </Link>
           </div>
         </div>

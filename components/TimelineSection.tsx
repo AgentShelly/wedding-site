@@ -31,6 +31,21 @@ export function TimelineSection() {
           </p>
         </div>
 
+        {/* Wedding video */}
+        <div className="mb-16 overflow-hidden rounded-sm border border-gold/30 shadow-lg">
+          <video
+            controls
+            preload="metadata"
+            poster="https://l5dewgcxwhbhcryx.public.blob.vercel-storage.com/video/wedding-video-poster.jpg"
+            className="w-full aspect-video bg-black"
+          >
+            <source
+              src="https://l5dewgcxwhbhcryx.public.blob.vercel-storage.com/video/wedding-video.mp4"
+              type="video/mp4"
+            />
+          </video>
+        </div>
+
         {/* Timeline */}
         <div className="relative pl-16 sm:pl-0">
           {/* Vertical line */}

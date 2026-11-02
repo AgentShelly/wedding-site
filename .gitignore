@@ -6,6 +6,7 @@ out/
 *.log
 .DS_Store
 .vercel
+.release/
 public/music/*.mp3
 instant-icon-497208-h2-e80600283320.json
 

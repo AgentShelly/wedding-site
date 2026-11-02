@@ -5,3 +5,5 @@ Record validation by date and stage under this folder when later authorized stag
 For each check, distinguish repository inspection from runtime checks and external Vercel/GitHub checks. State only what was actually verified. Record failures and skipped checks with the reason. Keep test source in the existing project test tree rather than this evidence folder.
 
 Deployment validation must identify whether it was preview or production, the approved project/environment, the verified Blob store identity, and the explicit approval covering that action. Never use production photo data for a test environment. Before any push or merge, record the automatic Vercel and GitHub deployment/workflow trigger inspection. Production, paid, DNS, and data-affecting actions each require their own explicit approval record.
+
+Local synthetic static implementation evidence: [local-static-build.md](local-static-build.md). It is not live account, preview, production, billing, or browser E2E evidence.

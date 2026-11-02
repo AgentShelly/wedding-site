@@ -1,6 +1,5 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { ChallengeAlbums } from "@/components/ChallengeAlbums";
 
 export const metadata: Metadata = {
   title: "Take Our Photo Challenge — Alice & Rudolph",
@@ -14,20 +13,11 @@ export default function PhotosPage() {
         <p className="font-body text-xs tracking-[0.35em] uppercase text-gold/80">
           Alice &amp; Rudolph
         </p>
-        <h1 className="font-display text-4xl text-ivory mt-3">
-          Take Our Photo Challenge
-        </h1>
+        <h1 className="font-display text-4xl text-ivory mt-3">The Photo Album</h1>
         <p className="font-body text-ivory/70 text-sm mt-4 mb-10 leading-relaxed">
-          Seven shots to hunt down over lunch. Tap an album, pick your photos —
-          as many as you like — full-resolution, straight off your phone.
+          Browse the wedding photos and open any original to download it.
         </p>
-
-        <ChallengeAlbums />
-
-        <Link
-          href="/gallery"
-          className="inline-block mt-10 font-body text-sm text-gold hover:text-gold-light underline underline-offset-4"
-        >
+        <Link href="/gallery" className="inline-block font-body text-sm text-gold underline underline-offset-4">
           View the album →
         </Link>
       </div>

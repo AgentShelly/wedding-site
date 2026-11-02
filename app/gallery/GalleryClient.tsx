@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { GalleryPhoto } from "@/lib/photo-store";
 import { ALBUMS } from "@/lib/photos";
 
@@ -10,12 +10,50 @@ type Props = {
   onDelete?: (pathname: string) => Promise<void>;
 };
 
-export function GalleryClient({ photos, admin = false, onDelete }: Props) {
+export function GalleryClient({ photos }: Props) {
   const [filter, setFilter] = useState("all");
   const [albumFilter, setAlbumFilter] = useState("all");
   const [active, setActive] = useState<GalleryPhoto | null>(null);
-  const [deleting, setDeleting] = useState<string | null>(null);
-  const [hidden, setHidden] = useState<Set<string>>(new Set());
+  const triggerRef = useRef<HTMLElement | null>(null);
+
+  function openPhoto(photo: GalleryPhoto, trigger: HTMLElement) {
+    triggerRef.current = trigger;
+    setActive(photo);
+  }
+
+  function closePhoto() {
+    setActive(null);
+  }
+
+  useEffect(() => {
+    if (!active) return;
+
+    const dialog = document.getElementById("photo-lightbox");
+    const controls = dialog?.querySelectorAll<HTMLElement>("a[href], button:not([disabled])");
+    controls?.[0]?.focus();
+
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        closePhoto();
+      } else if (event.key === "Tab" && controls?.length) {
+        const first = controls[0];
+        const last = controls[controls.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    }
+
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      triggerRef.current?.focus();
+    };
+  }, [active]);
 
   const uploaders = useMemo(
     () => Array.from(new Set(photos.map((p) => p.uploader))).sort(),
@@ -24,30 +62,14 @@ export function GalleryClient({ photos, admin = false, onDelete }: Props) {
 
   const shown = photos.filter(
     (p) =>
-      !hidden.has(p.pathname) &&
       (filter === "all" || p.uploader === filter) &&
       (albumFilter === "all" || p.album === albumFilter),
   );
 
-  async function remove(p: GalleryPhoto) {
-    if (!onDelete) return;
-    if (!confirm(`Delete this photo from ${p.uploader}?`)) return;
-    setDeleting(p.pathname);
-    try {
-      await onDelete(p.pathname);
-      setHidden((prev) => new Set(prev).add(p.pathname));
-      if (active?.pathname === p.pathname) setActive(null);
-    } catch {
-      alert("Delete failed.");
-    } finally {
-      setDeleting(null);
-    }
-  }
-
   if (photos.length === 0) {
     return (
       <p className="font-body text-ivory/60 text-sm text-center py-20">
-        No photos yet. Be the first to add some.
+        This album snapshot contains no photos.
       </p>
     );
   }
@@ -55,30 +77,36 @@ export function GalleryClient({ photos, admin = false, onDelete }: Props) {
   return (
     <div>
       <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
-        <select
-          value={albumFilter}
-          onChange={(e) => setAlbumFilter(e.target.value)}
-          className="bg-teal border border-gold/30 text-ivory font-body text-sm rounded-sm px-3 py-1.5 focus:outline-none"
-        >
+        <label className="font-body text-sm text-ivory/70">
+          Album{" "}
+          <select
+            value={albumFilter}
+            onChange={(e) => setAlbumFilter(e.target.value)}
+            className="ml-2 bg-teal border border-gold/30 text-ivory font-body text-sm rounded-sm px-3 py-1.5 focus:outline-none"
+          >
           <option value="all">All albums ({photos.length})</option>
           {ALBUMS.map((a) => (
             <option key={a.slug} value={a.slug}>
               {a.name} ({photos.filter((p) => p.album === a.slug).length})
             </option>
           ))}
-        </select>
-        <select
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-          className="bg-teal border border-gold/30 text-ivory font-body text-sm rounded-sm px-3 py-1.5 focus:outline-none"
-        >
+          </select>
+        </label>
+        <label className="font-body text-sm text-ivory/70">
+          Photographer{" "}
+          <select
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            className="ml-2 bg-teal border border-gold/30 text-ivory font-body text-sm rounded-sm px-3 py-1.5 focus:outline-none"
+          >
           <option value="all">Everyone</option>
           {uploaders.map((u) => (
             <option key={u} value={u}>
               {u} ({photos.filter((p) => p.uploader === u).length})
             </option>
           ))}
-        </select>
+          </select>
+        </label>
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
@@ -86,7 +114,8 @@ export function GalleryClient({ photos, admin = false, onDelete }: Props) {
           <div key={p.pathname} className="relative group">
             <button
               type="button"
-              onClick={() => setActive(p)}
+              onClick={(event) => openPhoto(p, event.currentTarget)}
+              aria-label={`View photo by ${p.uploader} in ${ALBUMS.find((album) => album.slug === p.album)?.name ?? "the album"}`}
               className="block w-full aspect-square overflow-hidden bg-teal rounded-sm"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -97,16 +126,6 @@ export function GalleryClient({ photos, admin = false, onDelete }: Props) {
                 className="w-full h-full object-cover transition-transform group-hover:scale-105"
               />
             </button>
-            {admin && (
-              <button
-                type="button"
-                onClick={() => remove(p)}
-                disabled={deleting === p.pathname}
-                className="absolute top-1 right-1 bg-coral text-white text-xs px-2 py-1 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-50"
-              >
-                {deleting === p.pathname ? "…" : "Delete"}
-              </button>
-            )}
           </div>
         ))}
       </div>
@@ -114,7 +133,11 @@ export function GalleryClient({ photos, admin = false, onDelete }: Props) {
       {active && (
         <div
           className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
-          onClick={() => setActive(null)}
+          id="photo-lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Photo by ${active.uploader}`}
+          onClick={closePhoto}
         >
           <div
             className="max-w-5xl max-h-full flex flex-col items-center"
@@ -129,23 +152,14 @@ export function GalleryClient({ photos, admin = false, onDelete }: Props) {
             <div className="flex items-center gap-4 mt-4 font-body text-sm">
               <span className="text-ivory/60">{active.uploader}</span>
               <a
-                href={`${active.url}?download=1`}
+            href={`${active.url}${active.url.includes("?") ? "&" : "?"}download=1`}
                 className="text-gold hover:text-gold-light underline underline-offset-4"
               >
                 Download original
               </a>
-              {admin && (
-                <button
-                  type="button"
-                  onClick={() => remove(active)}
-                  className="text-coral hover:text-coral-light underline underline-offset-4"
-                >
-                  Delete
-                </button>
-              )}
               <button
                 type="button"
-                onClick={() => setActive(null)}
+                onClick={closePhoto}
                 className="text-ivory/50 hover:text-ivory"
               >
                 Close

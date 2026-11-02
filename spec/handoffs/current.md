@@ -1,51 +1,49 @@
-# Current handoff — documentation committed locally; push skipped
+# Current handoff — local implementation complete; external feasibility gated
 
-- Updated: 2026-11-02 (Asia/Singapore)
-- Stage: documentation committed locally; user directed to skip push
-- Repository: `/Users/rudolph/alice-rudolph-wedding` (`origin` = `https://github.com/AgentShelly/wedding-site.git`)
-- Branch: `wedding-updates`, tracking `origin/main`
-- Git state at completion: clean worktree on `wedding-updates`, one documentation commit ahead of `origin/main`; 39 tracked application paths are unchanged. No application source is included. The commit is not pushed, per the user's latest instruction.
+- Updated: 2026-11-02 18:17 SGT (Asia/Singapore).
+- Stage: T3/T4 implementation committed locally. Push to `main` is blocked by unverified automatic deployment and branch-protection behavior; no deployment/account work was performed.
+- Repository: `/Users/rudolph/alice-rudolph-wedding`; origin `https://github.com/AgentShelly/wedding-site.git`.
+- Branch: `codex/static-album`, created from starting HEAD `bee5f8ffc68c277038a643ee48ac5e1ceaf6ef19`. Existing documentation edits from the earlier architecture stage were preserved. The approved change set was committed locally; worktree is clean. No push, PR or merge.
+- No agent/model switch or delegation occurred.
 
-## Commands and reads actually performed
+## New Git authorization and push gate
 
-- `pwd && git remote -v && git status --short --branch`
-- `cat AGENTS.md`, `cat spec/handoffs/current.md`, `cat review/audits/initial-audit.md`; conditional check of `graphify-out/graph.json` (absent, so no graph query).
-- Attempted `/Users/rudolph/.agents/skills/migration/SKILL.md` (missing); read available skill `/Users/rudolph/.codex/plugins/cache/caveman/caveman/4.0.1/skills/migration/SKILL.md`.
-- `git ls-files`; `git ls-files --stage`; `git ls-files -z | xargs -0 stat -f '%z %N'`; `git ls-files -z | xargs -0 file`; `git submodule status`; `git status --short --ignored`; `git status --short --branch`.
-- `cat package.json`; `rg -n` source scan for environment names, providers, endpoints, fetches, dynamic routes, logs, and duration settings.
-- `python3` read of `package.json` and `package-lock.json` to compare declared direct dependencies with lock-resolved versions. First lookup attempt used a wrong JSON path and raised `KeyError`; corrected read succeeded. No package manager command ran.
-- `rg -n` scan of route/API/storage/auth references; `nl -ba` reads of upload flow, photo path helpers, Blob store, auth, admin endpoints/UI, and external media components.
-- A `python3` read-only check compared the first exact-path block in `review/inventory/coverage.md` with `git ls-files`: 39 tracked, 39 listed, no missing/extra paths.
-- `git diff --check`; `git diff --no-index --check /dev/null` for each of four new inventory reports.
-- No new provider calls. The account facts quoted in these reports are explicitly attributed to the prior read-only audit; no secret values were read or reproduced.
-- For this commit request: reconfirmed `pwd`, `git remote -v`, `git status --short --branch`, and reread `AGENTS.md` and this handoff. Read-only Vercel `get_project` for `alice-rudolph-2026` confirmed the same project metadata and latest errored deployment; it did not expose Git auto-deployment settings.
-- Staged only `AGENTS.md`, `spec/`, and `review/` with `git add AGENTS.md spec review`; reviewed `git status`, `git diff --cached --check`, `git diff --cached --stat`, and `git diff --cached --name-only`.
-- `git commit -m "docs: add rebuild audit and inventory"`
-- `git add spec/handoffs/current.md`; `git diff --cached --check`; `git commit --amend --no-edit` (updates this handoff in the local docs commit)
-- `git status --short --branch`; `git log -1 --oneline`; `git rev-list --left-right --count origin/main...HEAD` (local branch is one commit ahead).
-- After user said `skip push`, reconfirmed `pwd`, `git remote -v`, `git status --short --branch`, and read this handoff before recording that disposition.
+The user explicitly requested “commit push main.” The local commit was created on `codex/static-album`. Local inspection found no checked-in `.github` workflow files, `vercel.json`, or `vercel.ts`; however, [the prior audit](../../review/audits/open-questions.md) records Git-linked Vercel deployments on refs including `main`, with exact auto-deploy/production-branch settings unverified. The deployment inventory confirms the same. A push may therefore trigger production outside the approved CLI release process. Push remains blocked until a sanitized Vercel trigger export establishes behavior and production deployment is separately authorized if a push triggers it. Branch-protection reads were previously 403, so direct-push authorization is also unverified.
 
-No application/project scripts, hooks, tests, build, lint, typecheck, installs, Node/npm runtime checks, production app/data, or deployment were accessed/run. One local documentation commit was created; no push or merge occurred. Binary assets were classified from Git mode, file signature/type and byte size; their contents were not inspected.
+## Authorization and immutable decisions
 
-## Work completed
+The user approved the static design and local synthetic implementation in this conversation; see [spec/README.md](../README.md#approval-record). Scope: existing-album view/download only, zero total service charges, local source/config/tooling and synthetic tests. No production/account access, real manifest, credential read, resource/account mutation, DNS, preview, production, external spend, commit, push, PR or merge. Cost assumptions, acceptance thresholds, static architecture and provider/model choices were not changed. No AI integration or key was added.
 
-- Created `review/inventory/project-inventory.md`, `deployment-map.md`, `configuration-matrix.md`, and `coverage.md`.
-- Updated this mandatory handoff for the analysis-stage/model transition.
-- Inventory enumerates all 39 tracked paths and distinguishes source, npm lockfile, public assets, large images, likely generated PDF artifacts, ignored vendor/build/local files, and untracked user docs.
-- Request/deployment map traces guest upload, live gallery reads, admin auth/delete/export, Blob persistence and rollback/restore limits.
-- Configuration matrix lists variable names and purposes only, reuses prior Vercel metadata without refreshing account state, and explains that DeepSeek code/model/billing/rate-limit/secret/fallback behavior is absent from this checkout.
+Earlier documentation work under `spec/` and `review/` was present before implementation and remains in the worktree. No user changes were discarded. Current Git state is recorded by the implementation log; refresh `git status --short --branch` before any new action.
 
-## Findings and limits
+## Implemented local scope
 
-- Prior Vercel metadata shows a public production Blob store shared with preview, a Git-linked project, Node 24.x, and a recent errored Claude-ref deployment. The exact auto-deployment triggers, project settings, backup retention, billing and DNS/TLS are unverified.
-- Prior GitHub read showed no workflow directory and no repository rulesets; branch protection reads returned 403. This stage made no provider calls.
-- Source contains one Next.js app, no database/queue/migration framework, no tests or CI workflow, app password-cookie auth, and Blob photo CRUD. There is no DeepSeek integration, model config, provider fallback or app rate limiting in tracked source.
-- Available data export routes are not a verified backup: URL list is a retrieval aid; ZIP can skip inaccessible objects/time out; no restore procedure was found. Rollback of code would not roll back Blob writes/deletes.
-- `.env.local`, `.vercel`, node_modules contents, Blob objects, binaries' content, external account settings and production runtime were not inspected. No hooks were executed. See [coverage limits](../../review/inventory/coverage.md).
-- Evidence: [project inventory](../../review/inventory/project-inventory.md), [deployment map](../../review/inventory/deployment-map.md), [configuration matrix](../../review/inventory/configuration-matrix.md), [coverage](../../review/inventory/coverage.md), plus [initial audit](../../review/audits/initial-audit.md).
-- Authorization: user authorized repository inventory and documentation, and explicitly withheld project-script/install/provider access absent approval. No such new approval was assumed. No implementation or deployment approval was granted.
-- The user explicitly requested a documentation commit, then directed `skip push`. The local docs commit remains one commit ahead of `origin/main`; no push was made. Vercel's project is Git-linked and prior metadata showed production deployments from `main`; the precise auto-deploy setting remains unknown. GitHub branch-protection read previously returned 403. Respect the latest instruction and leave it unpushed.
+- Static Next export: `/`, `/photos`, `/gallery`, `/release-health.json`.
+- Strict build-time manifest loader with HTTPS origin/store/path/metadata/digest/count validation and fail-closed behavior.
+- Read-only gallery filters, accessible lightbox, original view/download; removed old application upload/admin/delete/ZIP/API sources as listed in [cleanup-plan.md](../../review/changes/cleanup-plan.md). Historical audits and inventory files remain.
+- One release command: `npm run release -- <plan|check|apply|verify>` using `scripts/release.mjs`, with action-gated deploy/promote/rollback. Pinned CLI is 65.9.0; `.nvmrc` declares Node 24. Target IDs in `release-targets.json` are intentionally empty until T1 evidence is separately authorized. Current wrapper therefore cannot run a real target. No promotion or rollback was executed.
+- `review/changes/implementation-log.md` and [local validation evidence](../../review/validation/local-static-build.md) record work and limitations.
 
-## Exact next task for the high-capability analysis model
+## Commands actually run
 
-No further action for this task. Leave the local documentation commit unpushed and close the task. If the user later requests a push, first check Vercel/GitHub triggers and apply the production gate; do not deploy separately, change provider settings, run project validation, or alter data.
+- Start-of-stage: `pwd`, `git remote -v`, `git status --short --branch`, `git branch --show-current`; confirmed repository/origin and `codex/static-album`.
+- Push-safety inspection: `git branch -avv`, `git log --oneline --decorate -6`, `rg` over `.github`, `vercel.json`, `vercel.ts`, `package.json`, and the historical trigger audit/inventory. No checked-in workflows or repo Vercel config; Vercel Git-trigger settings remain explicitly unknown and prior evidence reports Git-linked deployment refs including `main`.
+- Commit preparation: `git add -A`; `git diff --cached --check` passed. The 53-file change set contains the approved local implementation and architecture package; no generated output, `.env.local`, production data, or secrets were included.
+- Commit: `git commit -m "feat: rebuild wedding album as static site"` succeeded on `codex/static-album`. Push was not run.
+- Dependency setup: `npm install --save-dev --save-exact vercel@65.9.0 eslint@9 eslint-config-next@16.2.6`; `npm uninstall @vercel/blob archiver @types/archiver`; `npm install --save-exact server-only@0.0.1 --ignore-scripts`; `npm install --package-lock-only --ignore-scripts`.
+- Tests/checks: `npm test` (12 passed); `npm run typecheck` (passed); `npm run lint` (passed); synthetic `npm run build` (static export passed); `git diff --check` (passed). Exact fixture-build environment and artifact scan are in the validation evidence.
+- Local CLI only: `node_modules/.bin/vercel --version`, `vercel deploy --help`, `vercel inspect --help`, `vercel promote --help`, and `vercel rollback --help`; no account command executed.
+- Output inspection: synthetic output contained root/gallery/photos pages, static release health, no API routes, none of scanned secret variable names, and no removed upload/admin component strings.
+- A first attempted `rm` command was rejected without workspace effect. Obsolete source files were removed with the patch tool per the cleanup plan.
+
+## Validation limits and blockers
+
+- Node tests, lint, typecheck and static build passed in the current environment. The environment is Node 26.4.0 despite the pinned Node 24.x declaration; clean-checkout proof on Node 24 remains open.
+- `npm` reported 60 vulnerabilities (31 moderate, 27 high, 2 critical) and unapproved install scripts for `esbuild`, `fsevents`, `koffi`, and `sharp`. No broad audit fix or install-script approval was performed. Build passed despite warnings.
+- No browser E2E, clean checkout, preview, live account/target verification, production request, photo-byte request, promotion, rollback or quota/billing proof was performed. Next detected `.env.local` during build; no value was read or printed, and static output scans found no named secrets.
+- Blank target IDs and missing sanitized owner export intentionally block all release modes. Existing Pro billing conflicts with the $0 total requirement until actual account evidence establishes a compliant path. Same-store ID/host/byte continuity, Hobby eligibility, active deploy triggers, old endpoint retirement and legacy token consumers are unknown.
+- A new static build does not disable old deployed functions/tokens. Data and external resources have not changed. Code rollback cannot reverse token, billing, team/store transfer or data effects; DR recovery is separate.
+
+## Exact next task
+
+Obtain an owner-supplied sanitized Vercel Git integration/production-branch/auto-deploy export and GitHub branch-protection/rules export, or separately authorize read-only access to retrieve them. Determine whether pushing `main` triggers production; if so, obtain explicit production deployment approval before push. If trigger behavior or branch authorization remains unknown, keep the commit local. T1 billing, resource IDs, quota and same-store continuity remain separate gates. The requested push has not been performed; preview, provisioning, transfer, production deployment, data access and merge remain unauthorized.

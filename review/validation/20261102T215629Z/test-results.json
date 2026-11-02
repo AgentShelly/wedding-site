@@ -1,0 +1,56 @@
+{
+  "runId": "20261102T215629Z",
+  "startedAt": "2026-11-02T21:49:00Z",
+  "completedAt": "2026-11-02T21:56:29Z",
+  "repository": {
+    "path": "/Users/rudolph/alice-rudolph-wedding",
+    "origin": "https://github.com/AgentShelly/wedding-site.git",
+    "branch": "codex/static-album",
+    "commit": "e63aab32d61581640b6cb70642264471c05000b2",
+    "tree": "e64bb8665d9f89faa6cdab7e009d51a8ff2ec0d5",
+    "trackedWorktreeCleanBeforeRun": true
+  },
+  "environment": {
+    "platform": "macOS local checkout",
+    "node": "v26.4.0",
+    "npm": "11.17.0",
+    "declaredNodeRange": ">=24 <25",
+    "dependenciesPreinstalled": true,
+    "dependenciesInstalledDuringRun": false,
+    "browserRuntimeInstalledDuringRun": false
+  },
+  "authorization": {
+    "scope": "local synthetic validation only",
+    "providerAccountAccess": false,
+    "productionAccess": false,
+    "deployOrPublish": false,
+    "pushOrMerge": false,
+    "realPhotoData": false,
+    "liveDeepSeek": false
+  },
+  "results": [
+    {"id":"repo-identity","command":"pwd; git remote -v; git branch --show-current; git status --short --branch; git rev-parse HEAD; git rev-parse HEAD^{tree}","expected":"Correct repo, branch and clean tracked worktree","actual":"Expected origin; codex/static-album; e63aab32d61581640b6cb70642264471c05000b2; tree e64bb8665d9f89faa6cdab7e009d51a8ff2ec0d5","status":"PASS","scope":"Local Git metadata only"},
+    {"id":"unit-tests","command":"npm test","expected":"All tests pass","actual":"12 passed, 0 failed, 0 skipped","status":"PASS","scope":"Synthetic unit/release-contract tests"},
+    {"id":"lint","command":"npm run lint","expected":"Exit 0","actual":"Exit 0","status":"PASS"},
+    {"id":"typecheck","command":"npm run typecheck","expected":"Exit 0","actual":"Exit 0","status":"PASS"},
+    {"id":"integration-suite","command":"Repository inspection of existing test infrastructure","expected":"Run existing integration checks where available","actual":"No separate integration suite exists; static fixture build and browser smoke provide partial local composition evidence only","status":"PARTIAL","scope":"No provider/service integration exercised"},
+    {"id":"static-build","command":"env NEXT_TELEMETRY_DISABLED=1 ALBUM_MANIFEST_PATH=tests/fixtures/album-manifest.json ALBUM_PHOTO_ORIGIN=https://album.example.test RELEASE_ID=validation-20261102T214944Z RELEASE_ENVIRONMENT=preview VERCEL_PROJECT_ID=synthetic-project npm run build","expected":"Static export succeeds","actual":"Exit 0; routes /, /photos, /gallery, /release-health.json; .env.local auto-loaded by Next","status":"PASS","scope":"Synthetic manifest; no provider access"},
+    {"id":"artifact-scan","command":"Node scan of out/ HTML/JS/JSON for required routes, api files, named secret and retired-feature markers","expected":"Required pages present; no runtime APIs or named markers","actual":"68 files; required routes present; no api files; zero named-marker hits","status":"PASS","scope":"Does not prove absence of unknown secrets"},
+    {"id":"target-guard","command":"npm run release -- plan --environment preview --team-id synthetic-team --project-id synthetic-project --store-id synthetic-store --release-id validation-20261102T214944Z --manifest <synthetic fixture> --manifest-digest invalid","expected":"Unapproved target rejected before mutation","actual":"Exit 1 before provider access: Explicit teamId does not match the approved preview target","status":"PASS","scope":"Local fail-closed negative case"},
+    {"id":"desktop-browser-smoke","command":"Headless browser opened local static /gallery.html and clicked synthetic photo control","expected":"Gallery, lightbox and download link render","actual":"Gallery and labelled dialog rendered at 1280 px; synthetic Download original URL exposed; placeholder image request errored","status":"PARTIAL","scope":"No real bytes fetched; browser had no local Chromium binary"},
+    {"id":"keyboard-mobile-e2e","command":"Not completed","expected":"Escape/focus return, filtering, mobile viewport, accessible journey and original bytes","actual":"Browser action interrupted; local browser binary unavailable and fixture media host is reserved example.test","status":"BLOCKED","scope":"No browser runtime installation authorized"},
+    {"id":"clean-node24","command":"Not run","expected":"Fresh checkout on Node 24 with locked dependencies","actual":"Current environment Node 26.4.0; no clean worktree/install performed","status":"BLOCKED"},
+    {"id":"live-provider-account-deployment","command":"Not run","expected":"Separate authorized account/preview/production checks","actual":"No provider or production access authorized in this validation","status":"BLOCKED"}
+  ],
+  "limitations": [
+    "No full browser E2E, login/session workflow, live API usage, live costs, billing, quota, preview, production, store continuity or rollback was verified.",
+    "Build used the synthetic manifest and Next auto-loaded .env.local without printing its values.",
+    "The static design contains no login/session, payment, database, or AI provider workflow."
+  ],
+  "artifacts": {
+    "summary": "summary.md",
+    "costEstimate": "cost-estimate.md",
+    "evidenceIndex": "evidence-index.md",
+    "bulkyRawArtifacts": "None retained. Tool-generated browser snapshots/logs were removed after review."
+  }
+}

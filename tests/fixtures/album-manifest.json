@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "capturedAt": "2026-11-02T00:00:00.000Z",
+  "photoOrigin": "https://album.example.test",
+  "sourceStoreId": "synthetic-store",
+  "recordCount": 1,
+  "photos": [
+    {
+      "pathname": "photos/ceremony/alice-lim/synthetic-001.jpg",
+      "url": "https://album.example.test/photos/ceremony/alice-lim/synthetic-001.jpg",
+      "thumbUrl": "https://album.example.test/thumbs/ceremony/alice-lim/synthetic-001.jpg",
+      "album": "ceremony",
+      "uploader": "alice lim",
+      "size": 123,
+      "uploadedAt": "2026-10-12T00:00:00.000Z"
+    }
+  ],
+  "digest": "9f0ee56870b67c022dd4e171ee89fbff0732e5255b678683951bce5d57d4907e"
+}

@@ -1,48 +1,16 @@
-import { HeroSection } from "@/components/HeroSection";
-import { TimelineSection } from "@/components/TimelineSection";
-import { PhotosSection } from "@/components/PhotosSection";
-import { MusicPlayer } from "@/components/MusicPlayer";
-
-// Dynamic so album cover photos + counts reflect uploads immediately.
-// A blob list() per hit is cheap at wedding scale.
-export const dynamic = "force-dynamic";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
-      <MusicPlayer />
-      <HeroSection />
-
-      <PhotosSection />
-      <TimelineSection />
-
-      {/* Footer */}
-      <footer className="bg-teal-dark py-12 px-6 text-center">
-        <div className="max-w-2xl mx-auto">
-          <div className="flex items-center justify-center gap-4 mb-5">
-            <div className="h-px w-14 bg-gold/35" />
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="text-gold">
-              <circle cx="9" cy="9" r="2.2" fill="currentColor" />
-              <ellipse cx="9" cy="2.5" rx="1.8" ry="3.5" fill="currentColor" opacity="0.6" />
-              <ellipse cx="9" cy="15.5" rx="1.8" ry="3.5" fill="currentColor" opacity="0.6" />
-              <ellipse cx="2.5" cy="9" rx="3.5" ry="1.8" fill="currentColor" opacity="0.6" />
-              <ellipse cx="15.5" cy="9" rx="3.5" ry="1.8" fill="currentColor" opacity="0.6" />
-            </svg>
-            <div className="h-px w-14 bg-gold/35" />
-          </div>
-
-          <p className="font-display text-3xl text-ivory tracking-widest">
-            Alice &amp; Rudolph
-          </p>
-          <p className="font-body text-gold/75 text-xs tracking-[0.3em] uppercase mt-2">
-            12 · September · 2026
-          </p>
-
-          <p className="font-body text-ivory/25 text-[11px] mt-8">
-            Music: Bossa by Bensound · bensound.com/royalty-free-music
-          </p>
-        </div>
-      </footer>
+    <main className="flex min-h-screen flex-col items-center justify-center bg-teal-dark px-6 text-center">
+      <p className="font-body text-xs uppercase tracking-[0.35em] text-gold/80">Alice &amp; Rudolph</p>
+      <h1 className="mt-4 font-display text-5xl text-ivory">The Wedding Album</h1>
+      <p className="mt-4 max-w-md font-body text-sm leading-relaxed text-ivory/70">
+        Seven albums of photos from the people who were there.
+      </p>
+      <Link href="/gallery" className="mt-8 rounded-sm bg-gold px-6 py-3 font-body text-sm font-semibold uppercase tracking-widest text-teal-dark">
+        Browse the album
+      </Link>
     </main>
   );
 }

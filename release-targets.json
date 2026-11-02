@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "cliVersion": "65.9.0",
+  "targets": {
+    "preview": {
+      "teamId": "",
+      "projectId": "",
+      "storeId": ""
+    },
+    "production": {
+      "teamId": "",
+      "projectId": "",
+      "storeId": ""
+    }
+  }
+}
